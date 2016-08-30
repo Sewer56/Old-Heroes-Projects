@@ -1,0 +1,2 @@
+LAV Filters/Splitter - (You'll probably already have this if you have some sort of codec pack installed)
+Please use 32bit GraphStudioNext (like this one here).
