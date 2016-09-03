@@ -122,4 +122,42 @@ for /D %%d in ("%WORKING_DIRECTORY%\ROM\GameMenus\Localized Menu Assets\English"
 cd %WORKING_DIRECTORY%\ROM\
 ren GameMenus "Game Menus"
 cd %WORKING_DIRECTORY%
+rem
+rem Bundle Game Code Together
+rem
+cd %WORKING_DIRECTORY%\ROM\
+ren "&&systemdata" "Game Code"
+move /Y movieD.rel "%WORKING_DIRECTORY%\ROM\Game Code\"
+move /Y autosaveD.rel "%WORKING_DIRECTORY%\ROM\Game Code\"
+move /Y advertiseD.rel "%WORKING_DIRECTORY%\ROM\Game Code\"
+rem
+rem Set up Stages
+rem
+mkdir %WORKING_DIRECTORY%\ROM\Levels
+rem Without Spaces to ensure HeroesONE doesn't freak out.
+mkdir "%WORKING_DIRECTORY%\ROM\Levels\TitleCards"
+mkdir "%WORKING_DIRECTORY%\ROM\Levels\Unused"
+mkdir "%WORKING_DIRECTORY%\ROM\Levels\Unused\Title Cards"
+mkdir "%WORKING_DIRECTORY%\ROM\Levels\Title Card Mission Text"
+for %%f in ("%WORKING_DIRECTORY%\ROM\stgtitle\mission\*.bmp") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\Title Card Mission Text")
+for %%f in ("%WORKING_DIRECTORY%\ROM\stgtitle\*.one") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\Title Cards")
+cd %WORKING_DIRECTORY%\ROM\Levels\
+for %%f in ("%WORKING_DIRECTORY%\ROM\Levels\TitleCards\*.one") do (%WORKING_DIRECTORY%\Tools\HeroesONE\HeroesONE.exe -u %%f %%~pnf)
+for %%f in ("%WORKING_DIRECTORY%\ROM\Levels\TitleCards\*.one") do (DEL /F %%f)
+
+rem Add spaces back.
+ren "TitleCards" "Title Cards" 
+
+move "%WORKING_DIRECTORY%\ROM\Levels\Title Cards\stg00title_disp" "%WORKING_DIRECTORY%\ROM\Levels\Unused\Title Cards\"
+cd "%WORKING_DIRECTORY%\ROM\Levels\Unused\Title Cards"
+ren "stg00title_disp" "Stage 00 - Testlevel"
+
+cd "%WORKING_DIRECTORY%\ROM\Levels\Title Cards"
+call %WORKING_DIRECTORY%\Scripts\RenameStageTitles.bat
+rem
+rem TestingCleanup
+rem
+rmdir /S /Q %WORKING_DIRECTORY%\ROM\Levels\TitleCards
+rmdir /S /Q %WORKING_DIRECTORY%\ROM\GameMenus
+rmdir /S /Q %WORKING_DIRECTORY%\ROM\stgtitle
 pause
