@@ -3,6 +3,7 @@ rem
 rem MASTER CODE XDDDDDD
 rem 
 set WORKING_DIRECTORY=%cd%
+set HANDBRAKECLI=C:\Program Files\Handbrake\HandBrakeCLI.exe
 rem 
 rem AFS2ADX 2 AAC-HC
 rem 
@@ -24,9 +25,8 @@ for %%f in (ROM\*.sfd) do (copy /Y %%f Tools\VideoConversion\0SFD2MPG)
 cd Tools\VideoConversion\0SFD2MPG\
 rem Call ConvertHeroes to demux and convert SFD.
 call ConvertHeroes.bat
-cd Tools\VideoConversion\1Handbrake\
 rem Convert With Handbrake
-call HeroesToX265.bat
+call %WORKING_DIRECTORY%\Tools\VideoConversion\1Handbrake\HeroesToX265.bat
 cd %WORKING_DIRECTORY%
 rem Remove all old cutscene files.
 for %%f in (ROM\*.sfd) do (del /f %%f)
