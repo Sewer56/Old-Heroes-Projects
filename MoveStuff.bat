@@ -1,3 +1,4 @@
+echo off
 set WORKING_DIRECTORY=%cd%
 rem
 rem REARRANGE ADVERTISE
@@ -123,6 +124,14 @@ cd %WORKING_DIRECTORY%\ROM\
 ren GameMenus "Game Menus"
 cd %WORKING_DIRECTORY%
 rem
+rem Add Menu Text
+rem
+mkdir "%WORKING_DIRECTORY%\ROM\Game Menus\Game Menu Text"
+for %%f in ("%WORKING_DIRECTORY%\ROM\Text\*.utx") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Game Menus\Game Menu Text")
+mkdir "%WORKING_DIRECTORY%\ROM\Game Menus\Credits Screen Text"
+move /Y "%WORKING_DIRECTORY%\ROM\Text\staffroll.csv" "%WORKING_DIRECTORY%\ROM\Game Menus\Credits Screen Text"
+
+rem
 rem Bundle Game Code Together
 rem
 cd %WORKING_DIRECTORY%\ROM\
@@ -131,15 +140,15 @@ move /Y movieD.rel "%WORKING_DIRECTORY%\ROM\Game Code\"
 move /Y autosaveD.rel "%WORKING_DIRECTORY%\ROM\Game Code\"
 move /Y advertiseD.rel "%WORKING_DIRECTORY%\ROM\Game Code\"
 rem
-rem Set up Stages
+rem Set up Stages Title Cards
 rem
 mkdir %WORKING_DIRECTORY%\ROM\Levels
 rem Without Spaces to ensure HeroesONE doesn't freak out.
 mkdir "%WORKING_DIRECTORY%\ROM\Levels\TitleCards"
 mkdir "%WORKING_DIRECTORY%\ROM\Levels\Unused"
 mkdir "%WORKING_DIRECTORY%\ROM\Levels\Unused\Title Cards"
-mkdir "%WORKING_DIRECTORY%\ROM\Levels\Title Card Mission Text"
-for %%f in ("%WORKING_DIRECTORY%\ROM\stgtitle\mission\*.bmp") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\Title Card Mission Text")
+mkdir "%WORKING_DIRECTORY%\ROM\Levels\TitleCardMissionText"
+for %%f in ("%WORKING_DIRECTORY%\ROM\stgtitle\mission\*.bmp") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\TitleCardMissionText")
 for %%f in ("%WORKING_DIRECTORY%\ROM\stgtitle\*.one") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\Title Cards")
 cd %WORKING_DIRECTORY%\ROM\Levels\
 for %%f in ("%WORKING_DIRECTORY%\ROM\Levels\TitleCards\*.one") do (%WORKING_DIRECTORY%\Tools\HeroesONE\HeroesONE.exe -u %%f %%~pnf)
@@ -154,10 +163,67 @@ ren "stg00title_disp" "Stage 00 - Testlevel"
 
 cd "%WORKING_DIRECTORY%\ROM\Levels\Title Cards"
 call %WORKING_DIRECTORY%\Scripts\RenameStageTitles.bat
+
+rem
+rem Set up Stage Geometry and Objects
+rem
+mkdir "%WORKING_DIRECTORY%\ROM\Levels\StageGeometry"
+mkdir "%WORKING_DIRECTORY%\ROM\Levels\StageSpecificObjects"
+mkdir "%WORKING_DIRECTORY%\ROM\Levels\CommonObjects"
+mkdir "%WORKING_DIRECTORY%\ROM\Levels\Unused\CommonObjects"
+for %%f in ("%WORKING_DIRECTORY%\ROM\s**obj.one") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\StageSpecificObjects")
+for %%f in ("%WORKING_DIRECTORY%\ROM\s**MRG.one") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\StageSpecificObjects")
+for %%f in ("%WORKING_DIRECTORY%\ROM\s**_flyer.one") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\StageSpecificObjects")
+for %%f in ("%WORKING_DIRECTORY%\ROM\s**.one") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\StageGeometry")
+for %%f in ("%WORKING_DIRECTORY%\ROM\stg**.one") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\StageGeometry")
+
+REM Fixes for object filter inaccuracies,
+for %%f in ("%WORKING_DIRECTORY%\ROM\Levels\StageGeometry\stg06_kw_hanabi_**.one") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\CommonObjects")
+move /Y "%WORKING_DIRECTORY%\ROM\Levels\StageGeometry\stgmem0910.one" "%WORKING_DIRECTORY%\ROM\Levels\CommonObjects"
+move /Y "%WORKING_DIRECTORY%\ROM\Levels\StageGeometry\stg80BJ.one" "%WORKING_DIRECTORY%\ROM\Levels\StageSpecificObjects"
+
+REM Move other models to ROOTDIR Models
+for %%f in ("%WORKING_DIRECTORY%\ROM\obj*_Prop*.dff") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\CommonObjects")
+for %%f in ("%WORKING_DIRECTORY%\ROM\bob*.one") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\CommonObjects")
+move /Y "%WORKING_DIRECTORY%\ROM\rain_ita.dff" "%WORKING_DIRECTORY%\ROM\Levels\CommonObjects"
+move /Y "%WORKING_DIRECTORY%\ROM\obj0708_sparks.dff" "%WORKING_DIRECTORY%\ROM\Levels\CommonObjects"
+move /Y "%WORKING_DIRECTORY%\ROM\primModels.one" "%WORKING_DIRECTORY%\ROM\Levels\Unused\CommonObjects"
+move /Y "%WORKING_DIRECTORY%\ROM\indirectEditor.dff" "%WORKING_DIRECTORY%\ROM\Levels\Unused\CommonObjects"
+move /Y "%WORKING_DIRECTORY%\ROM\null.dff" "%WORKING_DIRECTORY%\ROM\Levels\Unused\CommonObjects"
+move /Y "%WORKING_DIRECTORY%\ROM\comobj.one" "%WORKING_DIRECTORY%\ROM\Levels\CommonObjects"
+
+for %%f in ("%WORKING_DIRECTORY%\ROM\Levels\StageSpecificObjects\*.one") do (%WORKING_DIRECTORY%\Tools\HeroesONE\HeroesONE.exe -u %%f %%~pnf)
+for %%f in ("%WORKING_DIRECTORY%\ROM\Levels\StageGeometry\*.one") do (%WORKING_DIRECTORY%\Tools\HeroesONE\HeroesONE.exe -u %%f %%~pnf)
+for %%f in ("%WORKING_DIRECTORY%\ROM\Levels\CommonObjects\*.one") do (%WORKING_DIRECTORY%\Tools\HeroesONE\HeroesONE.exe -u %%f %%~pnf)
+for %%f in ("%WORKING_DIRECTORY%\ROM\Levels\Unused\CommonObjects\*.one") do (%WORKING_DIRECTORY%\Tools\HeroesONE\HeroesONE.exe -u %%f %%~pnf)
+for %%f in ("%WORKING_DIRECTORY%\ROM\Levels\StageSpecificObjects\*.one") do (DEL /F %%f)
+for %%f in ("%WORKING_DIRECTORY%\ROM\Levels\StageGeometry\*.one") do (DEL /F %%f)
+for %%f in ("%WORKING_DIRECTORY%\ROM\Levels\CommonObjects\*.one") do (DEL /F %%f)
+for %%f in ("%WORKING_DIRECTORY%\ROM\Levels\Unused\CommonObjects\*.one") do (DEL /F %%f)
+
+cd "%WORKING_DIRECTORY%\ROM\Levels\StageGeometry"
+call %WORKING_DIRECTORY%\Scripts\RenameStageGeometry.bat
+
+cd "%WORKING_DIRECTORY%\ROM\Levels\StageSpecificObjects"
+call %WORKING_DIRECTORY%\Scripts\RenameStageObjects.bat
+
+cd "%WORKING_DIRECTORY%\ROM\Levels\CommonObjects"
+call %WORKING_DIRECTORY%\Scripts\RenameCommonObjects.bat
+
+cd "%WORKING_DIRECTORY%\ROM\Levels\TitleCardMissionText"
+call %WORKING_DIRECTORY%\Scripts\BundleMissionText.bat
+
+pause
+
+for %%i in (%WORKING_DIRECTORY%\ROM\Levels\TitleCardMissionText\*.bmp) do (echo %%i & mkdir "%WORKING_DIRECTORY%\ROM\Levels\Unused\TitleCardMissionText" & move /Y "%%i" "%WORKING_DIRECTORY%\ROM\Levels\Unused\TitleCardMissionText\")
+
+pause
+
 rem
 rem TestingCleanup
 rem
 rmdir /S /Q %WORKING_DIRECTORY%\ROM\Levels\TitleCards
 rmdir /S /Q %WORKING_DIRECTORY%\ROM\GameMenus
 rmdir /S /Q %WORKING_DIRECTORY%\ROM\stgtitle
+rmdir /S /Q %WORKING_DIRECTORY%\ROM\text
 pause
