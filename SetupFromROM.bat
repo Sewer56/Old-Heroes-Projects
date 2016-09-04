@@ -3,7 +3,7 @@ rem
 rem MASTER CODE XDDDDDD
 rem 
 set WORKING_DIRECTORY=%cd%
-set HANDBRAKECLI=C:\Program Files\Handbrake\HandBrakeCLI.exe
+set HANDBRAKECLI="C:\Program Files\Handbrake\HandBrakeCLI.exe"
 rem 
 rem AFS2ADX 2 AAC-HC
 rem 

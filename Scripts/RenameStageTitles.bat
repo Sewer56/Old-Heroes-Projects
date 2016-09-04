@@ -100,7 +100,7 @@ move "English" "Stage 25 - Robot Storm\"
 
 ren stg26title_disp "Stage 26 - Egg Emperor"
 ren stg26title_dispE "English"
-move "English" "Stage 26- Egg Emperor\"
+move "English" "Stage 26 - Egg Emperor\"
 
 ren stg27title_disp "Stage 27 - Metal Madness"
 ren stg27title_dispE "English"

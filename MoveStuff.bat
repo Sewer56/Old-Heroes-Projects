@@ -139,9 +139,11 @@ ren "&&systemdata" "Game Code"
 move /Y movieD.rel "%WORKING_DIRECTORY%\ROM\Game Code\"
 move /Y autosaveD.rel "%WORKING_DIRECTORY%\ROM\Game Code\"
 move /Y advertiseD.rel "%WORKING_DIRECTORY%\ROM\Game Code\"
+
 rem
-rem Set up Stages Title Cards
+rem Set up Stages
 rem
+
 mkdir %WORKING_DIRECTORY%\ROM\Levels
 rem Without Spaces to ensure HeroesONE doesn't freak out.
 mkdir "%WORKING_DIRECTORY%\ROM\Levels\TitleCards"
@@ -149,7 +151,7 @@ mkdir "%WORKING_DIRECTORY%\ROM\Levels\Unused"
 mkdir "%WORKING_DIRECTORY%\ROM\Levels\Unused\Title Cards"
 mkdir "%WORKING_DIRECTORY%\ROM\Levels\TitleCardMissionText"
 for %%f in ("%WORKING_DIRECTORY%\ROM\stgtitle\mission\*.bmp") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\TitleCardMissionText")
-for %%f in ("%WORKING_DIRECTORY%\ROM\stgtitle\*.one") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\Title Cards")
+for %%f in ("%WORKING_DIRECTORY%\ROM\stgtitle\*.one") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\TitleCards")
 cd %WORKING_DIRECTORY%\ROM\Levels\
 for %%f in ("%WORKING_DIRECTORY%\ROM\Levels\TitleCards\*.one") do (%WORKING_DIRECTORY%\Tools\HeroesONE\HeroesONE.exe -u %%f %%~pnf)
 for %%f in ("%WORKING_DIRECTORY%\ROM\Levels\TitleCards\*.one") do (DEL /F %%f)
@@ -214,10 +216,7 @@ cd "%WORKING_DIRECTORY%\ROM\Levels\TitleCardMissionText"
 call %WORKING_DIRECTORY%\Scripts\BundleMissionText.bat
 
 pause
-
 for %%i in (%WORKING_DIRECTORY%\ROM\Levels\TitleCardMissionText\*.bmp) do (echo %%i & mkdir "%WORKING_DIRECTORY%\ROM\Levels\Unused\TitleCardMissionText" & move /Y "%%i" "%WORKING_DIRECTORY%\ROM\Levels\Unused\TitleCardMissionText\")
-
-pause
 
 rem
 rem TestingCleanup
