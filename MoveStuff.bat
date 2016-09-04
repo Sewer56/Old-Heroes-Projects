@@ -1,5 +1,8 @@
 echo off
 set WORKING_DIRECTORY=%cd%
+
+rem FIX FOR VARS INSIDE LOOPS
+setlocal enabledelayedexpansion
 rem
 rem REARRANGE ADVERTISE
 rem
@@ -224,9 +227,182 @@ mkdir "%WORKING_DIRECTORY%\ROM\Levels\StageCollision"
 for %%f in ("%WORKING_DIRECTORY%\ROM\collisions\*.cl") do (move /Y "%%f" "%WORKING_DIRECTORY%\ROM\Levels\StageCollision")
 cd "%WORKING_DIRECTORY%\ROM\Levels\StageCollision"
 call %WORKING_DIRECTORY%\Scripts\RenameStageCollisions.bat
+cd %WORKING_DIRECTORY%
 rem
-rem TestingCleanup
+rem Set up Event Handling
 rem
+mkdir "%WORKING_DIRECTORY%\ROM\Events"
+mkdir "%WORKING_DIRECTORY%\ROM\Events\TeamSonicEvents"
+mkdir "%WORKING_DIRECTORY%\ROM\Events\TeamDarkEvents"
+mkdir "%WORKING_DIRECTORY%\ROM\Events\TeamRoseEvents"
+mkdir "%WORKING_DIRECTORY%\ROM\Events\TeamChaotixEvents"
+mkdir "%WORKING_DIRECTORY%\ROM\Events\LastStoryEvents"
+mkdir "%WORKING_DIRECTORY%\ROM\Events\Other~UnusedEvents"
+for %%f in ("%WORKING_DIRECTORY%\ROM\event*") do (move /Y "%%f" "%WORKING_DIRECTORY%\ROM\Events\")
+for %%f in ("%WORKING_DIRECTORY%\ROM\Events\event00*") do (move /Y "%%f" "%WORKING_DIRECTORY%\ROM\Events\TeamSonicEvents\")
+for %%f in ("%WORKING_DIRECTORY%\ROM\Events\event01*") do (move /Y "%%f" "%WORKING_DIRECTORY%\ROM\Events\TeamDarkEvents\")
+for %%f in ("%WORKING_DIRECTORY%\ROM\Events\event02*") do (move /Y "%%f" "%WORKING_DIRECTORY%\ROM\Events\TeamRoseEvents\")
+for %%f in ("%WORKING_DIRECTORY%\ROM\Events\event03*") do (move /Y "%%f" "%WORKING_DIRECTORY%\ROM\Events\TeamChaotixEvents\")
+for %%f in ("%WORKING_DIRECTORY%\ROM\Events\event04*") do (move /Y "%%f" "%WORKING_DIRECTORY%\ROM\Events\LastStoryEvents\")
+for %%f in ("%WORKING_DIRECTORY%\ROM\Events\event*") do (move /Y "%%f" "%WORKING_DIRECTORY%\ROM\Events\Team SonicEvents\")
+
+rem SONIC
+rem Auto Gen Folders based on Suffix Discriminant
+cd %WORKING_DIRECTORY%\ROM\Events\TeamSonicEvents
+for %%f in ("%WORKING_DIRECTORY%\ROM\Events\TeamSonicEvents\event0*.scr") do (
+	set suffix=%%~nxf
+	if /I not !suffix:~-6!==_e.scr mkdir "%%~pnf"
+)
+
+for /D %%d in ("%WORKING_DIRECTORY%\ROM\Events\TeamSonicEvents\*") do (
+	for %%f in ("%WORKING_DIRECTORY%\ROM\Events\TeamSonicEvents\*") do (
+		set directoryname=%%~nxd
+		set filename=%%~nf
+		set test=!filename:~0,9!
+		if /I !test!==!directoryname! (move /Y %%f %%d\)
+	)
+)
+
+rem DARK
+rem Auto Gen Folders based on Suffix Discriminant
+cd %WORKING_DIRECTORY%\ROM\Events\TeamDarkEvents
+for %%f in ("%WORKING_DIRECTORY%\ROM\Events\TeamDarkEvents\event0*.scr") do (
+	set suffix=%%~nxf
+	if /I not !suffix:~-6!==_e.scr mkdir "%%~pnf"
+)
+
+for /D %%d in ("%WORKING_DIRECTORY%\ROM\Events\TeamDarkEvents\*") do (
+	for %%f in ("%WORKING_DIRECTORY%\ROM\Events\TeamDarkEvents\*") do (
+		set directoryname=%%~nxd
+		set filename=%%~nf
+		set test=!filename:~0,9!
+		if /I !test!==!directoryname! (move /Y %%f %%d\)
+	)
+)
+
+rem ROSE
+rem Auto Gen Folders based on Suffix Discriminant
+cd %WORKING_DIRECTORY%\ROM\Events\TeamRoseEvents
+for %%f in ("%WORKING_DIRECTORY%\ROM\Events\TeamRoseEvents\event0*.scr") do (
+	set suffix=%%~nxf
+	if /I not !suffix:~-6!==_e.scr mkdir "%%~pnf"
+)
+
+for /D %%d in ("%WORKING_DIRECTORY%\ROM\Events\TeamRoseEvents\*") do (
+	for %%f in ("%WORKING_DIRECTORY%\ROM\Events\TeamRoseEvents\*") do (
+		set directoryname=%%~nxd
+		set filename=%%~nf
+		set test=!filename:~0,9!
+		if /I !test!==!directoryname! (move /Y %%f %%d\)
+	)
+)
+
+rem CHAOTIX
+rem Auto Gen Folders based on Suffix Discriminant
+cd %WORKING_DIRECTORY%\ROM\Events\TeamChaotixEvents
+for %%f in ("%WORKING_DIRECTORY%\ROM\Events\TeamChaotixEvents\event0*.scr") do (
+	set suffix=%%~nxf
+	if /I not !suffix:~-6!==_e.scr mkdir "%%~pnf"
+)
+
+for /D %%d in ("%WORKING_DIRECTORY%\ROM\Events\TeamChaotixEvents\*") do (
+	for %%f in ("%WORKING_DIRECTORY%\ROM\Events\TeamChaotixEvents\*") do (
+		set directoryname=%%~nxd
+		set filename=%%~nf
+		set test=!filename:~0,9!
+		if /I !test!==!directoryname! (move /Y %%f %%d\)
+	)
+)
+
+rem LAST
+rem Auto Gen Folders based on Suffix Discriminant
+cd %WORKING_DIRECTORY%\ROM\Events\LastStoryEvents
+for %%f in ("%WORKING_DIRECTORY%\ROM\Events\LastStoryEvents\event0*.scr") do (
+	set suffix=%%~nxf
+	if /I not !suffix:~-6!==_e.scr mkdir "%%~pnf"
+)
+
+for /D %%d in ("%WORKING_DIRECTORY%\ROM\Events\LastStoryEvents\*") do (
+	for %%f in ("%WORKING_DIRECTORY%\ROM\Events\LastStoryEvents\*") do (
+		set directoryname=%%~nxd
+		set filename=%%~nf
+		set test=!filename:~0,9!
+		if /I !test!==!directoryname! (move /Y %%f %%d\)
+	)
+)
+
+rem UNUSED
+rem Auto Gen Folders based on Suffix Discriminant
+cd %WORKING_DIRECTORY%\ROM\Events\Other~UnusedEvents
+for %%f in ("%WORKING_DIRECTORY%\ROM\Events\Other~UnusedEvents\event0*.scr") do (
+	set suffix=%%~nxf
+	if /I not !suffix:~-6!==_e.scr mkdir "%%~pnf"
+)
+
+for /D %%d in ("%WORKING_DIRECTORY%\ROM\Events\Other~UnusedEvents\*") do (
+	for %%f in ("%WORKING_DIRECTORY%\ROM\Events\Other~UnusedEvents\*") do (
+		set directoryname=%%~nxd
+		set filename=%%~nf
+		set test=!filename:~0,9!
+		if /I !test!==!directoryname! (move /Y %%f %%d\)
+	)
+)
+
+cd %WORKING_DIRECTORY%\ROM\Events\
+for /R %%f in ("*.one") do (%WORKING_DIRECTORY%\Tools\HeroesONE\HeroesONE.exe -u %%f %%~pnf)
+for /R %%f in ("*.one") do (DEL /F %%f)
+
+rem
+rem Handle Character Models
+rem
+cd %WORKING_DIRECTORY%\ROM\
+ren playmodel "CharacterModels"
+cd %WORKING_DIRECTORY%\ROM\CharacterModels
+call %WORKING_DIRECTORY%\Scripts\CreateCharacterFolders.bat
+
+rem For Each Directory Do Sort Out Animations Models And Textures
+for /D %%d in ("%WORKING_DIRECTORY%\ROM\CharacterModels\*") do (
+	for %%f in ("%%d\*") do (
+		echo %%d
+		set filename=%%~nf
+		set directory=%%~nxf
+		set test=!filename:~-4!
+		if /I !test!==_anm (mkdir "%%~pfAnimations" & move "%%f" "%%~pfAnimations\")
+	)
+)
+
+for /D %%d in ("%WORKING_DIRECTORY%\ROM\CharacterModels\*") do (
+	for %%f in ("%%d\*") do (
+		echo %%d
+		set filename=%%~nf
+		set directory=%%~nxf
+		set test=!filename:~-4!
+		if /I !test!==_dff (mkdir "%%~pfModels" & move "%%f" "%%~pfModels\")
+	)
+)
+
+for /D %%d in ("%WORKING_DIRECTORY%\ROM\CharacterModels\*") do (
+	for %%f in ("%%d\*") do (
+		echo %%d
+		set filename=%%~nxf
+		set directory=%%~nxf
+		set test=!filename:~-4!
+		if /I !test!==.txd (mkdir "%%~pfTextures" & move "%%f" "%%~pfTextures\")
+	)
+)
+
+cd "%WORKING_DIRECTORY%\ROM\CharacterModels\"
+for /R %%f in ("*.one") do (%WORKING_DIRECTORY%\Tools\HeroesONE\HeroesONE.exe -u %%f %%~pnf)
+for /R %%f in ("*.one") do (DEL /F %%f)
+
+echo TESTING
+pause
+
+rem
+rem Cleanup
+rem
+cd %WORKING_DIRECTORY%\ROM\
+for /R %%f in ("vssver.scc") do (DEL /F %%f)
 rmdir /S /Q %WORKING_DIRECTORY%\ROM\Levels\TitleCards
 rmdir /S /Q %WORKING_DIRECTORY%\ROM\GameMenus
 rmdir /S /Q %WORKING_DIRECTORY%\ROM\stgtitle
