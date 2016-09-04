@@ -215,9 +215,15 @@ call %WORKING_DIRECTORY%\Scripts\RenameCommonObjects.bat
 cd "%WORKING_DIRECTORY%\ROM\Levels\TitleCardMissionText"
 call %WORKING_DIRECTORY%\Scripts\BundleMissionText.bat
 
-pause
 for %%i in (%WORKING_DIRECTORY%\ROM\Levels\TitleCardMissionText\*.bmp) do (echo %%i & mkdir "%WORKING_DIRECTORY%\ROM\Levels\Unused\TitleCardMissionText" & move /Y "%%i" "%WORKING_DIRECTORY%\ROM\Levels\Unused\TitleCardMissionText\")
 
+rem
+rem Set up Stage Collision Data
+rem
+mkdir "%WORKING_DIRECTORY%\ROM\Levels\StageCollision"
+for %%f in ("%WORKING_DIRECTORY%\ROM\collisions\*.cl") do (move /Y "%%f" "%WORKING_DIRECTORY%\ROM\Levels\StageCollision")
+cd "%WORKING_DIRECTORY%\ROM\Levels\StageCollision"
+call %WORKING_DIRECTORY%\Scripts\RenameStageCollisions.bat
 rem
 rem TestingCleanup
 rem
@@ -225,4 +231,5 @@ rmdir /S /Q %WORKING_DIRECTORY%\ROM\Levels\TitleCards
 rmdir /S /Q %WORKING_DIRECTORY%\ROM\GameMenus
 rmdir /S /Q %WORKING_DIRECTORY%\ROM\stgtitle
 rmdir /S /Q %WORKING_DIRECTORY%\ROM\text
+rmdir /S /Q %WORKING_DIRECTORY%\ROM\collisions
 pause

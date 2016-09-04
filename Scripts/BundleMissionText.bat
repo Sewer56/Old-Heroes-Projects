@@ -85,8 +85,8 @@ for %%f in ("%WORKING_DIRECTORY%\ROM\Levels\TitleCardMissionText\stg61*.bmp") do
 mkdir "Stage 62 - BINGO Highway 2P"
 for %%f in ("%WORKING_DIRECTORY%\ROM\Levels\TitleCardMissionText\stg62*.bmp") do (move /Y "%%f" "Stage 62 - BINGO Highway 2P\")
 
-mkdir "Stage 63 - Seaside Hill 2P"
-for %%f in ("%WORKING_DIRECTORY%\ROM\Levels\TitleCardMissionText\stg63*.bmp") do (move /Y "%%f" "Stage 63 - Seaside Hill 2P\")
+mkdir "Stage 63 - City Top 2P"
+for %%f in ("%WORKING_DIRECTORY%\ROM\Levels\TitleCardMissionText\stg63*.bmp") do (move /Y "%%f" "Stage 63 - City Top 2P\")
 
 mkdir "Stage 64 - Casino Ring 2P"
 for %%f in ("%WORKING_DIRECTORY%\ROM\Levels\TitleCardMissionText\stg64*.bmp") do (move /Y "%%f" "Stage 64 - Casino Ring 2P\")
