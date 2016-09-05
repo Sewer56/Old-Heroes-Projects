@@ -406,12 +406,14 @@ mkdir "%WORKING_DIRECTORY%\ROM\Levels\ObjectLayouts\TeamDark"
 mkdir "%WORKING_DIRECTORY%\ROM\Levels\ObjectLayouts\TeamRose"
 mkdir "%WORKING_DIRECTORY%\ROM\Levels\ObjectLayouts\TeamChaotix"
 mkdir "%WORKING_DIRECTORY%\ROM\Levels\ObjectLayouts\SuperHard"
+mkdir "%WORKING_DIRECTORY%\ROM\Levels\ObjectLayouts\DecorationLayouts"
 for %%f in ("%WORKING_DIRECTORY%\ROM\s**_PB.bin") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ObjectLayouts\AllTeams")
 for %%f in ("%WORKING_DIRECTORY%\ROM\s**_P1.bin") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ObjectLayouts\TeamSonic")
 for %%f in ("%WORKING_DIRECTORY%\ROM\s**_P2.bin") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ObjectLayouts\TeamDark")
 for %%f in ("%WORKING_DIRECTORY%\ROM\s**_P3.bin") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ObjectLayouts\TeamRose")
 for %%f in ("%WORKING_DIRECTORY%\ROM\s**_P4.bin") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ObjectLayouts\TeamChaotix")
 for %%f in ("%WORKING_DIRECTORY%\ROM\s**_P5.bin") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ObjectLayouts\SuperHard")
+for %%f in ("%WORKING_DIRECTORY%\ROM\s**_DB.bin") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ObjectLayouts\DecorationLayouts")
 
 for /D %%d in ("%WORKING_DIRECTORY%\ROM\Levels\ObjectLayouts\*") do (
 	cd %%d
@@ -426,17 +428,27 @@ for /D %%d in ("%WORKING_DIRECTORY%\ROM\Levels\ObjectLayouts\*") do (
 			set test1=!filename:~-0,3!
 			if /I not !test1!==stg (set test2=!filename:~1,2!) else (set test2=!filename:~3,2!)
 			if /I !test2!==!stagedirshort! (move /Y "%%~pnxf" "%%~pf!stagedir!\")
-			echo .
-			echo "FileStageNo:!test2!"
-			echo "StageDir2:!stagedirshort!"
-			echo .
-			echo "Stagedir:!stagedir!"
-			echo "File:%%~nxf"
-			echo "Filepath:%%~pf"
-			echo "CurrentDirectory:%cd%"
-			echo "TargetDir:%%~pf!stagedir!"
-			echo .
 		)
+	)
+)
+
+rem
+rem Handle AutoPlay Demos
+rem
+cd %WORKING_DIRECTORY%
+mkdir "%WORKING_DIRECTORY%\ROM\Levels\IdleAutoplayDemos"
+cd "%WORKING_DIRECTORY%\ROM\Levels\IdleAutoplayDemos"
+call %WORKING_DIRECTORY%\Scripts\CreateLevelFolders.bat
+for %%f in ("%WORKING_DIRECTORY%\ROM\s**.dmo") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\IdleAutoplayDemos")
+for /D %%1 in ("%WORKING_DIRECTORY%\ROM\Levels\IdleAutoplayDemos\*") do (
+	set stagedir=%%~n1
+	for %%f in ("%WORKING_DIRECTORY%\ROM\Levels\IdleAutoplayDemos\*") do ( 
+		set filename=%%~nf
+		set directory=%%~nxf
+		set stagedirshort=!stagedir:~6,2!
+		set test1=!filename:~-0,3!
+		if /I not !test1!==stg (set test2=!filename:~1,2!) else (set test2=!filename:~3,2!)
+		if /I !test2!==!stagedirshort! (move /Y "%%~pnxf" "%%~pf!stagedir!\")
 	)
 )
 
