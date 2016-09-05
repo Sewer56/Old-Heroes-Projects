@@ -159,9 +159,6 @@ cd %WORKING_DIRECTORY%\ROM\Levels\
 for %%f in ("%WORKING_DIRECTORY%\ROM\Levels\TitleCards\*.one") do (%WORKING_DIRECTORY%\Tools\HeroesONE\HeroesONE.exe -u %%f %%~pnf)
 for %%f in ("%WORKING_DIRECTORY%\ROM\Levels\TitleCards\*.one") do (DEL /F %%f)
 
-rem Add spaces back.
-ren "TitleCards" "Title Cards" 
-
 move "%WORKING_DIRECTORY%\ROM\Levels\Title Cards\stg00title_disp" "%WORKING_DIRECTORY%\ROM\Levels\Unused\Title Cards\"
 cd "%WORKING_DIRECTORY%\ROM\Levels\Unused\Title Cards"
 ren "stg00title_disp" "Stage 00 - Testlevel"
@@ -169,65 +166,6 @@ ren "stg00title_disp" "Stage 00 - Testlevel"
 cd "%WORKING_DIRECTORY%\ROM\Levels\Title Cards"
 call %WORKING_DIRECTORY%\Scripts\RenameStageTitles.bat
 
-rem
-rem Set up Stage Geometry and Objects
-rem
-mkdir "%WORKING_DIRECTORY%\ROM\Levels\StageGeometry"
-mkdir "%WORKING_DIRECTORY%\ROM\Levels\StageSpecificObjects"
-mkdir "%WORKING_DIRECTORY%\ROM\Levels\CommonObjects"
-mkdir "%WORKING_DIRECTORY%\ROM\Levels\Unused\CommonObjects"
-for %%f in ("%WORKING_DIRECTORY%\ROM\s**obj.one") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\StageSpecificObjects")
-for %%f in ("%WORKING_DIRECTORY%\ROM\s**MRG.one") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\StageSpecificObjects")
-for %%f in ("%WORKING_DIRECTORY%\ROM\s**_flyer.one") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\StageSpecificObjects")
-for %%f in ("%WORKING_DIRECTORY%\ROM\s**.one") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\StageGeometry")
-for %%f in ("%WORKING_DIRECTORY%\ROM\stg**.one") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\StageGeometry")
-
-REM Fixes for object filter inaccuracies,
-for %%f in ("%WORKING_DIRECTORY%\ROM\Levels\StageGeometry\stg06_kw_hanabi_**.one") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\CommonObjects")
-move /Y "%WORKING_DIRECTORY%\ROM\Levels\StageGeometry\stgmem0910.one" "%WORKING_DIRECTORY%\ROM\Levels\CommonObjects"
-move /Y "%WORKING_DIRECTORY%\ROM\Levels\StageGeometry\stg80BJ.one" "%WORKING_DIRECTORY%\ROM\Levels\StageSpecificObjects"
-
-REM Move other models to ROOTDIR Models
-for %%f in ("%WORKING_DIRECTORY%\ROM\obj*_Prop*.dff") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\CommonObjects")
-for %%f in ("%WORKING_DIRECTORY%\ROM\bob*.one") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\CommonObjects")
-move /Y "%WORKING_DIRECTORY%\ROM\rain_ita.dff" "%WORKING_DIRECTORY%\ROM\Levels\CommonObjects"
-move /Y "%WORKING_DIRECTORY%\ROM\obj0708_sparks.dff" "%WORKING_DIRECTORY%\ROM\Levels\CommonObjects"
-move /Y "%WORKING_DIRECTORY%\ROM\primModels.one" "%WORKING_DIRECTORY%\ROM\Levels\Unused\CommonObjects"
-move /Y "%WORKING_DIRECTORY%\ROM\indirectEditor.dff" "%WORKING_DIRECTORY%\ROM\Levels\Unused\CommonObjects"
-move /Y "%WORKING_DIRECTORY%\ROM\null.dff" "%WORKING_DIRECTORY%\ROM\Levels\Unused\CommonObjects"
-move /Y "%WORKING_DIRECTORY%\ROM\comobj.one" "%WORKING_DIRECTORY%\ROM\Levels\CommonObjects"
-
-for %%f in ("%WORKING_DIRECTORY%\ROM\Levels\StageSpecificObjects\*.one") do (%WORKING_DIRECTORY%\Tools\HeroesONE\HeroesONE.exe -u %%f %%~pnf)
-for %%f in ("%WORKING_DIRECTORY%\ROM\Levels\StageGeometry\*.one") do (%WORKING_DIRECTORY%\Tools\HeroesONE\HeroesONE.exe -u %%f %%~pnf)
-for %%f in ("%WORKING_DIRECTORY%\ROM\Levels\CommonObjects\*.one") do (%WORKING_DIRECTORY%\Tools\HeroesONE\HeroesONE.exe -u %%f %%~pnf)
-for %%f in ("%WORKING_DIRECTORY%\ROM\Levels\Unused\CommonObjects\*.one") do (%WORKING_DIRECTORY%\Tools\HeroesONE\HeroesONE.exe -u %%f %%~pnf)
-for %%f in ("%WORKING_DIRECTORY%\ROM\Levels\StageSpecificObjects\*.one") do (DEL /F %%f)
-for %%f in ("%WORKING_DIRECTORY%\ROM\Levels\StageGeometry\*.one") do (DEL /F %%f)
-for %%f in ("%WORKING_DIRECTORY%\ROM\Levels\CommonObjects\*.one") do (DEL /F %%f)
-for %%f in ("%WORKING_DIRECTORY%\ROM\Levels\Unused\CommonObjects\*.one") do (DEL /F %%f)
-
-cd "%WORKING_DIRECTORY%\ROM\Levels\StageGeometry"
-call %WORKING_DIRECTORY%\Scripts\RenameStageGeometry.bat
-
-cd "%WORKING_DIRECTORY%\ROM\Levels\StageSpecificObjects"
-call %WORKING_DIRECTORY%\Scripts\RenameStageObjects.bat
-
-cd "%WORKING_DIRECTORY%\ROM\Levels\CommonObjects"
-call %WORKING_DIRECTORY%\Scripts\RenameCommonObjects.bat
-
-cd "%WORKING_DIRECTORY%\ROM\Levels\TitleCardMissionText"
-call %WORKING_DIRECTORY%\Scripts\BundleMissionText.bat
-
-for %%i in (%WORKING_DIRECTORY%\ROM\Levels\TitleCardMissionText\*.bmp) do (echo %%i & mkdir "%WORKING_DIRECTORY%\ROM\Levels\Unused\TitleCardMissionText" & move /Y "%%i" "%WORKING_DIRECTORY%\ROM\Levels\Unused\TitleCardMissionText\")
-
-rem
-rem Set up Stage Collision Data
-rem
-mkdir "%WORKING_DIRECTORY%\ROM\Levels\StageCollision"
-for %%f in ("%WORKING_DIRECTORY%\ROM\collisions\*.cl") do (move /Y "%%f" "%WORKING_DIRECTORY%\ROM\Levels\StageCollision")
-cd "%WORKING_DIRECTORY%\ROM\Levels\StageCollision"
-call %WORKING_DIRECTORY%\Scripts\RenameStageCollisions.bat
-cd %WORKING_DIRECTORY%
 rem
 rem Set up Event Handling
 rem
@@ -396,6 +334,72 @@ for /R %%f in ("*.one") do (%WORKING_DIRECTORY%\Tools\HeroesONE\HeroesONE.exe -u
 for /R %%f in ("*.one") do (DEL /F %%f)
 
 rem
+rem
+rem
+rem
+rem Set up Stage Geometry and Objects
+rem
+rem
+rem
+rem
+mkdir "%WORKING_DIRECTORY%\ROM\Levels\StageGeometry"
+mkdir "%WORKING_DIRECTORY%\ROM\Levels\StageSpecificObjects"
+mkdir "%WORKING_DIRECTORY%\ROM\Levels\CommonObjects"
+mkdir "%WORKING_DIRECTORY%\ROM\Levels\Unused\CommonObjects"
+for %%f in ("%WORKING_DIRECTORY%\ROM\s**obj.one") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\StageSpecificObjects")
+for %%f in ("%WORKING_DIRECTORY%\ROM\s**MRG.one") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\StageSpecificObjects")
+for %%f in ("%WORKING_DIRECTORY%\ROM\s**_flyer.one") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\StageSpecificObjects")
+for %%f in ("%WORKING_DIRECTORY%\ROM\s**.one") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\StageGeometry")
+for %%f in ("%WORKING_DIRECTORY%\ROM\stg**.one") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\StageGeometry")
+
+REM Fixes for object filter inaccuracies,
+for %%f in ("%WORKING_DIRECTORY%\ROM\Levels\StageGeometry\stg06_kw_hanabi_**.one") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\CommonObjects")
+move /Y "%WORKING_DIRECTORY%\ROM\Levels\StageGeometry\stgmem0910.one" "%WORKING_DIRECTORY%\ROM\Levels\CommonObjects"
+move /Y "%WORKING_DIRECTORY%\ROM\Levels\StageGeometry\stg80BJ.one" "%WORKING_DIRECTORY%\ROM\Levels\StageSpecificObjects"
+
+REM Move other models to ROOTDIR Models
+for %%f in ("%WORKING_DIRECTORY%\ROM\obj*_Prop*.dff") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\CommonObjects")
+for %%f in ("%WORKING_DIRECTORY%\ROM\bob*.one") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\CommonObjects")
+move /Y "%WORKING_DIRECTORY%\ROM\rain_ita.dff" "%WORKING_DIRECTORY%\ROM\Levels\CommonObjects"
+move /Y "%WORKING_DIRECTORY%\ROM\obj0708_sparks.dff" "%WORKING_DIRECTORY%\ROM\Levels\CommonObjects"
+move /Y "%WORKING_DIRECTORY%\ROM\primModels.one" "%WORKING_DIRECTORY%\ROM\Levels\Unused\CommonObjects"
+move /Y "%WORKING_DIRECTORY%\ROM\indirectEditor.dff" "%WORKING_DIRECTORY%\ROM\Levels\Unused\CommonObjects"
+move /Y "%WORKING_DIRECTORY%\ROM\null.dff" "%WORKING_DIRECTORY%\ROM\Levels\Unused\CommonObjects"
+move /Y "%WORKING_DIRECTORY%\ROM\comobj.one" "%WORKING_DIRECTORY%\ROM\Levels\CommonObjects"
+
+for %%f in ("%WORKING_DIRECTORY%\ROM\Levels\StageSpecificObjects\*.one") do (%WORKING_DIRECTORY%\Tools\HeroesONE\HeroesONE.exe -u %%f %%~pnf)
+for %%f in ("%WORKING_DIRECTORY%\ROM\Levels\StageGeometry\*.one") do (%WORKING_DIRECTORY%\Tools\HeroesONE\HeroesONE.exe -u %%f %%~pnf)
+for %%f in ("%WORKING_DIRECTORY%\ROM\Levels\CommonObjects\*.one") do (%WORKING_DIRECTORY%\Tools\HeroesONE\HeroesONE.exe -u %%f %%~pnf)
+for %%f in ("%WORKING_DIRECTORY%\ROM\Levels\Unused\CommonObjects\*.one") do (%WORKING_DIRECTORY%\Tools\HeroesONE\HeroesONE.exe -u %%f %%~pnf)
+for %%f in ("%WORKING_DIRECTORY%\ROM\Levels\StageSpecificObjects\*.one") do (DEL /F %%f)
+for %%f in ("%WORKING_DIRECTORY%\ROM\Levels\StageGeometry\*.one") do (DEL /F %%f)
+for %%f in ("%WORKING_DIRECTORY%\ROM\Levels\CommonObjects\*.one") do (DEL /F %%f)
+for %%f in ("%WORKING_DIRECTORY%\ROM\Levels\Unused\CommonObjects\*.one") do (DEL /F %%f)
+
+cd "%WORKING_DIRECTORY%\ROM\Levels\StageGeometry"
+call %WORKING_DIRECTORY%\Scripts\RenameStageGeometry.bat
+
+cd "%WORKING_DIRECTORY%\ROM\Levels\StageSpecificObjects"
+call %WORKING_DIRECTORY%\Scripts\RenameStageObjects.bat
+
+cd "%WORKING_DIRECTORY%\ROM\Levels\CommonObjects"
+call %WORKING_DIRECTORY%\Scripts\RenameCommonObjects.bat
+
+cd "%WORKING_DIRECTORY%\ROM\Levels\TitleCardMissionText"
+call %WORKING_DIRECTORY%\Scripts\BundleMissionText.bat
+
+for %%i in (%WORKING_DIRECTORY%\ROM\Levels\TitleCardMissionText\*.bmp) do (echo %%i & mkdir "%WORKING_DIRECTORY%\ROM\Levels\Unused\TitleCardMissionText" & move /Y "%%i" "%WORKING_DIRECTORY%\ROM\Levels\Unused\TitleCardMissionText\")
+
+rem
+rem Set up Stage Collision Data
+rem
+mkdir "%WORKING_DIRECTORY%\ROM\Levels\StageCollision"
+for %%f in ("%WORKING_DIRECTORY%\ROM\collisions\*.cl") do (move /Y "%%f" "%WORKING_DIRECTORY%\ROM\Levels\StageCollision")
+cd "%WORKING_DIRECTORY%\ROM\Levels\StageCollision"
+call %WORKING_DIRECTORY%\Scripts\RenameStageCollisions.bat
+cd %WORKING_DIRECTORY%
+
+rem
 rem Handle Level Layouts
 rem
 cd %WORKING_DIRECTORY%
@@ -452,6 +456,76 @@ for /D %%1 in ("%WORKING_DIRECTORY%\ROM\Levels\IdleAutoplayDemos\*") do (
 	)
 )
 
+rem
+rem Handle Lighting Data
+rem
+cd %WORKING_DIRECTORY%
+mkdir "%WORKING_DIRECTORY%\ROM\Levels\StageLightingData"
+cd "%WORKING_DIRECTORY%\ROM\Levels\StageLightingData"
+call %WORKING_DIRECTORY%\Scripts\CreateLevelFolders.bat
+for %%f in ("%WORKING_DIRECTORY%\ROM\s**_light.bin") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\StageLightingData")
+for /D %%1 in ("%WORKING_DIRECTORY%\ROM\Levels\StageLightingData\*") do (
+	set stagedir=%%~n1
+	for %%f in ("%WORKING_DIRECTORY%\ROM\Levels\StageLightingData\*") do ( 
+		set filename=%%~nf
+		set directory=%%~nxf
+		set stagedirshort=!stagedir:~6,2!
+		set test1=!filename:~-0,3!
+		if /I not !test1!==stg (set test2=!filename:~1,2!) else (set test2=!filename:~3,2!)
+		if /I !test2!==!stagedirshort! (move /Y "%%~pnxf" "%%~pf!stagedir!\")
+	)
+)
+
+rem
+rem Handle Camera Data
+rem
+cd %WORKING_DIRECTORY%
+mkdir "%WORKING_DIRECTORY%\ROM\Levels\StageCameraData"
+cd "%WORKING_DIRECTORY%\ROM\Levels\StageCameraData"
+call %WORKING_DIRECTORY%\Scripts\CreateLevelFolders.bat
+for %%f in ("%WORKING_DIRECTORY%\ROM\s**_cam.bin") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\StageCameraData")
+for /D %%1 in ("%WORKING_DIRECTORY%\ROM\Levels\StageCameraData\*") do (
+	set stagedir=%%~n1
+	for %%f in ("%WORKING_DIRECTORY%\ROM\Levels\StageCameraData\*") do ( 
+		set filename=%%~nf
+		set directory=%%~nxf
+		set stagedirshort=!stagedir:~6,2!
+		set test1=!filename:~-0,3!
+		if /I not !test1!==stg (set test2=!filename:~1,2!) else (set test2=!filename:~3,2!)
+		if /I !test2!==!stagedirshort! (move /Y "%%~pnxf" "%%~pf!stagedir!\")
+	)
+)
+
+rem
+rem Handle Geometry Visibility Data
+rem
+cd %WORKING_DIRECTORY%
+mkdir "%WORKING_DIRECTORY%\ROM\Levels\StageGeometryVisibilityData"
+cd "%WORKING_DIRECTORY%\ROM\Levels\StageGeometryVisibilityData"
+call %WORKING_DIRECTORY%\Scripts\CreateLevelFolders.bat
+for %%f in ("%WORKING_DIRECTORY%\ROM\s**_blk.bin") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\StageGeometryVisibilityData")
+for /D %%1 in ("%WORKING_DIRECTORY%\ROM\Levels\StageGeometryVisibilityData\*") do (
+	set stagedir=%%~n1
+	for %%f in ("%WORKING_DIRECTORY%\ROM\Levels\StageGeometryVisibilityData\*") do ( 
+		set filename=%%~nf
+		set directory=%%~nxf
+		set stagedirshort=!stagedir:~6,2!
+		set test1=!filename:~-0,3!
+		if /I not !test1!==stg (set test2=!filename:~1,2!) else (set test2=!filename:~3,2!)
+		if /I !test2!==!stagedirshort! (move /Y "%%~pnxf" "%%~pf!stagedir!\")
+	)
+)
+
+rem
+rem
+rem
+rem
+rem Set up Stage Geometry and Objects
+rem
+rem
+rem
+rem
+
 echo ayymd
 pause
 
@@ -468,4 +542,7 @@ rmdir /S /Q %WORKING_DIRECTORY%\ROM\collisions
 rem Kill Empty Directories
 cd %WORKING_DIRECTORY%\ROM\
 for /f "usebackq delims=" %%d in (`"dir /ad/b/s | sort /R"`) do rd "%%d"
+
+rem Add spaces back.
+ren "TitleCards" "Title Cards" 
 pause
