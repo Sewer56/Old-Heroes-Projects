@@ -395,7 +395,52 @@ cd "%WORKING_DIRECTORY%\ROM\CharacterModels\"
 for /R %%f in ("*.one") do (%WORKING_DIRECTORY%\Tools\HeroesONE\HeroesONE.exe -u %%f %%~pnf)
 for /R %%f in ("*.one") do (DEL /F %%f)
 
-echo TESTING
+rem
+rem Handle Level Layouts
+rem
+cd %WORKING_DIRECTORY%
+mkdir "%WORKING_DIRECTORY%\ROM\Levels\ObjectLayouts"
+mkdir "%WORKING_DIRECTORY%\ROM\Levels\ObjectLayouts\AllTeams"
+mkdir "%WORKING_DIRECTORY%\ROM\Levels\ObjectLayouts\TeamSonic"
+mkdir "%WORKING_DIRECTORY%\ROM\Levels\ObjectLayouts\TeamDark"
+mkdir "%WORKING_DIRECTORY%\ROM\Levels\ObjectLayouts\TeamRose"
+mkdir "%WORKING_DIRECTORY%\ROM\Levels\ObjectLayouts\TeamChaotix"
+mkdir "%WORKING_DIRECTORY%\ROM\Levels\ObjectLayouts\SuperHard"
+for %%f in ("%WORKING_DIRECTORY%\ROM\s**_PB.bin") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ObjectLayouts\AllTeams")
+for %%f in ("%WORKING_DIRECTORY%\ROM\s**_P1.bin") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ObjectLayouts\TeamSonic")
+for %%f in ("%WORKING_DIRECTORY%\ROM\s**_P2.bin") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ObjectLayouts\TeamDark")
+for %%f in ("%WORKING_DIRECTORY%\ROM\s**_P3.bin") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ObjectLayouts\TeamRose")
+for %%f in ("%WORKING_DIRECTORY%\ROM\s**_P4.bin") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ObjectLayouts\TeamChaotix")
+for %%f in ("%WORKING_DIRECTORY%\ROM\s**_P5.bin") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ObjectLayouts\SuperHard")
+
+for /D %%d in ("%WORKING_DIRECTORY%\ROM\Levels\ObjectLayouts\*") do (
+	cd %%d
+	call %WORKING_DIRECTORY%\Scripts\CreateLevelFolders.bat
+	for /D %%1 in ("%%d\*") do (
+		set stagedir=%%~n1
+		for %%f in ("%%d\*") do ( 
+			cd %%~pf
+			set filename=%%~nf
+			set directory=%%~nxf
+			set stagedirshort=!stagedir:~6,2!
+			set test1=!filename:~-0,3!
+			if /I not !test1!==stg (set test2=!filename:~1,2!) else (set test2=!filename:~3,2!)
+			if /I !test2!==!stagedirshort! (move /Y "%%~pnxf" "%%~pf!stagedir!\")
+			echo .
+			echo "FileStageNo:!test2!"
+			echo "StageDir2:!stagedirshort!"
+			echo .
+			echo "Stagedir:!stagedir!"
+			echo "File:%%~nxf"
+			echo "Filepath:%%~pf"
+			echo "CurrentDirectory:%cd%"
+			echo "TargetDir:%%~pf!stagedir!"
+			echo .
+		)
+	)
+)
+
+echo ayymd
 pause
 
 rem
@@ -408,4 +453,7 @@ rmdir /S /Q %WORKING_DIRECTORY%\ROM\GameMenus
 rmdir /S /Q %WORKING_DIRECTORY%\ROM\stgtitle
 rmdir /S /Q %WORKING_DIRECTORY%\ROM\text
 rmdir /S /Q %WORKING_DIRECTORY%\ROM\collisions
+rem Kill Empty Directories
+cd %WORKING_DIRECTORY%\ROM\
+for /f "usebackq delims=" %%d in (`"dir /ad/b/s | sort /R"`) do rd "%%d"
 pause
