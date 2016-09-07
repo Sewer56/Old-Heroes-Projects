@@ -1,59 +1,55 @@
 echo off
 set WORKING_DIRECTORY=%cd%
-
 rem FIX FOR VARS INSIDE LOOPS
 setlocal enabledelayedexpansion
 rem
 rem REARRANGE ADVERTISE
 rem
 mkdir "%WORKING_DIRECTORY%\ROM\GameMenus"
-mkdir "%WORKING_DIRECTORY%\ROM\GameMenus\Localized Menu Assets"
-mkdir "%WORKING_DIRECTORY%\ROM\GameMenus\Localized Menu Assets\English"
-mkdir "%WORKING_DIRECTORY%\ROM\GameMenus\Localized Menu Assets\French"
-mkdir "%WORKING_DIRECTORY%\ROM\GameMenus\Localized Menu Assets\German"
-mkdir "%WORKING_DIRECTORY%\ROM\GameMenus\Localized Menu Assets\Italian"
-mkdir "%WORKING_DIRECTORY%\ROM\GameMenus\Localized Menu Assets\Japanese"
-mkdir "%WORKING_DIRECTORY%\ROM\GameMenus\Localized Menu Assets\Korean"
-mkdir "%WORKING_DIRECTORY%\ROM\GameMenus\Localized Menu Assets\Spanish"
+mkdir "%WORKING_DIRECTORY%\ROM\GameMenus\LocalizedMenuAssets"
+mkdir "%WORKING_DIRECTORY%\ROM\GameMenus\LocalizedMenuAssets\English"
+mkdir "%WORKING_DIRECTORY%\ROM\GameMenus\LocalizedMenuAssets\French"
+mkdir "%WORKING_DIRECTORY%\ROM\GameMenus\LocalizedMenuAssets\German"
+mkdir "%WORKING_DIRECTORY%\ROM\GameMenus\LocalizedMenuAssets\Italian"
+mkdir "%WORKING_DIRECTORY%\ROM\GameMenus\LocalizedMenuAssets\Japanese"
+mkdir "%WORKING_DIRECTORY%\ROM\GameMenus\LocalizedMenuAssets\Korean"
+mkdir "%WORKING_DIRECTORY%\ROM\GameMenus\LocalizedMenuAssets\Spanish"
 move /Y %WORKING_DIRECTORY%\ROM\advertise\* "%WORKING_DIRECTORY%\ROM\GameMenus"
-move /Y %WORKING_DIRECTORY%\ROM\advertise\E\* "%WORKING_DIRECTORY%\ROM\GameMenus\Localized Menu Assets\English"
-move /Y %WORKING_DIRECTORY%\ROM\advertise\F\* "%WORKING_DIRECTORY%\ROM\GameMenus\Localized Menu Assets\French"
-move /Y %WORKING_DIRECTORY%\ROM\advertise\G\* "%WORKING_DIRECTORY%\ROM\GameMenus\Localized Menu Assets\German"
-move /Y %WORKING_DIRECTORY%\ROM\advertise\I\* "%WORKING_DIRECTORY%\ROM\GameMenus\Localized Menu Assets\Italian"
-move /Y %WORKING_DIRECTORY%\ROM\advertise\J\* "%WORKING_DIRECTORY%\ROM\GameMenus\Localized Menu Assets\Japanese"
-move /Y %WORKING_DIRECTORY%\ROM\advertise\K\* "%WORKING_DIRECTORY%\ROM\GameMenus\Localized Menu Assets\Korean"
-move /Y %WORKING_DIRECTORY%\ROM\advertise\S\* "%WORKING_DIRECTORY%\ROM\GameMenus\Localized Menu Assets\Spanish"
-rmdir /S /Q %WORKING_DIRECTORY%\ROM\advertise
+move /Y %WORKING_DIRECTORY%\ROM\advertise\E\* "%WORKING_DIRECTORY%\ROM\GameMenus\LocalizedMenuAssets\English"
+move /Y %WORKING_DIRECTORY%\ROM\advertise\F\* "%WORKING_DIRECTORY%\ROM\GameMenus\LocalizedMenuAssets\French"
+move /Y %WORKING_DIRECTORY%\ROM\advertise\G\* "%WORKING_DIRECTORY%\ROM\GameMenus\LocalizedMenuAssets\German"
+move /Y %WORKING_DIRECTORY%\ROM\advertise\I\* "%WORKING_DIRECTORY%\ROM\GameMenus\LocalizedMenuAssets\Italian"
+move /Y %WORKING_DIRECTORY%\ROM\advertise\J\* "%WORKING_DIRECTORY%\ROM\GameMenus\LocalizedMenuAssets\Japanese"
+move /Y %WORKING_DIRECTORY%\ROM\advertise\K\* "%WORKING_DIRECTORY%\ROM\GameMenus\LocalizedMenuAssets\Korean"
+move /Y %WORKING_DIRECTORY%\ROM\advertise\S\* "%WORKING_DIRECTORY%\ROM\GameMenus\LocalizedMenuAssets\Spanish"
+
 rem
 rem ADD OTHER MENU ITEMS INSIDE
 rem
-mkdir "%WORKING_DIRECTORY%\ROM\GameMenus\Transition Models"
-move /Y %WORKING_DIRECTORY%\ROM\adv_ef_warpa.dff "%WORKING_DIRECTORY%\ROM\GameMenus\Transition Models"
-move /Y %WORKING_DIRECTORY%\ROM\adv_ef_warpb.dff "%WORKING_DIRECTORY%\ROM\GameMenus\Transition Models"
-move /Y %WORKING_DIRECTORY%\ROM\adv_sonicoutline.dff "%WORKING_DIRECTORY%\ROM\GameMenus\Transition Models"
-mkdir "%WORKING_DIRECTORY%\ROM\GameMenus\Special Stage Time Up Models"
-mkdir "%WORKING_DIRECTORY%\ROM\GameMenus\Special Stage Time Up Models\French"
-mkdir "%WORKING_DIRECTORY%\ROM\GameMenus\Special Stage Time Up Models\German"
-mkdir "%WORKING_DIRECTORY%\ROM\GameMenus\Special Stage Time Up Models\Italian"
-mkdir "%WORKING_DIRECTORY%\ROM\GameMenus\Special Stage Time Up Models\Spanish"
-mkdir "%WORKING_DIRECTORY%\ROM\GameMenus\Special Stage Time Up Models\English & Japanese"
-move /Y %WORKING_DIRECTORY%\ROM\adv_timeup.dff "%WORKING_DIRECTORY%\ROM\GameMenus\Special Stage Time Up Models\English & Japanese"
-move /Y %WORKING_DIRECTORY%\ROM\adv_timeup_fr.dff "%WORKING_DIRECTORY%\ROM\GameMenus\Special Stage Time Up Models\French"
-move /Y %WORKING_DIRECTORY%\ROM\adv_timeup_ge.dff "%WORKING_DIRECTORY%\ROM\GameMenus\Special Stage Time Up Models\German"
-move /Y %WORKING_DIRECTORY%\ROM\adv_timeup_it.dff "%WORKING_DIRECTORY%\ROM\GameMenus\Special Stage Time Up Models\Italian"
-move /Y %WORKING_DIRECTORY%\ROM\adv_timeup_sp.dff "%WORKING_DIRECTORY%\ROM\GameMenus\Special Stage Time Up Models\Spanish"
-rem
-rem HeroesONE goes Harambe!
-rem
-for %%f in ("%WORKING_DIRECTORY%\ROM\GameMenus\*.one") do (%WORKING_DIRECTORY%\Tools\HeroesONE\HeroesONE.exe -u %%f %%~pnf)
-for %%f in ("%WORKING_DIRECTORY%\ROM\GameMenus\*.one") do (DEL /F %%f)
+mkdir "%WORKING_DIRECTORY%\ROM\GameMenus\TransitionModels"
+move /Y %WORKING_DIRECTORY%\ROM\adv_ef_warpa.dff "%WORKING_DIRECTORY%\ROM\GameMenus\TransitionModels"
+move /Y %WORKING_DIRECTORY%\ROM\adv_ef_warpb.dff "%WORKING_DIRECTORY%\ROM\GameMenus\TransitionModels"
+move /Y %WORKING_DIRECTORY%\ROM\adv_sonicoutline.dff "%WORKING_DIRECTORY%\ROM\GameMenus\TransitionModels"
+mkdir "%WORKING_DIRECTORY%\ROM\GameMenus\SpecialStageTimeUpModels"
+mkdir "%WORKING_DIRECTORY%\ROM\GameMenus\SpecialStageTimeUpModels\French"
+mkdir "%WORKING_DIRECTORY%\ROM\GameMenus\SpecialStageTimeUpModels\German"
+mkdir "%WORKING_DIRECTORY%\ROM\GameMenus\SpecialStageTimeUpModels\Italian"
+mkdir "%WORKING_DIRECTORY%\ROM\GameMenus\SpecialStageTimeUpModels\Spanish"
+mkdir "%WORKING_DIRECTORY%\ROM\GameMenus\SpecialStageTimeUpModels\English & Japanese"
+move /Y %WORKING_DIRECTORY%\ROM\adv_timeup.dff "%WORKING_DIRECTORY%\ROM\GameMenus\SpecialStageTimeUpModels\English&Japanese"
+move /Y %WORKING_DIRECTORY%\ROM\adv_timeup_fr.dff "%WORKING_DIRECTORY%\ROM\GameMenus\SpecialStageTimeUpModels\French"
+move /Y %WORKING_DIRECTORY%\ROM\adv_timeup_ge.dff "%WORKING_DIRECTORY%\ROM\GameMenus\SpecialStageTimeUpModels\German"
+move /Y %WORKING_DIRECTORY%\ROM\adv_timeup_it.dff "%WORKING_DIRECTORY%\ROM\GameMenus\SpecialStageTimeUpModels\Italian"
+move /Y %WORKING_DIRECTORY%\ROM\adv_timeup_sp.dff "%WORKING_DIRECTORY%\ROM\GameMenus\SpecialStageTimeUpModels\Spanish"
+
 rem
 rem Move Main Menu Chars!
 rem
-mkdir "%WORKING_DIRECTORY%\ROM\GameMenus\Main Menu Characters"
-for /D %%d in ("%WORKING_DIRECTORY%\ROM\GameMenus\adv_pl*") do (move /Y %%d "%WORKING_DIRECTORY%\ROM\GameMenus\Main Menu Characters\")
-cd "%WORKING_DIRECTORY%\ROM\GameMenus\Main Menu Characters\"
-call %WORKING_DIRECTORY%\Scripts\RenameMenuCharacters.bat
+mkdir "%WORKING_DIRECTORY%\ROM\GameMenus\MainMenuCharacters"
+for %%f in ("%WORKING_DIRECTORY%\ROM\GameMenus\adv_pl*.one") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\GameMenus\MainMenuCharacters\")
+cd "%WORKING_DIRECTORY%\ROM\GameMenus\MainMenuCharacters\"
+call %WORKING_DIRECTORY%\Scripts\Current\GenerateMenuCharacters.bat
+
 rem
 rem Decompress PRS Fonts
 rem
@@ -62,109 +58,54 @@ mkdir "%WORKING_DIRECTORY%\ROM\GameMenus\Fonts"
 for %%f in ("%WORKING_DIRECTORY%\ROM\GameMenus\*.prs") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\GameMenus\Fonts")
 for %%f in ("%WORKING_DIRECTORY%\ROM\GameMenus\Fonts\*.prs") do (%WORKING_DIRECTORY%\Tools\PrsDec\PrsDec.exe %%f %%~pnf.bin)
 for %%f in ("%WORKING_DIRECTORY%\ROM\GameMenus\Fonts\*.prs") do (DEL /F %%f)
+
 rem
 rem Move over Unused Files
 rem
 mkdir "%WORKING_DIRECTORY%\ROM\GameMenus\Unused"
-move /Y "%WORKING_DIRECTORY%\ROM\GameMenus\adv_title" "%WORKING_DIRECTORY%\ROM\GameMenus\Unused"
-move /Y "%WORKING_DIRECTORY%\ROM\GameMenus\adv_audio" "%WORKING_DIRECTORY%\ROM\GameMenus\Unused"
-move /Y "%WORKING_DIRECTORY%\ROM\GameMenus\adv_e3rom" "%WORKING_DIRECTORY%\ROM\GameMenus\Unused"
-ren "%WORKING_DIRECTORY%\ROM\GameMenus\Unused\adv_title" "Early E3-10.8 Title Screen"
-ren "%WORKING_DIRECTORY%\ROM\GameMenus\Unused\adv_audio" "Early Pre 10.8 Proto Audio Menu"
-ren "%WORKING_DIRECTORY%\ROM\GameMenus\Unused\adv_e3rom" "E3 Build Main Menu Assets"
+cd "%WORKING_DIRECTORY%\ROM\GameMenus\Unused"
+mkdir "%WORKING_DIRECTORY%\ROM\GameMenus\Unused\EarlyE3-10.8Title Screen"
+mkdir "%WORKING_DIRECTORY%\ROM\GameMenus\Unused\EarlyPre10.8ProtoAudioMenu"
+mkdir "%WORKING_DIRECTORY%\ROM\GameMenus\Unused\E3BuildMainMenuAssets"
+move /Y "%WORKING_DIRECTORY%\ROM\GameMenus\adv_title.one" "%WORKING_DIRECTORY%\ROM\GameMenus\Unused\EarlyE3-10.8Title Screen"
+move /Y "%WORKING_DIRECTORY%\ROM\GameMenus\adv_audio.one" "%WORKING_DIRECTORY%\ROM\GameMenus\Unused\EarlyPre10.8ProtoAudioMenu"
+move /Y "%WORKING_DIRECTORY%\ROM\GameMenus\adv_e3rom.one" "%WORKING_DIRECTORY%\ROM\GameMenus\Unused\E3BuildMainMenuAssets"
+ 
 rem
 rem Group Assets
 rem
 mkdir "%WORKING_DIRECTORY%\ROM\GameMenus\Assets"
-for /D %%d in ("%WORKING_DIRECTORY%\ROM\GameMenus\adv_*") do (move /Y %%d "%WORKING_DIRECTORY%\ROM\GameMenus\Assets")
-move /Y "%WORKING_DIRECTORY%\ROM\GameMenus\as_emblem" "%WORKING_DIRECTORY%\ROM\GameMenus\Assets"
+for %%f in ("%WORKING_DIRECTORY%\ROM\GameMenus\adv_*") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\GameMenus\Assets")
+move /Y "%WORKING_DIRECTORY%\ROM\GameMenus\as_emblem.one" "%WORKING_DIRECTORY%\ROM\GameMenus\Assets"
 cd %WORKING_DIRECTORY%\ROM\GameMenus\Assets
-ren adv_bg "Main Menu Background Assets"
-ren adv_chao "Main Menu Omochao"
-ren adv_help "Main Menu Omochao Help Icon"
-ren adv_save "Autosave Menu"
-ren adv_staffroll "Credits Screen Logos"
-ren adv_window "Main Menu Window Textures"
-ren as_emblem "Emblem Count Spinning Emblem"
-rem
-rem HeroesONE back for more Harambe. Now taking full languages.
-rem
-cd %WORKING_DIRECTORY%\ROM\GameMenus\
-ren "Localized Menu Assets" "LocalizedMenuAssets"
-for %%f in ("%WORKING_DIRECTORY%\ROM\GameMenus\LocalizedMenuAssets\English\*.one") do (%WORKING_DIRECTORY%\Tools\HeroesONE\HeroesONE.exe -u %%f %%~pnf)
-for %%f in ("%WORKING_DIRECTORY%\ROM\GameMenus\LocalizedMenuAssets\English\*.one") do (DEL /F %%f)
-for %%f in ("%WORKING_DIRECTORY%\ROM\GameMenus\LocalizedMenuAssets\French\*.one") do (%WORKING_DIRECTORY%\Tools\HeroesONE\HeroesONE.exe -u %%f %%~pnf)
-for %%f in ("%WORKING_DIRECTORY%\ROM\GameMenus\LocalizedMenuAssets\French\*.one") do (DEL /F %%f)
-for %%f in ("%WORKING_DIRECTORY%\ROM\GameMenus\LocalizedMenuAssets\German\*.one") do (%WORKING_DIRECTORY%\Tools\HeroesONE\HeroesONE.exe -u %%f %%~pnf)
-for %%f in ("%WORKING_DIRECTORY%\ROM\GameMenus\LocalizedMenuAssets\German\*.one") do (DEL /F %%f)
-for %%f in ("%WORKING_DIRECTORY%\ROM\GameMenus\LocalizedMenuAssets\Italian\*.one") do (%WORKING_DIRECTORY%\Tools\HeroesONE\HeroesONE.exe -u %%f %%~pnf)
-for %%f in ("%WORKING_DIRECTORY%\ROM\GameMenus\LocalizedMenuAssets\Italian\*.one") do (DEL /F %%f)
-for %%f in ("%WORKING_DIRECTORY%\ROM\GameMenus\LocalizedMenuAssets\Japanese\*.one") do (%WORKING_DIRECTORY%\Tools\HeroesONE\HeroesONE.exe -u %%f %%~pnf)
-for %%f in ("%WORKING_DIRECTORY%\ROM\GameMenus\LocalizedMenuAssets\Japanese\*.one") do (DEL /F %%f)
-for %%f in ("%WORKING_DIRECTORY%\ROM\GameMenus\LocalizedMenuAssets\Korean\*.one") do (%WORKING_DIRECTORY%\Tools\HeroesONE\HeroesONE.exe -u %%f %%~pnf)
-for %%f in ("%WORKING_DIRECTORY%\ROM\GameMenus\LocalizedMenuAssets\Korean\*.one") do (DEL /F %%f)
-for %%f in ("%WORKING_DIRECTORY%\ROM\GameMenus\LocalizedMenuAssets\Spanish\*.one") do (%WORKING_DIRECTORY%\Tools\HeroesONE\HeroesONE.exe -u %%f %%~pnf)
-for %%f in ("%WORKING_DIRECTORY%\ROM\GameMenus\LocalizedMenuAssets\Spanish\*.one") do (DEL /F %%f)
-ren "LocalizedMenuAssets" "Localized Menu Assets"
+call %WORKING_DIRECTORY%\Scripts\Current\GroupAssets.bat
+
 rem
 rem Rename Language Specific Assets
 rem
-cd "%WORKING_DIRECTORY%\ROM\GameMenus\Localized Menu Assets\English"
-for /D %%d in ("%WORKING_DIRECTORY%\ROM\GameMenus\Localized Menu Assets\English") do (call "%WORKING_DIRECTORY%\Scripts\RenameLocaleFiles.bat")
-cd "%WORKING_DIRECTORY%\ROM\GameMenus\Localized Menu Assets\French"
-for /D %%d in ("%WORKING_DIRECTORY%\ROM\GameMenus\Localized Menu Assets\English") do (call "%WORKING_DIRECTORY%\Scripts\RenameLocaleFiles.bat")
-cd "%WORKING_DIRECTORY%\ROM\GameMenus\Localized Menu Assets\German"
-for /D %%d in ("%WORKING_DIRECTORY%\ROM\GameMenus\Localized Menu Assets\English") do (call "%WORKING_DIRECTORY%\Scripts\RenameLocaleFiles.bat")
-cd "%WORKING_DIRECTORY%\ROM\GameMenus\Localized Menu Assets\Italian"
-for /D %%d in ("%WORKING_DIRECTORY%\ROM\GameMenus\Localized Menu Assets\English") do (call "%WORKING_DIRECTORY%\Scripts\RenameLocaleFiles.bat")
-cd "%WORKING_DIRECTORY%\ROM\GameMenus\Localized Menu Assets\Japanese"
-for /D %%d in ("%WORKING_DIRECTORY%\ROM\GameMenus\Localized Menu Assets\English") do (call "%WORKING_DIRECTORY%\Scripts\RenameLocaleFiles.bat")
-cd "%WORKING_DIRECTORY%\ROM\GameMenus\Localized Menu Assets\Korean"
-for /D %%d in ("%WORKING_DIRECTORY%\ROM\GameMenus\Localized Menu Assets\English") do (call "%WORKING_DIRECTORY%\Scripts\RenameLocaleFiles.bat")
-cd "%WORKING_DIRECTORY%\ROM\GameMenus\Localized Menu Assets\Spanish"
-for /D %%d in ("%WORKING_DIRECTORY%\ROM\GameMenus\Localized Menu Assets\English") do (call "%WORKING_DIRECTORY%\Scripts\RenameLocaleFiles.bat")
-cd %WORKING_DIRECTORY%\ROM\
-ren GameMenus "Game Menus"
+for /D %%d in ("%WORKING_DIRECTORY%\ROM\GameMenus\LocalizedMenuAssets\*") do (cd %%d & call "%WORKING_DIRECTORY%\Scripts\Current\RenameLocaleFiles.bat")
 cd %WORKING_DIRECTORY%
+
 rem
 rem Add Menu Text
 rem
-mkdir "%WORKING_DIRECTORY%\ROM\Game Menus\Game Menu Text"
-for %%f in ("%WORKING_DIRECTORY%\ROM\Text\*.utx") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Game Menus\Game Menu Text")
-mkdir "%WORKING_DIRECTORY%\ROM\Game Menus\Credits Screen Text"
-move /Y "%WORKING_DIRECTORY%\ROM\Text\staffroll.csv" "%WORKING_DIRECTORY%\ROM\Game Menus\Credits Screen Text"
+mkdir "%WORKING_DIRECTORY%\ROM\GameMenus\GameMenuText"
+for %%f in ("%WORKING_DIRECTORY%\ROM\Text\*.utx") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\GameMenus\GameMenuText")
+mkdir "%WORKING_DIRECTORY%\ROM\GameMenus\CreditsScreenText"
+move /Y "%WORKING_DIRECTORY%\ROM\Text\staffroll.csv" "%WORKING_DIRECTORY%\ROM\GameMenus\CreditsScreenText"
 
 rem
 rem Bundle Game Code Together
 rem
 cd %WORKING_DIRECTORY%\ROM\
-ren "&&systemdata" "Game Code"
-move /Y movieD.rel "%WORKING_DIRECTORY%\ROM\Game Code\"
-move /Y autosaveD.rel "%WORKING_DIRECTORY%\ROM\Game Code\"
-move /Y advertiseD.rel "%WORKING_DIRECTORY%\ROM\Game Code\"
+mkdir "%WORKING_DIRECTORY%\ROM\GameCode\StageRelocatableModuleFiles"
+for %%f in (*.rel) do (
+	set FileName=%%~nf
+	set First5Letters=!FileName:~0,5!
+	if /I !First5Letters!==stage (move /Y %%f "%WORKING_DIRECTORY%\ROM\GameCode\StageRelocatableModuleFiles\") else (move /Y %%f "%WORKING_DIRECTORY%\ROM\GameCode\")
+)
 
-rem
-rem Set up Stages
-rem
-
-mkdir %WORKING_DIRECTORY%\ROM\Levels
-rem Without Spaces to ensure HeroesONE doesn't freak out.
-mkdir "%WORKING_DIRECTORY%\ROM\Levels\TitleCards"
-mkdir "%WORKING_DIRECTORY%\ROM\Levels\Unused"
-mkdir "%WORKING_DIRECTORY%\ROM\Levels\Unused\Title Cards"
-mkdir "%WORKING_DIRECTORY%\ROM\Levels\TitleCardMissionText"
-for %%f in ("%WORKING_DIRECTORY%\ROM\stgtitle\mission\*.bmp") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\TitleCardMissionText")
-for %%f in ("%WORKING_DIRECTORY%\ROM\stgtitle\*.one") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\TitleCards")
-cd %WORKING_DIRECTORY%\ROM\Levels\
-for %%f in ("%WORKING_DIRECTORY%\ROM\Levels\TitleCards\*.one") do (%WORKING_DIRECTORY%\Tools\HeroesONE\HeroesONE.exe -u %%f %%~pnf)
-for %%f in ("%WORKING_DIRECTORY%\ROM\Levels\TitleCards\*.one") do (DEL /F %%f)
-
-move "%WORKING_DIRECTORY%\ROM\Levels\Title Cards\stg00title_disp" "%WORKING_DIRECTORY%\ROM\Levels\Unused\Title Cards\"
-cd "%WORKING_DIRECTORY%\ROM\Levels\Unused\Title Cards"
-ren "stg00title_disp" "Stage 00 - Testlevel"
-
-cd "%WORKING_DIRECTORY%\ROM\Levels\Title Cards"
-call %WORKING_DIRECTORY%\Scripts\RenameStageTitles.bat
+move /Y "%WORKING_DIRECTORY%\ROM\&&systemdata\*.dol" "%WORKING_DIRECTORY%\ROM\GameCode\"
 
 rem
 rem Set up Event Handling
@@ -286,10 +227,6 @@ for /D %%d in ("%WORKING_DIRECTORY%\ROM\Events\Other~UnusedEvents\*") do (
 	)
 )
 
-cd %WORKING_DIRECTORY%\ROM\Events\
-for /R %%f in ("*.one") do (%WORKING_DIRECTORY%\Tools\HeroesONE\HeroesONE.exe -u %%f %%~pnf)
-for /R %%f in ("*.one") do (DEL /F %%f)
-
 rem
 rem Handle Character Models
 rem
@@ -301,7 +238,6 @@ call %WORKING_DIRECTORY%\Scripts\CreateCharacterFolders.bat
 rem For Each Directory Do Sort Out Animations Models And Textures
 for /D %%d in ("%WORKING_DIRECTORY%\ROM\CharacterModels\*") do (
 	for %%f in ("%%d\*") do (
-		echo %%d
 		set filename=%%~nf
 		set directory=%%~nxf
 		set test=!filename:~-4!
@@ -311,7 +247,6 @@ for /D %%d in ("%WORKING_DIRECTORY%\ROM\CharacterModels\*") do (
 
 for /D %%d in ("%WORKING_DIRECTORY%\ROM\CharacterModels\*") do (
 	for %%f in ("%%d\*") do (
-		echo %%d
 		set filename=%%~nf
 		set directory=%%~nxf
 		set test=!filename:~-4!
@@ -321,7 +256,6 @@ for /D %%d in ("%WORKING_DIRECTORY%\ROM\CharacterModels\*") do (
 
 for /D %%d in ("%WORKING_DIRECTORY%\ROM\CharacterModels\*") do (
 	for %%f in ("%%d\*") do (
-		echo %%d
 		set filename=%%~nxf
 		set directory=%%~nxf
 		set test=!filename:~-4!
@@ -329,35 +263,84 @@ for /D %%d in ("%WORKING_DIRECTORY%\ROM\CharacterModels\*") do (
 	)
 )
 
-cd "%WORKING_DIRECTORY%\ROM\CharacterModels\"
-for /R %%f in ("*.one") do (%WORKING_DIRECTORY%\Tools\HeroesONE\HeroesONE.exe -u %%f %%~pnf)
-for /R %%f in ("*.one") do (DEL /F %%f)
+rem
+rem Set up Stages Rewrite Full X2
+rem
 
-rem
-rem
-rem
-rem
-rem Set up Stage Geometry and Objects
-rem
-rem
-rem
-rem
-mkdir "%WORKING_DIRECTORY%\ROM\Levels\StageGeometry"
-mkdir "%WORKING_DIRECTORY%\ROM\Levels\StageSpecificObjects"
+mkdir "%WORKING_DIRECTORY%\ROM\Levels\ActionStages"
 mkdir "%WORKING_DIRECTORY%\ROM\Levels\CommonObjects"
 mkdir "%WORKING_DIRECTORY%\ROM\Levels\Unused\CommonObjects"
-for %%f in ("%WORKING_DIRECTORY%\ROM\s**obj.one") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\StageSpecificObjects")
-for %%f in ("%WORKING_DIRECTORY%\ROM\s**MRG.one") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\StageSpecificObjects")
-for %%f in ("%WORKING_DIRECTORY%\ROM\s**_flyer.one") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\StageSpecificObjects")
-for %%f in ("%WORKING_DIRECTORY%\ROM\s**.one") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\StageGeometry")
-for %%f in ("%WORKING_DIRECTORY%\ROM\stg**.one") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\StageGeometry")
+cd "%WORKING_DIRECTORY%\ROM\Levels\ActionStages"
+call %WORKING_DIRECTORY%\Scripts\CreateLevelFolders.bat
+for /D %%d in ("%WORKING_DIRECTORY%\ROM\Levels\ActionStages\*") do (
+	mkdir "%%d\Geometry"
+	mkdir "%%d\CustomFalcoEnemy"
+	mkdir "%%d\StageSpecificObjects"
+	mkdir "%%d\TitleCardMissionText"
+	mkdir "%%d\TitleCard"
+	mkdir "%%d\TitleCard\ExtraMission"
+	mkdir "%%d\TitleCard\SuperHard"
+	mkdir "%%d\Collision"
+	mkdir "%%d\Collision\WaterCollision"
+	mkdir "%%d\Collision\DeathPlanes"
+	mkdir "%%d\ObjectLayouts"
+	mkdir "%%d\ObjectLayouts\AllTeams"
+	mkdir "%%d\ObjectLayouts\TeamSonic"
+	mkdir "%%d\ObjectLayouts\TeamDark"
+	mkdir "%%d\ObjectLayouts\TeamRose"
+	mkdir "%%d\ObjectLayouts\TeamChaotix"
+	mkdir "%%d\ObjectLayouts\SuperHard"
+	mkdir "%%d\ObjectLayouts\DecorationLayouts"	
+	mkdir "%%d\IdleAutoplayDemos"
+	mkdir "%%d\LightingData"
+	mkdir "%%d\CameraData"
+	mkdir "%%d\GeometryVisibilityData"
+	mkdir "%%d\Textures"
+	mkdir "%%d\IndirectionalData"
+	mkdir "%%d\ParticleData"
+	mkdir "%%d\ExtraSplineData"
+)
 
-REM Fixes for object filter inaccuracies,
-for %%f in ("%WORKING_DIRECTORY%\ROM\Levels\StageGeometry\stg06_kw_hanabi_**.one") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\CommonObjects")
-move /Y "%WORKING_DIRECTORY%\ROM\Levels\StageGeometry\stgmem0910.one" "%WORKING_DIRECTORY%\ROM\Levels\CommonObjects"
-move /Y "%WORKING_DIRECTORY%\ROM\Levels\StageGeometry\stg80BJ.one" "%WORKING_DIRECTORY%\ROM\Levels\StageSpecificObjects"
+REM MOVE ALL THE STUFF
+REM MOVE ALL THE STUFF
+REM MOVE ALL THE STUFF
+for %%f in ("%WORKING_DIRECTORY%\ROM\s**obj.one") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ActionStages")
+for %%f in ("%WORKING_DIRECTORY%\ROM\s**MRG.one") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ActionStages")
+for %%f in ("%WORKING_DIRECTORY%\ROM\s**_flyer.one") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ActionStages")
+for %%f in ("%WORKING_DIRECTORY%\ROM\s**.one") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ActionStages")
+for %%f in ("%WORKING_DIRECTORY%\ROM\stg**.one") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ActionStages")
+for %%f in ("%WORKING_DIRECTORY%\ROM\collisions\*.cl") do (move /Y "%%f" "%WORKING_DIRECTORY%\ROM\Levels\ActionStages")
+for %%f in ("%WORKING_DIRECTORY%\ROM\s**_PB.bin") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ActionStages")
+for %%f in ("%WORKING_DIRECTORY%\ROM\s**_P1.bin") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ActionStages")
+for %%f in ("%WORKING_DIRECTORY%\ROM\s**_P2.bin") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ActionStages")
+for %%f in ("%WORKING_DIRECTORY%\ROM\s**_P3.bin") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ActionStages")
+for %%f in ("%WORKING_DIRECTORY%\ROM\s**_P4.bin") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ActionStages")
+for %%f in ("%WORKING_DIRECTORY%\ROM\s**_P5.bin") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ActionStages")
+for %%f in ("%WORKING_DIRECTORY%\ROM\s**_DB.bin") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ActionStages")
+for %%f in ("%WORKING_DIRECTORY%\ROM\stgtitle\mission\*.bmp") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ActionStages")
+for %%f in ("%WORKING_DIRECTORY%\ROM\stgtitle\*.one") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ActionStages")
+for %%f in ("%WORKING_DIRECTORY%\ROM\s**.dmo") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ActionStages")
+for %%f in ("%WORKING_DIRECTORY%\ROM\s**_light.bin") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ActionStages")
+for %%f in ("%WORKING_DIRECTORY%\ROM\s**_cam.bin") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ActionStages")
+for %%f in ("%WORKING_DIRECTORY%\ROM\s**_blk.bin") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ActionStages")
+for %%f in ("%WORKING_DIRECTORY%\ROM\s**_indinfo.dat") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ActionStages")
+for %%f in ("%WORKING_DIRECTORY%\ROM\s**_ptcl.bin") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ActionStages")
+for %%f in ("%WORKING_DIRECTORY%\ROM\s**_ptclplay.bin") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ActionStages")
+for %%f in ("%WORKING_DIRECTORY%\ROM\s**.txc") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ActionStages")
+for %%f in ("%WORKING_DIRECTORY%\ROM\s**.spl") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ActionStages")
+for %%f in ("%WORKING_DIRECTORY%\ROM\Textures\s**.txd") do (
+	set filename=%%~nf
+	set test1=!filename:~-0,3!
+	if /I not !test1!==stg (set test2=!filename:~0,8!) else (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ActionStages")
+	if /I not !test2!==startbtn (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ActionStages")
+)
 
-REM Move other models to ROOTDIR Models
+REM COMMON OBJS
+REM Fixes for object filter inaccuracies, and move the common objects.
+for %%f in ("%WORKING_DIRECTORY%\ROM\Levels\ActionStages\stg06_kw_hanabi_**.one") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\CommonObjects")
+move /Y "%WORKING_DIRECTORY%\ROM\Levels\ActionStages\stgmem0910.one" "%WORKING_DIRECTORY%\ROM\Levels\CommonObjects"
+
+REM Manually move Common Objects Across to the correct directories.
 for %%f in ("%WORKING_DIRECTORY%\ROM\obj*_Prop*.dff") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\CommonObjects")
 for %%f in ("%WORKING_DIRECTORY%\ROM\bob*.one") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\CommonObjects")
 move /Y "%WORKING_DIRECTORY%\ROM\rain_ita.dff" "%WORKING_DIRECTORY%\ROM\Levels\CommonObjects"
@@ -367,182 +350,134 @@ move /Y "%WORKING_DIRECTORY%\ROM\indirectEditor.dff" "%WORKING_DIRECTORY%\ROM\Le
 move /Y "%WORKING_DIRECTORY%\ROM\null.dff" "%WORKING_DIRECTORY%\ROM\Levels\Unused\CommonObjects"
 move /Y "%WORKING_DIRECTORY%\ROM\comobj.one" "%WORKING_DIRECTORY%\ROM\Levels\CommonObjects"
 
-for %%f in ("%WORKING_DIRECTORY%\ROM\Levels\StageSpecificObjects\*.one") do (%WORKING_DIRECTORY%\Tools\HeroesONE\HeroesONE.exe -u %%f %%~pnf)
-for %%f in ("%WORKING_DIRECTORY%\ROM\Levels\StageGeometry\*.one") do (%WORKING_DIRECTORY%\Tools\HeroesONE\HeroesONE.exe -u %%f %%~pnf)
-for %%f in ("%WORKING_DIRECTORY%\ROM\Levels\CommonObjects\*.one") do (%WORKING_DIRECTORY%\Tools\HeroesONE\HeroesONE.exe -u %%f %%~pnf)
-for %%f in ("%WORKING_DIRECTORY%\ROM\Levels\Unused\CommonObjects\*.one") do (%WORKING_DIRECTORY%\Tools\HeroesONE\HeroesONE.exe -u %%f %%~pnf)
-for %%f in ("%WORKING_DIRECTORY%\ROM\Levels\StageSpecificObjects\*.one") do (DEL /F %%f)
-for %%f in ("%WORKING_DIRECTORY%\ROM\Levels\StageGeometry\*.one") do (DEL /F %%f)
-for %%f in ("%WORKING_DIRECTORY%\ROM\Levels\CommonObjects\*.one") do (DEL /F %%f)
-for %%f in ("%WORKING_DIRECTORY%\ROM\Levels\Unused\CommonObjects\*.one") do (DEL /F %%f)
-
-cd "%WORKING_DIRECTORY%\ROM\Levels\StageGeometry"
-call %WORKING_DIRECTORY%\Scripts\RenameStageGeometry.bat
-
-cd "%WORKING_DIRECTORY%\ROM\Levels\StageSpecificObjects"
-call %WORKING_DIRECTORY%\Scripts\RenameStageObjects.bat
-
 cd "%WORKING_DIRECTORY%\ROM\Levels\CommonObjects"
 call %WORKING_DIRECTORY%\Scripts\RenameCommonObjects.bat
 
-cd "%WORKING_DIRECTORY%\ROM\Levels\TitleCardMissionText"
-call %WORKING_DIRECTORY%\Scripts\BundleMissionText.bat
-
-for %%i in (%WORKING_DIRECTORY%\ROM\Levels\TitleCardMissionText\*.bmp) do (echo %%i & mkdir "%WORKING_DIRECTORY%\ROM\Levels\Unused\TitleCardMissionText" & move /Y "%%i" "%WORKING_DIRECTORY%\ROM\Levels\Unused\TitleCardMissionText\")
-
 rem
-rem Set up Stage Collision Data
+rem Move Stuff Level Stuff To Proper Directory
 rem
-mkdir "%WORKING_DIRECTORY%\ROM\Levels\StageCollision"
-for %%f in ("%WORKING_DIRECTORY%\ROM\collisions\*.cl") do (move /Y "%%f" "%WORKING_DIRECTORY%\ROM\Levels\StageCollision")
-cd "%WORKING_DIRECTORY%\ROM\Levels\StageCollision"
-call %WORKING_DIRECTORY%\Scripts\RenameStageCollisions.bat
-cd %WORKING_DIRECTORY%
 
-rem
-rem Handle Level Layouts
-rem
-cd %WORKING_DIRECTORY%
-mkdir "%WORKING_DIRECTORY%\ROM\Levels\ObjectLayouts"
-mkdir "%WORKING_DIRECTORY%\ROM\Levels\ObjectLayouts\AllTeams"
-mkdir "%WORKING_DIRECTORY%\ROM\Levels\ObjectLayouts\TeamSonic"
-mkdir "%WORKING_DIRECTORY%\ROM\Levels\ObjectLayouts\TeamDark"
-mkdir "%WORKING_DIRECTORY%\ROM\Levels\ObjectLayouts\TeamRose"
-mkdir "%WORKING_DIRECTORY%\ROM\Levels\ObjectLayouts\TeamChaotix"
-mkdir "%WORKING_DIRECTORY%\ROM\Levels\ObjectLayouts\SuperHard"
-mkdir "%WORKING_DIRECTORY%\ROM\Levels\ObjectLayouts\DecorationLayouts"
-for %%f in ("%WORKING_DIRECTORY%\ROM\s**_PB.bin") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ObjectLayouts\AllTeams")
-for %%f in ("%WORKING_DIRECTORY%\ROM\s**_P1.bin") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ObjectLayouts\TeamSonic")
-for %%f in ("%WORKING_DIRECTORY%\ROM\s**_P2.bin") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ObjectLayouts\TeamDark")
-for %%f in ("%WORKING_DIRECTORY%\ROM\s**_P3.bin") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ObjectLayouts\TeamRose")
-for %%f in ("%WORKING_DIRECTORY%\ROM\s**_P4.bin") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ObjectLayouts\TeamChaotix")
-for %%f in ("%WORKING_DIRECTORY%\ROM\s**_P5.bin") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ObjectLayouts\SuperHard")
-for %%f in ("%WORKING_DIRECTORY%\ROM\s**_DB.bin") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ObjectLayouts\DecorationLayouts")
+for /D %%d in ("%WORKING_DIRECTORY%\ROM\Levels\ActionStages\*") do (
+	set StageDirectory=%%~nd
+	for %%f in ("%WORKING_DIRECTORY%\ROM\Levels\ActionStages\*") do ( 
+		set FileName=%%~nf
+		set directory=%%~nxd
+		set stagedirshort=!StageDirectory:~6,2!
+		set test1=!FileName:~-0,3!
+		if /I not !test1!==stg (set test2=!FileName:~1,2!) else (set test2=!FileName:~3,2!)
+		if /I !test2!==!stagedirshort! (move /Y "%%~pnxf" "%%~pf!StageDirectory!\")
+		echo "Current Directory: !directory!"
+	)
+)
 
-for /D %%d in ("%WORKING_DIRECTORY%\ROM\Levels\ObjectLayouts\*") do (
-	cd %%d
-	call %WORKING_DIRECTORY%\Scripts\CreateLevelFolders.bat
-	for /D %%1 in ("%%d\*") do (
-		set stagedir=%%~n1
-		for %%f in ("%%d\*") do ( 
-			cd %%~pf
-			set filename=%%~nf
-			set directory=%%~nxf
-			set stagedirshort=!stagedir:~6,2!
-			set test1=!filename:~-0,3!
-			if /I not !test1!==stg (set test2=!filename:~1,2!) else (set test2=!filename:~3,2!)
-			if /I !test2!==!stagedirshort! (move /Y "%%~pnxf" "%%~pf!stagedir!\")
+for /D %%d in ("%WORKING_DIRECTORY%\ROM\Levels\ActionStages\*") do (
+	for %%f in ("%%d\*") do ( 
+		set FullFileName=%%~nxf
+		set FileName=%%~nf
+		set Extension=%%~xf
+		set Last3Chars=!FileName:~-3!
+		set Last5Chars=!FileName:~-5!
+		set Last7Chars=!FileName:~-7!
+		set Last8Chars=!FileName:~-8!
+		set StageTitleTest=!FileName:~5,10!
+		set StageTitleTestExtended=!FileName:~5,12!
+		REM echo "Currently Processing File: !FileName!"
+		echo !Extension!
+		REM Move Stage Title Card Mission Text
+		if /I !Extension!==.bmp (move /Y "%%f" "%%d\TitleCardMissionText\")
+		REM Move Stage Specific Objects
+		if /I !Last3Chars!==obj (move /Y "%%f" "%%d\StageSpecificObjects\")
+		REM Move Stage All Team Layout
+		if /I !Last3Chars!==_PB (move /Y "%%f" "%%d\ObjectLayouts\AllTeams\")
+		REM Move Stage Team Sonic Layout
+		if /I !Last3Chars!==_P1 (move /Y "%%f" "%%d\ObjectLayouts\TeamSonic\")
+		REM Move Stage Team Dark Layout
+		if /I !Last3Chars!==_P2 (move /Y "%%f" "%%d\ObjectLayouts\TeamDark\")
+		REM Move Stage Team Rose Layout
+		if /I !Last3Chars!==_P3 (move /Y "%%f" "%%d\ObjectLayouts\TeamRose\")
+		REM Move Stage Team Chaotix Layout
+		if /I !Last3Chars!==_P4 (move /Y "%%f" "%%d\ObjectLayouts\TeamChaotix\")
+		REM Move Stage Super Hard Layout
+		if /I !Last3Chars!==_P5 (move /Y "%%f" "%%d\ObjectLayouts\SuperHard\")
+		REM Move Stage Decoration Layout
+		if /I !Last3Chars!==_DB (move /Y "%%f" "%%d\ObjectLayouts\DecorationLayouts\")
+		REM Move Stage Collision Data
+		if /I !Extension!==.cl (
+			if /I !Last3Chars!==_wt (move /Y "%%f" "%%d\Collision\WaterCollision\")
+			if /I !Last3Chars!==_WT (move /Y "%%f" "%%d\Collision\WaterCollision\")
+			if /I !Last3Chars!==_xx (move /Y "%%f" "%%d\Collision\DeathPlanes\")
+			if /I !Last3Chars!==_XX (move /Y "%%f" "%%d\Collision\DeathPlanes\")
+			move /Y "%%f" "%%d\Collision\"
 		)
+		REM Move Stage Title Cards
+		if /I !StageTitleTestExtended!==title_dispEX (move /Y "%%f" "%%d\TitleCard\ExtraMission\")
+		if /I !StageTitleTestExtended!==title_dispSH (move /Y "%%f" "%%d\TitleCard\SuperHard\")
+		if /I !StageTitleTest!==title_disp (move /Y "%%f" "%%d\TitleCard\")
+		REM Move Stage Autoplay Demos
+		if /I !Extension!==.dmo (move /Y "%%f" "%%d\IdleAutoplayDemos\")
+		REM Move Lighting Data
+		if /I !Last5Chars!==light (move /Y "%%f" "%%d\LightingData\")
+		REM Move FalcoEnemy
+		if /I !Last5Chars!==flyer (move /Y "%%f" "%%d\CustomFalcoEnemy")
+		REM Move Camera Data
+		if /I !Last3Chars!==cam (move /Y "%%f" "%%d\CameraData\")
+		REM Move Geometry Visibility Data
+		if /I !Last3Chars!==blk (move /Y "%%f" "%%d\GeometryVisibilityData\")
+		REM Move Textures
+		if /I !Extension!==.txd (move /Y "%%f" "%%d\Textures\")
+		if /I !Extension!==.txc (move /Y "%%f" "%%d\Textures\")
+		REM Move Indirectional Data
+		if /I !Last7Chars!==indinfo (move /Y "%%f" "%%d\IndirectionalData\")
+		REM Move Particle Data
+		if /I !Last5Chars!==_ptcl (move /Y "%%f" "%%d\ParticleData\")
+		if /I !Last8Chars!==ptclplay (move /Y "%%f" "%%d\ParticleData\")
+		REM Move Spline Data
+		if /I !Extension!==.spl (move /Y "%%f" "%%d\ExtraSplineData\")
+		REM Move Geometry
+		set GeomFileNameTest1=!FileName:~1,2!
+		set GeomFileNameTest2=!FileName:~3,2!
+		if /I !FileName!==s!GeomFileNameTest1! (move /Y "%%f" "%%d\Geometry\")
+		if /I !FileName!==stg!GeomFileNameTest2! (move /Y "%%f" "%%d\Geometry\")
 	)
 )
 
 rem
-rem Handle AutoPlay Demos
+rem Remove all of the remaining stage titles.
 rem
-cd %WORKING_DIRECTORY%
-mkdir "%WORKING_DIRECTORY%\ROM\Levels\IdleAutoplayDemos"
-cd "%WORKING_DIRECTORY%\ROM\Levels\IdleAutoplayDemos"
-call %WORKING_DIRECTORY%\Scripts\CreateLevelFolders.bat
-for %%f in ("%WORKING_DIRECTORY%\ROM\s**.dmo") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\IdleAutoplayDemos")
-for /D %%1 in ("%WORKING_DIRECTORY%\ROM\Levels\IdleAutoplayDemos\*") do (
-	set stagedir=%%~n1
-	for %%f in ("%WORKING_DIRECTORY%\ROM\Levels\IdleAutoplayDemos\*") do ( 
-		set filename=%%~nf
-		set directory=%%~nxf
-		set stagedirshort=!stagedir:~6,2!
-		set test1=!filename:~-0,3!
-		if /I not !test1!==stg (set test2=!filename:~1,2!) else (set test2=!filename:~3,2!)
-		if /I !test2!==!stagedirshort! (move /Y "%%~pnxf" "%%~pf!stagedir!\")
-	)
-)
+for %%i in (%WORKING_DIRECTORY%\ROM\Levels\ActionStages\*.bmp) do (echo %%i & mkdir "%WORKING_DIRECTORY%\ROM\Levels\Unused\TitleCardMissionText" & move /Y "%%i" "%WORKING_DIRECTORY%\ROM\Levels\Unused\TitleCardMissionText\")
 
-rem
-rem Handle Lighting Data
-rem
-cd %WORKING_DIRECTORY%
-mkdir "%WORKING_DIRECTORY%\ROM\Levels\StageLightingData"
-cd "%WORKING_DIRECTORY%\ROM\Levels\StageLightingData"
-call %WORKING_DIRECTORY%\Scripts\CreateLevelFolders.bat
-for %%f in ("%WORKING_DIRECTORY%\ROM\s**_light.bin") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\StageLightingData")
-for /D %%1 in ("%WORKING_DIRECTORY%\ROM\Levels\StageLightingData\*") do (
-	set stagedir=%%~n1
-	for %%f in ("%WORKING_DIRECTORY%\ROM\Levels\StageLightingData\*") do ( 
-		set filename=%%~nf
-		set directory=%%~nxf
-		set stagedirshort=!stagedir:~6,2!
-		set test1=!filename:~-0,3!
-		if /I not !test1!==stg (set test2=!filename:~1,2!) else (set test2=!filename:~3,2!)
-		if /I !test2!==!stagedirshort! (move /Y "%%~pnxf" "%%~pf!stagedir!\")
-	)
-)
-
-rem
-rem Handle Camera Data
-rem
-cd %WORKING_DIRECTORY%
-mkdir "%WORKING_DIRECTORY%\ROM\Levels\StageCameraData"
-cd "%WORKING_DIRECTORY%\ROM\Levels\StageCameraData"
-call %WORKING_DIRECTORY%\Scripts\CreateLevelFolders.bat
-for %%f in ("%WORKING_DIRECTORY%\ROM\s**_cam.bin") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\StageCameraData")
-for /D %%1 in ("%WORKING_DIRECTORY%\ROM\Levels\StageCameraData\*") do (
-	set stagedir=%%~n1
-	for %%f in ("%WORKING_DIRECTORY%\ROM\Levels\StageCameraData\*") do ( 
-		set filename=%%~nf
-		set directory=%%~nxf
-		set stagedirshort=!stagedir:~6,2!
-		set test1=!filename:~-0,3!
-		if /I not !test1!==stg (set test2=!filename:~1,2!) else (set test2=!filename:~3,2!)
-		if /I !test2!==!stagedirshort! (move /Y "%%~pnxf" "%%~pf!stagedir!\")
-	)
-)
-
-rem
-rem Handle Geometry Visibility Data
-rem
-cd %WORKING_DIRECTORY%
-mkdir "%WORKING_DIRECTORY%\ROM\Levels\StageGeometryVisibilityData"
-cd "%WORKING_DIRECTORY%\ROM\Levels\StageGeometryVisibilityData"
-call %WORKING_DIRECTORY%\Scripts\CreateLevelFolders.bat
-for %%f in ("%WORKING_DIRECTORY%\ROM\s**_blk.bin") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\StageGeometryVisibilityData")
-for /D %%1 in ("%WORKING_DIRECTORY%\ROM\Levels\StageGeometryVisibilityData\*") do (
-	set stagedir=%%~n1
-	for %%f in ("%WORKING_DIRECTORY%\ROM\Levels\StageGeometryVisibilityData\*") do ( 
-		set filename=%%~nf
-		set directory=%%~nxf
-		set stagedirshort=!stagedir:~6,2!
-		set test1=!filename:~-0,3!
-		if /I not !test1!==stg (set test2=!filename:~1,2!) else (set test2=!filename:~3,2!)
-		if /I !test2!==!stagedirshort! (move /Y "%%~pnxf" "%%~pf!stagedir!\")
-	)
-)
-
-rem
-rem
-rem
-rem
-rem Set up Stage Geometry and Objects
-rem
-rem
-rem
-rem
-
-echo ayymd
+echo "TESTLAST"
+echo "TESTLAST"
+echo "TESTLAST"
 pause
 
+
+rem
+rem HeroesONE goes Harambe! AYAYAYAYAYAYAY!!!
+rem
+echo "lol"
+pause
+cd %WORKING_DIRECTORY%\ROM\
+for /R %%f in ("*.one") do (%WORKING_DIRECTORY%\Tools\HeroesONE\HeroesONE.exe -u "%%f" "%%~pnf")
+for /R %%f in ("*.one") do (DEL /F "%%f")
+echo "lozzzzl"
+echo "lozzzzl"
+pause
 rem
 rem Cleanup
 rem
-cd %WORKING_DIRECTORY%\ROM\
-for /R %%f in ("vssver.scc") do (DEL /F %%f)
-rmdir /S /Q %WORKING_DIRECTORY%\ROM\Levels\TitleCards
-rmdir /S /Q %WORKING_DIRECTORY%\ROM\GameMenus
-rmdir /S /Q %WORKING_DIRECTORY%\ROM\stgtitle
-rmdir /S /Q %WORKING_DIRECTORY%\ROM\text
-rmdir /S /Q %WORKING_DIRECTORY%\ROM\collisions
+
+rem Remove Useless Microsoft Sourcesafe Leftovers
+for /R %%f in ("*") do ( 
+	if /I %%~nxf==vssver.scc (DEL /F %%f) 
+)
+
 rem Kill Empty Directories
 cd %WORKING_DIRECTORY%\ROM\
 for /f "usebackq delims=" %%d in (`"dir /ad/b/s | sort /R"`) do rd "%%d"
 
-rem Add spaces back.
-ren "TitleCards" "Title Cards" 
+rem ALL HAIL MARKEYJESTER
+rem ALL HAIL MARKEYJESTER
+rem ALL HAIL MARKEYJESTER
+echo "DONE"
 pause
