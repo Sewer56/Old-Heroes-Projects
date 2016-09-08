@@ -103,7 +103,7 @@ call %WORKING_DIRECTORY%\Scripts\Current\CreateLevelFolders.bat
 cd %WORKING_DIRECTORY%\ROM\
 
 for /D %%d in ("%WORKING_DIRECTORY%\ROM\GameCode\StageRelocatableModuleFiles\*") do (
-	for /R %WORKING_DIRECTORY%\ROM\ %%f in (*.rel) do (
+	for %%f in (*.rel) do (
 		set FileName=%%~nf
 		set FolderName=%%~nd
 		set First5Letters=!FileName:~0,5!
@@ -282,7 +282,7 @@ call %WORKING_DIRECTORY%\Scripts\Current\CreateLevelFolders.bat
 for /D %%d in ("%WORKING_DIRECTORY%\ROM\Levels\ActionStages\*") do (
 	mkdir "%%d\Geometry"
 	mkdir "%%d\CustomFalcoEnemy"
-	mkdir "%%d\StageSpecificObjects"
+	mkdir "%%d\StageSpecificObjects\GeometryAndEnvironmentModels"
 	mkdir "%%d\TitleCardMissionText"
 	mkdir "%%d\TitleCard"
 	mkdir "%%d\TitleCard\ExtraMission"
@@ -371,8 +371,48 @@ for /D %%d in ("%WORKING_DIRECTORY%\ROM\Levels\ActionStages\*") do (
 		set directory=%%~nxd
 		set stagedirshort=!StageDirectory:~6,2!
 		set test1=!FileName:~-0,3!
+		set TeamChaotixTest=!FileName:~-0,15!
+		set EnglishTeamTitleTest=!FileName:~-1!
+		set Team4CharTest=!FileName:~-0,12!
+		set Team5CharTest=!FileName:~-0,13!
+		set GenericStageTitleTest=!FileName:~-0,13!
+		set GenericStageTitleID=!FileName:~13,3!
+		
+		REM TEST FOR DIRECTORY
 		if /I not !test1!==stg (set test2=!FileName:~1,2!) else (set test2=!FileName:~3,2!)
 		if /I !test2!==!stagedirshort! (move /Y "%%~pnxf" "%%~pf!StageDirectory!\")
+		
+		REM TEST FOR TEAMS
+		
+		if /I !TeamChaotixTest!==stgCHAOTIXtitle (if /I !EnglishTeamTitleTest!==E (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\TeamBattleTitles\Chaotix\English\") else (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\TeamBattleTitles\Chaotix\"))
+		
+		if /I !Team4CharTest!==stgDARKtitle (if /I !EnglishTeamTitleTest!==E (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\TeamBattleTitles\Dark\English") else (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\TeamBattleTitles\Dark\"))
+		
+		if /I !Team4CharTest!==stgROSEtitle (if /I !EnglishTeamTitleTest!==E (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\TeamBattleTitles\Rose\English") else (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\TeamBattleTitles\Rose\"))
+		
+		if /I !Team5CharTest!==stgSONICtitle (if /I !EnglishTeamTitleTest!==E (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\TeamBattleTitles\Sonic\English") else (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\TeamBattleTitles\Sonic\"))
+		
+		if /I !GenericStageTitleTest!==stgtitle_disp (
+			if /I !GenericStageTitleID!==EEX (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\GenericStageTitles\English\ExtraMission\")
+			if /I !GenericStageTitleID!==ESH (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\GenericStageTitles\English\SuperHard\")
+			if /I !GenericStageTitleID!==E (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\GenericStageTitles\English\")
+			
+			if /I !GenericStageTitleID!==FSH (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\GenericStageTitles\French\ExtraMission\")
+			if /I !GenericStageTitleID!==FEX (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\GenericStageTitles\French\SuperHard\")
+			if /I !GenericStageTitleID!==F (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\GenericStageTitles\French\")
+			
+			if /I !GenericStageTitleID!==GSH (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\GenericStageTitles\German\ExtraMission\")
+			if /I !GenericStageTitleID!==GEX (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\GenericStageTitles\German\SuperHard\")
+			if /I !GenericStageTitleID!==G (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\GenericStageTitles\German\")
+			
+			if /I !GenericStageTitleID!==ISH (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\GenericStageTitles\Italian\ExtraMission\")
+			if /I !GenericStageTitleID!==IEX (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\GenericStageTitles\Italian\SuperHard\")
+			if /I !GenericStageTitleID!==I (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\GenericStageTitles\Italian\")
+			
+			if /I !GenericStageTitleID!==SSH (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\GenericStageTitles\Spanish\ExtraMission\")
+			if /I !GenericStageTitleID!==SEX (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\GenericStageTitles\Spanish\SuperHard\")
+			if /I !GenericStageTitleID!==S (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\GenericStageTitles\Spanish\")
+		)
 		echo "Current Directory: !directory!"
 	)
 )
@@ -394,6 +434,7 @@ for /D %%d in ("%WORKING_DIRECTORY%\ROM\Levels\ActionStages\*") do (
 		if /I !Extension!==.bmp (move /Y "%%f" "%%d\TitleCardMissionText\")
 		REM Move Stage Specific Objects
 		if /I !Last3Chars!==obj (move /Y "%%f" "%%d\StageSpecificObjects\")
+		if /I !Last3Chars!==MRG (move /Y "%%f" "%%d\StageSpecificObjects\GeometryAndEnvironmentModels\")
 		REM Move Stage All Team Layout
 		if /I !Last3Chars!==_PB (move /Y "%%f" "%%d\ObjectLayouts\AllTeams\")
 		REM Move Stage Team Sonic Layout
