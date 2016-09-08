@@ -97,16 +97,25 @@ move /Y "%WORKING_DIRECTORY%\ROM\Text\staffroll.csv" "%WORKING_DIRECTORY%\ROM\Ga
 rem
 rem Bundle Game Code Together
 rem
-cd %WORKING_DIRECTORY%\ROM\
 mkdir "%WORKING_DIRECTORY%\ROM\GameCode\StageRelocatableModuleFiles"
-for %%f in (*.rel) do (
-	set FileName=%%~nf
-	set First5Letters=!FileName:~0,5!
-	if /I !First5Letters!==stage (move /Y %%f "%WORKING_DIRECTORY%\ROM\GameCode\StageRelocatableModuleFiles\") else (move /Y %%f "%WORKING_DIRECTORY%\ROM\GameCode\")
+cd "%WORKING_DIRECTORY%\ROM\GameCode\StageRelocatableModuleFiles"
+call %WORKING_DIRECTORY%\Scripts\Current\CreateLevelFolders.bat
+cd %WORKING_DIRECTORY%\ROM\
+
+for /D %%d in ("%WORKING_DIRECTORY%\ROM\GameCode\StageRelocatableModuleFiles\*") do (
+	for %%f in (%WORKING_DIRECTORY%\ROM\*.rel) do (
+		set FileName=%%~nf
+		set FolderName=%%~nd
+		set First5Letters=!FileName:~0,5!
+		set LevelIDRel=!FileName:~5,2!
+		set LevelIDFolder=!FolderName:~6,2!
+		if /I !First5Letters!==stage ( if /I !LevelIDRel!==!LevelIDFolder! ( move /Y %%f "%%d\" ) ) else ( move /Y %%f "%WORKING_DIRECTORY%\ROM\GameCode\" )
+	)
 )
-
 move /Y "%WORKING_DIRECTORY%\ROM\&&systemdata\*.dol" "%WORKING_DIRECTORY%\ROM\GameCode\"
-
+@echo Similar stages and zones share one unique .rel file, e.g. stage01D.rel is used for Seaside Hill and Ocean Palace.> "%WORKING_DIRECTORY%\ROM\GameCode\StageRelocatableModuleFiles\Note.txt"
+pause
+pause
 rem
 rem Set up Event Handling
 rem
@@ -233,7 +242,7 @@ rem
 cd %WORKING_DIRECTORY%\ROM\
 ren playmodel "CharacterModels"
 cd %WORKING_DIRECTORY%\ROM\CharacterModels
-call %WORKING_DIRECTORY%\Scripts\CreateCharacterFolders.bat
+call %WORKING_DIRECTORY%\Scripts\Current\CreateCharacterFolders.bat
 
 rem For Each Directory Do Sort Out Animations Models And Textures
 for /D %%d in ("%WORKING_DIRECTORY%\ROM\CharacterModels\*") do (
@@ -271,7 +280,7 @@ mkdir "%WORKING_DIRECTORY%\ROM\Levels\ActionStages"
 mkdir "%WORKING_DIRECTORY%\ROM\Levels\CommonObjects"
 mkdir "%WORKING_DIRECTORY%\ROM\Levels\Unused\CommonObjects"
 cd "%WORKING_DIRECTORY%\ROM\Levels\ActionStages"
-call %WORKING_DIRECTORY%\Scripts\CreateLevelFolders.bat
+call %WORKING_DIRECTORY%\Scripts\Current\CreateLevelFolders.bat
 for /D %%d in ("%WORKING_DIRECTORY%\ROM\Levels\ActionStages\*") do (
 	mkdir "%%d\Geometry"
 	mkdir "%%d\CustomFalcoEnemy"
@@ -351,7 +360,7 @@ move /Y "%WORKING_DIRECTORY%\ROM\null.dff" "%WORKING_DIRECTORY%\ROM\Levels\Unuse
 move /Y "%WORKING_DIRECTORY%\ROM\comobj.one" "%WORKING_DIRECTORY%\ROM\Levels\CommonObjects"
 
 cd "%WORKING_DIRECTORY%\ROM\Levels\CommonObjects"
-call %WORKING_DIRECTORY%\Scripts\RenameCommonObjects.bat
+call %WORKING_DIRECTORY%\Scripts\Current\RenameCommonObjects.bat
 
 rem
 rem Move Stuff Level Stuff To Proper Directory
@@ -446,23 +455,117 @@ rem Remove all of the remaining stage titles.
 rem
 for %%i in (%WORKING_DIRECTORY%\ROM\Levels\ActionStages\*.bmp) do (echo %%i & mkdir "%WORKING_DIRECTORY%\ROM\Levels\Unused\TitleCardMissionText" & move /Y "%%i" "%WORKING_DIRECTORY%\ROM\Levels\Unused\TitleCardMissionText\")
 
-echo "TESTLAST"
-echo "TESTLAST"
-echo "TESTLAST"
+
+rem
+rem Do all the Textures
+rem
+cd %WORKING_DIRECTORY%\ROM\
+ren "textures" "Textures"
+mkdir "%WORKING_DIRECTORY%\ROM\Textures\Common\Effects"
+mkdir "%WORKING_DIRECTORY%\ROM\Textures\Common\Loading"
+mkdir "%WORKING_DIRECTORY%\ROM\Textures\Common\StartButton"
+
+for %%f in (%WORKING_DIRECTORY%\ROM\Textures\*) do (
+	set FileName=%%~nf
+	set Extension=%%~xf
+	set First3Chars=!FileName:~0,3!
+	set First8Chars=!FileName:~0,8!
+	
+	echo "Extension:!Extension!"
+	echo "FileName:!FileName!"
+	if /I !First3Chars!==obj (move /Y %%f "%WORKING_DIRECTORY%\ROM\Textures\Common\")
+	if /I !First3Chars!==eff (move /Y %%f "%WORKING_DIRECTORY%\ROM\Textures\Common\Effects\")
+	if /I !FileName!==rain_ita (move /Y %%f "%WORKING_DIRECTORY%\ROM\Textures\Common\Effects\")
+	if /I !FileName!==cmn_effect (move /Y %%f "%WORKING_DIRECTORY%\ROM\Textures\Common\Effects\")
+	if /I !First3Chars!==ef_ (move /Y %%f "%WORKING_DIRECTORY%\ROM\Textures\Common\Effects\")
+	if /I !First8Chars!==startbtn (move /Y %%f "%WORKING_DIRECTORY%\ROM\Textures\Common\StartButton\")
+	if /I !FileName!==loading (move /Y %%f "%WORKING_DIRECTORY%\ROM\Textures\Common\Loading\")
+	if /I !First3Chars!==en_ (mkdir "%WORKING_DIRECTORY%\ROM\Textures\Unused\Enemies" & move /Y %%f "%WORKING_DIRECTORY%\ROM\Textures\Unused\Enemies\")
+	if /I !FileName!==e3adv (mkdir "%WORKING_DIRECTORY%\ROM\Textures\Unused\E3" & move /Y %%f "%WORKING_DIRECTORY%\ROM\Textures\Unused\E3\")
+	if /I !FileName!==comsoon (mkdir "%WORKING_DIRECTORY%\ROM\Textures\Unused\E3" & move /Y %%f "%WORKING_DIRECTORY%\ROM\Textures\Unused\E3\")
+
+	REM NTSC-U SPECIFIC
+	if /I !FileName!==stg40_indinfo (mkdir "%WORKING_DIRECTORY%\ROM\Textures\Unused\OutOfPlace\Stage 40 - Bonus Stage 2\IndirectionalData" & move /Y %%f "%WORKING_DIRECTORY%\ROM\Textures\Unused\OutOfPlace\Stage 40 - Bonus Stage 2\IndirectionalData\")
+	
+	REM PICK UP ANY OTHER SCRAPS LEFT
+	if /I not !Extension!==.txd (mkdir "%WORKING_DIRECTORY%\ROM\Textures\Unused\OutOfPlace\Other" & move /Y %%f "%WORKING_DIRECTORY%\ROM\Textures\Unused\OutOfPlace\Other\")
+)
+
+for %%f in (%WORKING_DIRECTORY%\ROM\Textures\*.txd) do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Textures\Unused\")
+
+rem
+rem Sort out the Enemies
+rem
+cd %WORKING_DIRECTORY%\ROM
+mkdir "Enemies~Bosses\Bosses"
+mkdir "Enemies~Bosses\CommonAssets"
+mkdir "Enemies~Bosses\Enemies"
+
+for /D %%d in (%WORKING_DIRECTORY%\ROM\Enemies~Bosses\*) do (cd %%d && call %WORKING_DIRECTORY%\Scripts\Current\GenerateEnemyNames.bat)
+for %%f in (%WORKING_DIRECTORY%\ROM\*.one) do (
+	set FileName=%%~nf
+	set First3Chars=!FileName:~0,3!
+	set First7Chars=!FileName:~0,7!
+	if /I !First7Chars!==chrboss (move /Y %%f "%WORKING_DIRECTORY%\ROM\Enemies~Bosses\Common\")
+	if /I !FileName!==en_common (move /Y %%f "%WORKING_DIRECTORY%\ROM\Enemies~Bosses\CommonAssets\")
+	if /I !FileName!==en_icon (move /Y %%f "%WORKING_DIRECTORY%\ROM\Enemies~Bosses\CommonAssets\")
+	if /I !First3Chars!==bs_ (move /Y %%f "%WORKING_DIRECTORY%\ROM\Enemies~Bosses\Bosses\")
+	if /I !First3Chars!==en_ (move /Y %%f "%WORKING_DIRECTORY%\ROM\Enemies~Bosses\EnemiesAssets\")
+
+)
+for /D %%d in (%WORKING_DIRECTORY%\ROM\Enemies~Bosses\*) do (
+	cd %%d
+	for %%f in (%%d\*.one) do (
+		set FileName=%%~nf
+		set First12Chars=!FileName:~0,12!
+		if /I !FileName!==bs_albatross (move /Y %%f "EggAlbatross\")
+		if /I !FileName!==bs_egghawk (move /Y %%f "EggHawk\")
+		if /I !FileName!==bs_kingpawn (move /Y %%f "EggEmperor\")
+		if /I !FileName!==chrboss_disp (move /Y %%f "TeamBattleIcons\TeamSonic\")
+		if /I !FileName!==chrboss_dispC (move /Y %%f "TeamBattleIcons\TeamChaotix\")
+		if /I !FileName!==chrboss_dispD (move /Y %%f "TeamBattleIcons\TeamDark\")
+		if /I !FileName!==chrboss_dispR (move /Y %%f "TeamBattleIcons\TeamRose\")
+		if /I !FileName!==en_common (move /Y %%f "CommonAssets\")
+		if /I !FileName!==en_capture (move /Y %%f "Klagen\")
+		if /I !FileName!==en_e2000 (move /Y %%f "E2000\")
+		if /I !First12Chars!==en_eggmobile (move /Y %%f "EggMobile\")
+		if /I !FileName!==en_flyer (move /Y %%f "Falco\")
+		if /I !FileName!==en_icon (move /Y %%f "CommonAssets\")
+		if /I !FileName!==en_magician (move /Y %%f "EggMagician\")
+		if /I !FileName!==en_metalsonic1st (move /Y %%f "MetalSonic1\")
+		if /I !FileName!==en_metalsonic2nd (move /Y %%f "MetalSonic2\")
+		if /I !FileName!==en_pawn (move /Y %%f "EggPawn\")
+		if /I !FileName!==en_pawn_roulette (move /Y %%f "EggPawnCasino\")
+		if /I !FileName!==en_rinoliner (move /Y %%f "Rhinoliner\")
+		if /I !FileName!==en_searcher (move /Y %%f "Flapper\")
+		if /I !FileName!==en_turtle (move /Y %%f "Cameron\")
+		if /I !FileName!==en_wall (move /Y %%f "HeavyEggHammer\")
+	)
+)
+
+rem
+rem Deal with SFX
+rem
+cd %WORKING_DIRECTORY%\ROM
+mkdir "SoundEffects\SoundEffectTables"
+mkdir "SoundEffects\SoundEffects"
+mkdir "SoundEffects\SoundEffectSoundLibConfiguration"
+for %%f in (%%d\se_*.mlt) do (move /Y %%f "%WORKING_DIRECTORY%\ROM\SoundEffects\SoundEffects")
+for %%f in (%%d\se_*.bin) do (move /Y %%f "%WORKING_DIRECTORY%\ROM\SoundEffects\SoundEffectTables")
+move /Y %WORKING_DIRECTORY%\ROM\GCAX.conf "%WORKING_DIRECTORY%\ROM\SoundEffects\SoundEffectSoundLibConfiguration"
+
+echo DANKMEMES
+echo DANKMEMES
+echo DANKMEMES
 pause
-
-
 rem
 rem HeroesONE goes Harambe! AYAYAYAYAYAYAY!!!
 rem
-echo "lol"
-pause
 cd %WORKING_DIRECTORY%\ROM\
 for /R %%f in ("*.one") do (%WORKING_DIRECTORY%\Tools\HeroesONE\HeroesONE.exe -u "%%f" "%%~pnf")
 for /R %%f in ("*.one") do (DEL /F "%%f")
-echo "lozzzzl"
-echo "lozzzzl"
-pause
+
+
 rem
 rem Cleanup
 rem
