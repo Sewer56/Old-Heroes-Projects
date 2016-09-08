@@ -114,8 +114,6 @@ for /D %%d in ("%WORKING_DIRECTORY%\ROM\GameCode\StageRelocatableModuleFiles\*")
 )
 move /Y "%WORKING_DIRECTORY%\ROM\&&systemdata\*.dol" "%WORKING_DIRECTORY%\ROM\GameCode\"
 @echo Similar stages and zones share one unique .rel file, e.g. stage01D.rel is used for Seaside Hill and Ocean Palace.> "%WORKING_DIRECTORY%\ROM\GameCode\StageRelocatableModuleFiles\Note.txt"
-pause
-pause
 rem
 rem Set up Event Handling
 rem
@@ -548,11 +546,55 @@ rem Deal with SFX
 rem
 cd %WORKING_DIRECTORY%\ROM
 mkdir "SoundEffects\SoundEffectTables"
-mkdir "SoundEffects\SoundEffects"
+mkdir "SoundEffects\Sounds"
 mkdir "SoundEffects\SoundEffectSoundLibConfiguration"
-for %%f in (%%d\se_*.mlt) do (move /Y %%f "%WORKING_DIRECTORY%\ROM\SoundEffects\SoundEffects")
-for %%f in (%%d\se_*.bin) do (move /Y %%f "%WORKING_DIRECTORY%\ROM\SoundEffects\SoundEffectTables")
-move /Y %WORKING_DIRECTORY%\ROM\GCAX.conf "%WORKING_DIRECTORY%\ROM\SoundEffects\SoundEffectSoundLibConfiguration"
+move /Y %WORKING_DIRECTORY%\ROM\GCAX.conf "%WORKING_DIRECTORY%\ROM\SoundEffects\SoundEffectSoundLibConfiguration\"
+for %%f in (%WORKING_DIRECTORY%\ROM\se_*.mlt) do (move /Y %%f "%WORKING_DIRECTORY%\ROM\SoundEffects\Sounds\")
+for %%f in (%WORKING_DIRECTORY%\ROM\se_*.bin) do (move /Y %%f "%WORKING_DIRECTORY%\ROM\SoundEffects\SoundEffectTables\")
+cd %WORKING_DIRECTORY%\ROM\SoundEffects\Sounds\ && call %WORKING_DIRECTORY%\Scripts\Current\CreateLevelFolders.bat
+cd %WORKING_DIRECTORY%\ROM\SoundEffects\SoundEffectTables\ && call %WORKING_DIRECTORY%\Scripts\Current\CreateLevelFolders.bat
+@echo off
+for /D %%d in ("%WORKING_DIRECTORY%\ROM\SoundEffects\*") do (
+	mkdir "%%d\Player\TeamSonic"
+	mkdir "%%d\Player\TeamDark"
+	mkdir "%%d\Player\TeamRose"
+	mkdir "%%d\Player\TeamChaotix"
+	mkdir "%%d\Enemy"
+	mkdir "%%d\Common"
+	mkdir "%%d\Vocal"
+	mkdir "%%d\Unknown"
+	for /D %%0 in ("%%d\*") do (
+		for %%f in (%%d\*) do (
+			set FileName=%%~nf
+			set FolderName=%%~n0
+			set LevelIDSFX=!FileName:~4,2!
+			
+			set LevelIDFolder=!FolderName:~6,2!
+			
+			set SFXTypeShort=!FileName:~3,2!
+			set SFXType=!FileName:~3,5!
+			
+			echo "FolderName: !FolderName!"
+			echo "FileName: !FileName!"
+			echo "Level ID SFX CMP: !LevelIDSFX! - !LevelIDFolder!"
+			echo "SFXType: !SFXType!"
+			
+			if /I not !FileName!==GCAX (if /I !LevelIDSFX!==!LevelIDFolder! (move /Y %%f "%%0\"))
+			if /I !SFXTypeShort!==pl (move /Y %%f "%%d\Player\")
+			if /I !SFXTypeShort!==en (move /Y %%f "%%d\Enemy\")
+			if /I !SFXTypeShort!==cn (move /Y %%f "%%d\Common\")
+			if /I !SFXTypeShort!==vo (move /Y %%f "%%d\Vocal\")
+			if /I !SFXTypeShort!==sy (move /Y %%f "%%d\Unknown\")
+			if /I !SFXType!==CMNGK (move /Y %%f "%%d\Common\")
+			if /I !SFXType!==VOICE (move /Y %%f "%%d\Vocal\")
+			if /I !SFXType!==BASIC (move /Y %%f "%%d\Common\")
+			if /I !SFXType!==CH_TS (move /Y %%f "%%d\Player\TeamSonic\")
+			if /I !SFXType!==CH_TD (move /Y %%f "%%d\Player\TeamDark\")
+			if /I !SFXType!==CH_TR (move /Y %%f "%%d\Player\TeamRose\")
+			if /I !SFXType!==CH_TC (move /Y %%f "%%d\Player\TeamChaotix\")
+		)
+	)
+)
 
 echo DANKMEMES
 echo DANKMEMES
