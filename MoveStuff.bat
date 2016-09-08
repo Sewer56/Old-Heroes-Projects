@@ -103,7 +103,7 @@ call %WORKING_DIRECTORY%\Scripts\Current\CreateLevelFolders.bat
 cd %WORKING_DIRECTORY%\ROM\
 
 for /D %%d in ("%WORKING_DIRECTORY%\ROM\GameCode\StageRelocatableModuleFiles\*") do (
-	for %%f in (%WORKING_DIRECTORY%\ROM\*.rel) do (
+	for /R %WORKING_DIRECTORY%\ROM\ %%f in (*.rel) do (
 		set FileName=%%~nf
 		set FolderName=%%~nd
 		set First5Letters=!FileName:~0,5!
