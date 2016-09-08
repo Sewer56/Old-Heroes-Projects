@@ -504,12 +504,11 @@ for %%f in (%WORKING_DIRECTORY%\ROM\*.one) do (
 	set FileName=%%~nf
 	set First3Chars=!FileName:~0,3!
 	set First7Chars=!FileName:~0,7!
-	if /I !First7Chars!==chrboss (move /Y %%f "%WORKING_DIRECTORY%\ROM\Enemies~Bosses\Common\")
+	if /I !First7Chars!==chrboss (move /Y %%f "%WORKING_DIRECTORY%\ROM\Enemies~Bosses\Bosses\")
 	if /I !FileName!==en_common (move /Y %%f "%WORKING_DIRECTORY%\ROM\Enemies~Bosses\CommonAssets\")
 	if /I !FileName!==en_icon (move /Y %%f "%WORKING_DIRECTORY%\ROM\Enemies~Bosses\CommonAssets\")
 	if /I !First3Chars!==bs_ (move /Y %%f "%WORKING_DIRECTORY%\ROM\Enemies~Bosses\Bosses\")
-	if /I !First3Chars!==en_ (move /Y %%f "%WORKING_DIRECTORY%\ROM\Enemies~Bosses\EnemiesAssets\")
-
+	if /I !First3Chars!==en_ (move /Y %%f "%WORKING_DIRECTORY%\ROM\Enemies~Bosses\Enemies\")
 )
 for /D %%d in (%WORKING_DIRECTORY%\ROM\Enemies~Bosses\*) do (
 	cd %%d
@@ -528,7 +527,7 @@ for /D %%d in (%WORKING_DIRECTORY%\ROM\Enemies~Bosses\*) do (
 		if /I !FileName!==en_e2000 (move /Y %%f "E2000\")
 		if /I !First12Chars!==en_eggmobile (move /Y %%f "EggMobile\")
 		if /I !FileName!==en_flyer (move /Y %%f "Falco\")
-		if /I !FileName!==en_icon (move /Y %%f "CommonAssets\")
+		if /I !FileName!==en_icon (move /Y %%f "EnemyIcons\")
 		if /I !FileName!==en_magician (move /Y %%f "EggMagician\")
 		if /I !FileName!==en_metalsonic1st (move /Y %%f "MetalSonic1\")
 		if /I !FileName!==en_metalsonic2nd (move /Y %%f "MetalSonic2\")
@@ -553,7 +552,6 @@ for %%f in (%WORKING_DIRECTORY%\ROM\se_*.mlt) do (move /Y %%f "%WORKING_DIRECTOR
 for %%f in (%WORKING_DIRECTORY%\ROM\se_*.bin) do (move /Y %%f "%WORKING_DIRECTORY%\ROM\SoundEffects\SoundEffectTables\")
 cd %WORKING_DIRECTORY%\ROM\SoundEffects\Sounds\ && call %WORKING_DIRECTORY%\Scripts\Current\CreateLevelFolders.bat
 cd %WORKING_DIRECTORY%\ROM\SoundEffects\SoundEffectTables\ && call %WORKING_DIRECTORY%\Scripts\Current\CreateLevelFolders.bat
-@echo off
 for /D %%d in ("%WORKING_DIRECTORY%\ROM\SoundEffects\*") do (
 	mkdir "%%d\Player\TeamSonic"
 	mkdir "%%d\Player\TeamDark"
