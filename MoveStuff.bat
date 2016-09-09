@@ -113,7 +113,9 @@ for /D %%d in ("%WORKING_DIRECTORY%\ROM\GameCode\StageRelocatableModuleFiles\*")
 	)
 )
 move /Y "%WORKING_DIRECTORY%\ROM\&&systemdata\*.dol" "%WORKING_DIRECTORY%\ROM\GameCode\"
+move /Y "%WORKING_DIRECTORY%\ROM\TSonic.str" "%WORKING_DIRECTORY%\ROM\GameCode\"
 @echo Similar stages and zones share one unique .rel file, e.g. stage01D.rel is used for Seaside Hill and Ocean Palace.> "%WORKING_DIRECTORY%\ROM\GameCode\StageRelocatableModuleFiles\Note.txt"
+@echo TSonic.str (and TSonicD.str) is simply a log of the compilation of the current ROM, showing what assets have been rebuilt for this version.\n Start.dol (typically named), is the equivalent of the main executable of the game (.elf on PS2, .exe on PC and .xex on XBOX).> "%WORKING_DIRECTORY%\ROM\GameCode\Note.txt"
 rem
 rem Set up Event Handling
 rem
@@ -275,6 +277,9 @@ rem Set up Stages Rewrite Full X2
 rem
 
 mkdir "%WORKING_DIRECTORY%\ROM\Levels\ActionStages"
+mkdir "%WORKING_DIRECTORY%\ROM\Levels\Other\SETIDTable"
+mkdir "%WORKING_DIRECTORY%\ROM\Levels\Other\CommonParticleData"
+mkdir "%WORKING_DIRECTORY%\ROM\Levels\Other\"
 mkdir "%WORKING_DIRECTORY%\ROM\Levels\CommonObjects"
 mkdir "%WORKING_DIRECTORY%\ROM\Levels\Unused\CommonObjects"
 cd "%WORKING_DIRECTORY%\ROM\Levels\ActionStages"
@@ -306,6 +311,7 @@ for /D %%d in ("%WORKING_DIRECTORY%\ROM\Levels\ActionStages\*") do (
 	mkdir "%%d\IndirectionalData"
 	mkdir "%%d\ParticleData"
 	mkdir "%%d\ExtraSplineData"
+	mkdir "%%d\Unknown"
 )
 
 REM MOVE ALL THE STUFF
@@ -356,6 +362,11 @@ move /Y "%WORKING_DIRECTORY%\ROM\primModels.one" "%WORKING_DIRECTORY%\ROM\Levels
 move /Y "%WORKING_DIRECTORY%\ROM\indirectEditor.dff" "%WORKING_DIRECTORY%\ROM\Levels\Unused\CommonObjects"
 move /Y "%WORKING_DIRECTORY%\ROM\null.dff" "%WORKING_DIRECTORY%\ROM\Levels\Unused\CommonObjects"
 move /Y "%WORKING_DIRECTORY%\ROM\comobj.one" "%WORKING_DIRECTORY%\ROM\Levels\CommonObjects"
+
+mkdir  "%WORKING_DIRECTORY%\ROM\Levels\CommonObjects\Bomb Effect\Model\"
+mkdir  "%WORKING_DIRECTORY%\ROM\Levels\CommonObjects\Bomb Effect\Animation\"
+move /Y "%WORKING_DIRECTORY%\ROM\ef_bomb.dff" "%WORKING_DIRECTORY%\ROM\Levels\CommonObjects\Bomb Effect\Model\"
+move /Y "%WORKING_DIRECTORY%\ROM\ef_bomb.anm" "%WORKING_DIRECTORY%\ROM\Levels\CommonObjects\Bomb Effect\Animation\"
 
 cd "%WORKING_DIRECTORY%\ROM\Levels\CommonObjects"
 call %WORKING_DIRECTORY%\Scripts\Current\RenameCommonObjects.bat
@@ -488,6 +499,16 @@ for /D %%d in ("%WORKING_DIRECTORY%\ROM\Levels\ActionStages\*") do (
 		if /I !FileName!==stg!GeomFileNameTest2! (move /Y "%%f" "%%d\Geometry\")
 	)
 )
+
+REM
+REM SORT OUT THE UNUSUAL LEVEL STUFF (This is pt2 to last method)
+REM
+
+REM Move Unknown OBJ to Unknown
+move /Y "%WORKING_DIRECTORY%\ROM\stg05.bin" "%WORKING_DIRECTORY%\ROM\Levels\ActionStages\Stage 05 - Casino Park\Unknown\"
+move /Y "%WORKING_DIRECTORY%\ROM\startStage.inf" "%WORKING_DIRECTORY%\ROM\Levels\Other\"
+move /Y "%WORKING_DIRECTORY%\ROM\setidtbl.bin" "%WORKING_DIRECTORY%\ROM\Levels\Other\SETIDTable\"
+move /Y "%WORKING_DIRECTORY%\ROM\cmn_ptcl.bin" "%WORKING_DIRECTORY%\ROM\Levels\Other\CommonParticleData\"
 
 rem
 rem Remove all of the remaining stage titles.
@@ -758,19 +779,66 @@ for %%f in (%WORKING_DIRECTORY%\ROM\*.one) do (
 	)
 )
 
-echo DANKMEMES
-echo DANKMEMES
-echo DANKMEMES
-pause
 
+rem
+rem Sort out what is left in the ROOTDIR. Misc preprogrammed actions.
+rem
+mkdir "%WORKING_DIRECTORY%\ROM\Unknown\Group1\"
+
+for %%f in (%WORKING_DIRECTORY%\ROM\*) do (
+	set FileName=%%~nf
+	set CoverIdentifier=!FileName:~0,9!
+	set StartbtnIdentifier=!FileName:~0,8!
+	set CoverLanguage=!FileName:~9,2!
+	set StartbtnLanguage=!FileName:~9,2!
+	
+	set 3Chars=!FileName:~0,3!
+
+	if /I !CoverIdentifier!==coverOpen (
+		if /I !FileName!==coverOpen (mkdir "%WORKING_DIRECTORY%\ROM\Other\OpenDiscTrayMessage\Unknown\" && move /Y %%f "%WORKING_DIRECTORY%\ROM\Other\OpenDiscTrayMessage\Unknown\")
+		if /I !CoverLanguage!==en (mkdir "%WORKING_DIRECTORY%\ROM\Other\OpenDiscTrayMessage\English\" && move /Y %%f "%WORKING_DIRECTORY%\ROM\Other\OpenDiscTrayMessage\English\")
+		if /I !CoverLanguage!==fr (mkdir "%WORKING_DIRECTORY%\ROM\Other\OpenDiscTrayMessage\French\" && move /Y %%f "%WORKING_DIRECTORY%\ROM\Other\OpenDiscTrayMessage\French\")
+		if /I !CoverLanguage!==ge (mkdir "%WORKING_DIRECTORY%\ROM\Other\OpenDiscTrayMessage\German\" && move /Y %%f "%WORKING_DIRECTORY%\ROM\Other\OpenDiscTrayMessage\German\")
+		if /I !CoverLanguage!==it (mkdir "%WORKING_DIRECTORY%\ROM\Other\OpenDiscTrayMessage\Italian\" && move /Y %%f "%WORKING_DIRECTORY%\ROM\Other\OpenDiscTrayMessage\Italian\")
+		if /I !CoverLanguage!==jp (mkdir "%WORKING_DIRECTORY%\ROM\Other\OpenDiscTrayMessage\Japanese\" && move /Y %%f "%WORKING_DIRECTORY%\ROM\Other\OpenDiscTrayMessage\Japanese\")
+		if /I !CoverLanguage!==ko (mkdir "%WORKING_DIRECTORY%\ROM\Other\OpenDiscTrayMessage\Korean\" && move /Y %%f "%WORKING_DIRECTORY%\ROM\Other\OpenDiscTrayMessage\Korean\")
+		if /I !CoverLanguage!==sp (mkdir "%WORKING_DIRECTORY%\ROM\Other\OpenDiscTrayMessage\Spanish\" && move /Y %%f "%WORKING_DIRECTORY%\ROM\Other\OpenDiscTrayMessage\Spanish\")
+	)	
+	
+	if /I !StartbtnIdentifier!==startbtn (
+		if /I !StartbtnLanguage!==en (mkdir "%WORKING_DIRECTORY%\ROM\Other\TitleScreenStartButtonAnimation\English\" && move /Y %%f "%WORKING_DIRECTORY%\ROM\Other\TitleScreenStartButtonAnimation\English\")
+		if /I !StartbtnLanguage!==fr (mkdir "%WORKING_DIRECTORY%\ROM\Other\TitleScreenStartButtonAnimation\French\" && move /Y %%f "%WORKING_DIRECTORY%\ROM\Other\TitleScreenStartButtonAnimation\French\")
+		if /I !StartbtnLanguage!==ge (mkdir "%WORKING_DIRECTORY%\ROM\Other\TitleScreenStartButtonAnimation\German\" && move /Y %%f "%WORKING_DIRECTORY%\ROM\Other\TitleScreenStartButtonAnimation\German\")
+		if /I !StartbtnLanguage!==it (mkdir "%WORKING_DIRECTORY%\ROM\Other\TitleScreenStartButtonAnimation\Italian\" && move /Y %%f "%WORKING_DIRECTORY%\ROM\Other\TitleScreenStartButtonAnimation\Italian\")
+		if /I !StartbtnLanguage!==jp (mkdir "%WORKING_DIRECTORY%\ROM\Other\TitleScreenStartButtonAnimation\Japanese\" && move /Y %%f "%WORKING_DIRECTORY%\ROM\Other\TitleScreenStartButtonAnimation\Japanese\")
+		if /I !StartbtnLanguage!==ko (mkdir "%WORKING_DIRECTORY%\ROM\Other\TitleScreenStartButtonAnimation\Korean\" && move /Y %%f "%WORKING_DIRECTORY%\ROM\Other\TitleScreenStartButtonAnimation\Korean\")
+		if /I !StartbtnLanguage!==sp (mkdir "%WORKING_DIRECTORY%\ROM\Other\TitleScreenStartButtonAnimation\Spanish\" && move /Y %%f "%WORKING_DIRECTORY%\ROM\Other\TitleScreenStartButtonAnimation\Spanish\")
+	)
+	
+	if /I !FileName!==opening (mkdir "%WORKING_DIRECTORY%\ROM\Other\GameCubeBanner\" && move /Y %%f "%WORKING_DIRECTORY%\ROM\Other\GameCubeBanner\")
+	if /I !FileName!==pk1_par1 (mkdir "%WORKING_DIRECTORY%\ROM\Unused\SeasideHillGiantBirdTexture\" && move /Y %%f "%WORKING_DIRECTORY%\ROM\Unused\SeasideHillGiantBirdTexture\")
+	if /I !FileName!==mte_gcn (mkdir "%WORKING_DIRECTORY%\ROM\Other\GameCubeMaterialDefinitions\" && move /Y %%f "%WORKING_DIRECTORY%\ROM\Other\GameCubeMaterialDefinitions\")
+	if /I !FileName!==startLoad (mkdir "%WORKING_DIRECTORY%\ROM\Other\LoadingLogoOnGameLaunch\" && move /Y %%f "%WORKING_DIRECTORY%\ROM\Other\LoadingLogoOnGameLaunch\")
+	if /I !FileName!==loading (mkdir "%WORKING_DIRECTORY%\ROM\Other\TeamBattle~E3ProtoLoadAnimation\" && move /Y %%f "%WORKING_DIRECTORY%\ROM\Other\TeamBattle~E3ProtoLoadAnimation\")
+	
+	if /I !3Chars!==mc_ (move /Y %%f "%WORKING_DIRECTORY%\ROM\Unknown\Group1\")
+)
 
 rem
 rem HeroesONE goes Harambe! AYAYAYAYAYAYAY!!!
 rem
 cd %WORKING_DIRECTORY%\ROM\
-for /R %%f in ("*.one") do (%WORKING_DIRECTORY%\Tools\HeroesONE\HeroesONE.exe -u "%%f" "%%~pnf")
+for /R %%f in ("*.one") do (
+	echo "HeroesONE: Extracting %%~nxf"
 for /R %%f in ("*.one") do (DEL /F "%%f")
 
+rem Protect Weird .one files from HeroesONE and Removal 2
+for /D %%d in (%WORKING_DIRECTORY%\ROM\Other\OpenDiscTrayMessage\*) do (
+	for %%f in (%%d\*.tmp) do (
+		cd %%d
+		ren "%%~nxf" "%%~nf"
+	)
+)
 
 rem
 rem Cleanup
