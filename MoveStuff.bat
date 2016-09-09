@@ -588,6 +588,7 @@ cd %WORKING_DIRECTORY%\ROM
 mkdir "SoundEffects\SoundEffectTables"
 mkdir "SoundEffects\Sounds"
 mkdir "SoundEffects\SoundEffectSoundLibConfiguration"
+@echo Similar stages and zones share one unique .mlt file, e.g. SE_S01ST.mlt is used for Seaside Hill and Ocean Palace.> "%WORKING_DIRECTORY%\ROM\SoundEffects\Sounds\Note.txt"
 move /Y %WORKING_DIRECTORY%\ROM\GCAX.conf "%WORKING_DIRECTORY%\ROM\SoundEffects\SoundEffectSoundLibConfiguration\"
 for %%f in (%WORKING_DIRECTORY%\ROM\se_*.mlt) do (move /Y %%f "%WORKING_DIRECTORY%\ROM\SoundEffects\Sounds\")
 for %%f in (%WORKING_DIRECTORY%\ROM\se_*.bin) do (move /Y %%f "%WORKING_DIRECTORY%\ROM\SoundEffects\SoundEffectTables\")
@@ -635,10 +636,134 @@ for /D %%d in ("%WORKING_DIRECTORY%\ROM\SoundEffects\*") do (
 	)
 )
 
+rem
+rem Deal with the Heads up Display.
+rem
+cd %WORKING_DIRECTORY%\ROM\
+mkdir HUD\ResultsScreen\TimeOnly
+mkdir HUD\ResultsScreen\Normal
+mkdir HUD\ResultsScreen\BonusStage
+mkdir HUD\TeamSonic\
+mkdir HUD\TeamDark\
+mkdir HUD\TeamChaotix\
+mkdir HUD\TeamRose\
+mkdir HUD\2Player\
+
+for /D %%d in (%WORKING_DIRECTORY%\ROM\HUD\*) do (
+	mkdir "%%d\English"
+	mkdir "%%d\French"
+	mkdir "%%d\German"
+	mkdir "%%d\Italian"
+	mkdir "%%d\Korean"
+	mkdir "%%d\Spanish"
+)
+
+for /D %%1 in (%WORKING_DIRECTORY%\ROM\HUD\ResultsScreen\*) do (
+		mkdir "%%1\English"
+		mkdir "%%1\French"
+		mkdir "%%1\German"
+		mkdir "%%1\Italian"
+		mkdir "%%1\Korean"
+		mkdir "%%1\Spanish"
+)
+
+for %%f in (%WORKING_DIRECTORY%\ROM\*.one) do (
+	set FileName=%%~nf
+	set HUDIdentifier=!FileName:~0,9!
+	set ResultIdentifier=!FileName:~0,6!
+	set HUDType=!FileName:~9,1!
+	set HUDLanguage=!FileName:~-1!
+	set ResultType=!FileName:~6,1!
+	
+	if /I !HUDIdentifier!==game_disp (
+		REM TYPE SONIC
+		if /I !FileName!==game_disp (move /Y %%f "%WORKING_DIRECTORY%\ROM\HUD\TeamSonic\")
+		if /I !HUDType!==E (move /Y %%f "%WORKING_DIRECTORY%\ROM\HUD\TeamSonic\English\")
+		if /I !HUDType!==F (move /Y %%f "%WORKING_DIRECTORY%\ROM\HUD\TeamSonic\French\")
+		if /I !HUDType!==G (move /Y %%f "%WORKING_DIRECTORY%\ROM\HUD\TeamSonic\German\")
+		if /I !HUDType!==I (move /Y %%f "%WORKING_DIRECTORY%\ROM\HUD\TeamSonic\Italian\")
+		if /I !HUDType!==K (move /Y %%f "%WORKING_DIRECTORY%\ROM\HUD\TeamSonic\Korean\")
+		if /I !HUDType!==S (move /Y %%f "%WORKING_DIRECTORY%\ROM\HUD\TeamSonic\Spanish\")
+		
+		REM TYPE 2PLAYER
+		if /I !HUDType!==2 (
+			if /I !FileName!==game_disp2 (move /Y %%f "%WORKING_DIRECTORY%\ROM\HUD\2Player\")
+			if /I !HUDLanguage!==E (move /Y %%f "%WORKING_DIRECTORY%\ROM\HUD\2Player\English\")
+			if /I !HUDLanguage!==F (move /Y %%f "%WORKING_DIRECTORY%\ROM\HUD\2Player\French\")
+			if /I !HUDLanguage!==G (move /Y %%f "%WORKING_DIRECTORY%\ROM\HUD\2Player\German\")
+			if /I !HUDLanguage!==I (move /Y %%f "%WORKING_DIRECTORY%\ROM\HUD\2Player\Italian\")
+			if /I !HUDLanguage!==K (move /Y %%f "%WORKING_DIRECTORY%\ROM\HUD\2Player\Korean\")
+			if /I !HUDLanguage!==S (move /Y %%f "%WORKING_DIRECTORY%\ROM\HUD\2Player\Spanish\")
+		)		
+		
+		REM TYPE CHAOTIX
+		if /I !HUDType!==C (
+			if /I !FileName!==game_dispC (move /Y %%f "%WORKING_DIRECTORY%\ROM\HUD\TeamChaotix\")
+			if /I !HUDLanguage!==E (move /Y %%f "%WORKING_DIRECTORY%\ROM\HUD\TeamChaotix\English\")
+			if /I !HUDLanguage!==F (move /Y %%f "%WORKING_DIRECTORY%\ROM\HUD\TeamChaotix\French\")
+			if /I !HUDLanguage!==G (move /Y %%f "%WORKING_DIRECTORY%\ROM\HUD\TeamChaotix\German\")
+			if /I !HUDLanguage!==I (move /Y %%f "%WORKING_DIRECTORY%\ROM\HUD\TeamChaotix\Italian\")
+			if /I !HUDLanguage!==K (move /Y %%f "%WORKING_DIRECTORY%\ROM\HUD\TeamChaotix\Korean\")
+			if /I !HUDLanguage!==S (move /Y %%f "%WORKING_DIRECTORY%\ROM\HUD\TeamChaotix\Spanish\")
+		)		
+		
+		REM TYPE DARK
+		if /I !HUDType!==D (
+			if /I !FileName!==game_dispD (move /Y %%f "%WORKING_DIRECTORY%\ROM\HUD\TeamDark\")
+			if /I !HUDLanguage!==E (move /Y %%f "%WORKING_DIRECTORY%\ROM\HUD\TeamDark\English\")
+			if /I !HUDLanguage!==F (move /Y %%f "%WORKING_DIRECTORY%\ROM\HUD\TeamDark\French\")
+			if /I !HUDLanguage!==G (move /Y %%f "%WORKING_DIRECTORY%\ROM\HUD\TeamDark\German\")
+			if /I !HUDLanguage!==I (move /Y %%f "%WORKING_DIRECTORY%\ROM\HUD\TeamDark\Italian\")
+			if /I !HUDLanguage!==K (move /Y %%f "%WORKING_DIRECTORY%\ROM\HUD\TeamDark\Korean\")
+			if /I !HUDLanguage!==S (move /Y %%f "%WORKING_DIRECTORY%\ROM\HUD\TeamDark\Spanish\")
+		)
+		
+		REM TYPE ROSE
+		if /I !HUDType!==R (
+			if /I !FileName!==game_dispR (move /Y %%f "%WORKING_DIRECTORY%\ROM\HUD\TeamRose\")
+			if /I !HUDLanguage!==E (move /Y %%f "%WORKING_DIRECTORY%\ROM\HUD\TeamRose\English\")
+			if /I !HUDLanguage!==F (move /Y %%f "%WORKING_DIRECTORY%\ROM\HUD\TeamRose\French\")
+			if /I !HUDLanguage!==G (move /Y %%f "%WORKING_DIRECTORY%\ROM\HUD\TeamRose\German\")
+			if /I !HUDLanguage!==I (move /Y %%f "%WORKING_DIRECTORY%\ROM\HUD\TeamRose\Italian\")
+			if /I !HUDLanguage!==K (move /Y %%f "%WORKING_DIRECTORY%\ROM\HUD\TeamRose\Korean\")
+			if /I !HUDLanguage!==S (move /Y %%f "%WORKING_DIRECTORY%\ROM\HUD\TeamRose\Spanish\")
+		)
+	)
+	
+	if /I !ResultIdentifier!==result (
+		REM RESULT TYPE A, NORMAL MODE
+		if /I !ResultType!==A (
+			if /I !FileName!==resultA_disp (move /Y %%f "%WORKING_DIRECTORY%\ROM\HUD\ResultsScreen\Normal\")
+			if /I !HUDLanguage!==F (move /Y %%f "%WORKING_DIRECTORY%\ROM\HUD\ResultsScreen\Normal\French\")
+			if /I !HUDLanguage!==G (move /Y %%f "%WORKING_DIRECTORY%\ROM\HUD\ResultsScreen\Normal\German\")
+			if /I !HUDLanguage!==I (move /Y %%f "%WORKING_DIRECTORY%\ROM\HUD\ResultsScreen\Normal\Italian\")
+			if /I !HUDLanguage!==S (move /Y %%f "%WORKING_DIRECTORY%\ROM\HUD\ResultsScreen\Normal\Spanish\")
+		)		
+		REM RESULT TYPE B, TIME ONLY
+		if /I !ResultType!==B (
+			if /I !FileName!==resultB_disp (move /Y %%f "%WORKING_DIRECTORY%\ROM\HUD\ResultsScreen\TimeOnly\")
+			if /I !HUDLanguage!==F (move /Y %%f "%WORKING_DIRECTORY%\ROM\HUD\ResultsScreen\TimeOnly\French\")
+			if /I !HUDLanguage!==G (move /Y %%f "%WORKING_DIRECTORY%\ROM\HUD\ResultsScreen\TimeOnly\German\")
+			if /I !HUDLanguage!==I (move /Y %%f "%WORKING_DIRECTORY%\ROM\HUD\ResultsScreen\TimeOnly\Italian\")
+			if /I !HUDLanguage!==S (move /Y %%f "%WORKING_DIRECTORY%\ROM\HUD\ResultsScreen\TimeOnly\Spanish\")
+		)		
+		REM RESULT TYPE S, BONUS STAGE
+		if /I !ResultType!==S (
+			if /I !FileName!==resultS_disp (move /Y %%f "%WORKING_DIRECTORY%\ROM\HUD\ResultsScreen\BonusStage\")
+			if /I !HUDLanguage!==F (move /Y %%f "%WORKING_DIRECTORY%\ROM\HUD\ResultsScreen\BonusStage\French\")
+			if /I !HUDLanguage!==G (move /Y %%f "%WORKING_DIRECTORY%\ROM\HUD\ResultsScreen\BonusStage\German\")
+			if /I !HUDLanguage!==I (move /Y %%f "%WORKING_DIRECTORY%\ROM\HUD\ResultsScreen\BonusStage\Italian\")
+			if /I !HUDLanguage!==S (move /Y %%f "%WORKING_DIRECTORY%\ROM\HUD\ResultsScreen\BonusStage\Spanish\")
+		)
+	)
+)
+
 echo DANKMEMES
 echo DANKMEMES
 echo DANKMEMES
 pause
+
+
 rem
 rem HeroesONE goes Harambe! AYAYAYAYAYAYAY!!!
 rem

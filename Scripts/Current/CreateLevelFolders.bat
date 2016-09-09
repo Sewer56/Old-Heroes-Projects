@@ -100,3 +100,23 @@ mkdir "Stage 96 - Unused"
 mkdir "Stage 97 - Unused"
 mkdir "Stage 98 - Unused"
 mkdir "Stage 99 - Unused"
+
+mkdir "Stage XX - Common Assets\GenericStageTitles\English\ExtraMission"
+mkdir "Stage XX - Common Assets\GenericStageTitles\English\SuperHard"
+
+mkdir "Stage XX - Common Assets\GenericStageTitles\French\SuperHard"
+mkdir "Stage XX - Common Assets\GenericStageTitles\French\ExtraMission"
+
+mkdir "Stage XX - Common Assets\GenericStageTitles\German\ExtraMission"
+mkdir "Stage XX - Common Assets\GenericStageTitles\German\SuperHard"
+
+mkdir "Stage XX - Common Assets\GenericStageTitles\Italian\ExtraMission"
+mkdir "Stage XX - Common Assets\GenericStageTitles\Italian\SuperHard"
+
+mkdir "Stage XX - Common Assets\GenericStageTitles\Spanish\ExtraMission"
+mkdir "Stage XX - Common Assets\GenericStageTitles\Spanish\SuperHard"
+
+mkdir "Stage XX - Common Assets\TeamBattleTitles\Chaotix\English"
+mkdir "Stage XX - Common Assets\TeamBattleTitles\Rose\English"
+mkdir "Stage XX - Common Assets\TeamBattleTitles\Dark\English"
+mkdir "Stage XX - Common Assets\TeamBattleTitles\Sonic\English"
