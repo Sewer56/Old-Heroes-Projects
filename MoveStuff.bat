@@ -2,437 +2,77 @@
 set WORKING_DIRECTORY=%cd%
 rem FIX FOR VARS INSIDE LOOPS
 setlocal enabledelayedexpansion
-rem
-rem REARRANGE ADVERTISE
-rem
-mkdir "%WORKING_DIRECTORY%\ROM\GameMenus"
-mkdir "%WORKING_DIRECTORY%\ROM\GameMenus\LocalizedMenuAssets"
-mkdir "%WORKING_DIRECTORY%\ROM\GameMenus\LocalizedMenuAssets\English"
-mkdir "%WORKING_DIRECTORY%\ROM\GameMenus\LocalizedMenuAssets\French"
-mkdir "%WORKING_DIRECTORY%\ROM\GameMenus\LocalizedMenuAssets\German"
-mkdir "%WORKING_DIRECTORY%\ROM\GameMenus\LocalizedMenuAssets\Italian"
-mkdir "%WORKING_DIRECTORY%\ROM\GameMenus\LocalizedMenuAssets\Japanese"
-mkdir "%WORKING_DIRECTORY%\ROM\GameMenus\LocalizedMenuAssets\Korean"
-mkdir "%WORKING_DIRECTORY%\ROM\GameMenus\LocalizedMenuAssets\Spanish"
-move /Y %WORKING_DIRECTORY%\ROM\advertise\* "%WORKING_DIRECTORY%\ROM\GameMenus"
-move /Y %WORKING_DIRECTORY%\ROM\advertise\E\* "%WORKING_DIRECTORY%\ROM\GameMenus\LocalizedMenuAssets\English"
-move /Y %WORKING_DIRECTORY%\ROM\advertise\F\* "%WORKING_DIRECTORY%\ROM\GameMenus\LocalizedMenuAssets\French"
-move /Y %WORKING_DIRECTORY%\ROM\advertise\G\* "%WORKING_DIRECTORY%\ROM\GameMenus\LocalizedMenuAssets\German"
-move /Y %WORKING_DIRECTORY%\ROM\advertise\I\* "%WORKING_DIRECTORY%\ROM\GameMenus\LocalizedMenuAssets\Italian"
-move /Y %WORKING_DIRECTORY%\ROM\advertise\J\* "%WORKING_DIRECTORY%\ROM\GameMenus\LocalizedMenuAssets\Japanese"
-move /Y %WORKING_DIRECTORY%\ROM\advertise\K\* "%WORKING_DIRECTORY%\ROM\GameMenus\LocalizedMenuAssets\Korean"
-move /Y %WORKING_DIRECTORY%\ROM\advertise\S\* "%WORKING_DIRECTORY%\ROM\GameMenus\LocalizedMenuAssets\Spanish"
 
-rem
-rem ADD OTHER MENU ITEMS INSIDE
-rem
-mkdir "%WORKING_DIRECTORY%\ROM\GameMenus\TransitionModels"
-move /Y %WORKING_DIRECTORY%\ROM\adv_ef_warpa.dff "%WORKING_DIRECTORY%\ROM\GameMenus\TransitionModels"
-move /Y %WORKING_DIRECTORY%\ROM\adv_ef_warpb.dff "%WORKING_DIRECTORY%\ROM\GameMenus\TransitionModels"
-move /Y %WORKING_DIRECTORY%\ROM\adv_sonicoutline.dff "%WORKING_DIRECTORY%\ROM\GameMenus\TransitionModels"
-mkdir "%WORKING_DIRECTORY%\ROM\GameMenus\SpecialStageTimeUpModels"
-mkdir "%WORKING_DIRECTORY%\ROM\GameMenus\SpecialStageTimeUpModels\French"
-mkdir "%WORKING_DIRECTORY%\ROM\GameMenus\SpecialStageTimeUpModels\German"
-mkdir "%WORKING_DIRECTORY%\ROM\GameMenus\SpecialStageTimeUpModels\Italian"
-mkdir "%WORKING_DIRECTORY%\ROM\GameMenus\SpecialStageTimeUpModels\Spanish"
-mkdir "%WORKING_DIRECTORY%\ROM\GameMenus\SpecialStageTimeUpModels\English & Japanese"
-move /Y %WORKING_DIRECTORY%\ROM\adv_timeup.dff "%WORKING_DIRECTORY%\ROM\GameMenus\SpecialStageTimeUpModels\English&Japanese"
-move /Y %WORKING_DIRECTORY%\ROM\adv_timeup_fr.dff "%WORKING_DIRECTORY%\ROM\GameMenus\SpecialStageTimeUpModels\French"
-move /Y %WORKING_DIRECTORY%\ROM\adv_timeup_ge.dff "%WORKING_DIRECTORY%\ROM\GameMenus\SpecialStageTimeUpModels\German"
-move /Y %WORKING_DIRECTORY%\ROM\adv_timeup_it.dff "%WORKING_DIRECTORY%\ROM\GameMenus\SpecialStageTimeUpModels\Italian"
-move /Y %WORKING_DIRECTORY%\ROM\adv_timeup_sp.dff "%WORKING_DIRECTORY%\ROM\GameMenus\SpecialStageTimeUpModels\Spanish"
+REM ############################################### USER CHOICE 01 BEGIN: DEFAULT CONVERSION
 
-rem
-rem Move Main Menu Chars!
-rem
-mkdir "%WORKING_DIRECTORY%\ROM\GameMenus\MainMenuCharacters"
-for %%f in ("%WORKING_DIRECTORY%\ROM\GameMenus\adv_pl*.one") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\GameMenus\MainMenuCharacters\")
-cd "%WORKING_DIRECTORY%\ROM\GameMenus\MainMenuCharacters\"
-call %WORKING_DIRECTORY%\Scripts\Current\GenerateMenuCharacters.bat
+rem #01 REARRANGE ADVERTISE
+echo "[01/30] REARRANGE ADVERTISE"
+call :ReArrangeAdvertise
 
-rem
-rem Decompress PRS Fonts
-rem
-cd %WORKING_DIRECTORY%
-mkdir "%WORKING_DIRECTORY%\ROM\GameMenus\Fonts"
-for %%f in ("%WORKING_DIRECTORY%\ROM\GameMenus\*.prs") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\GameMenus\Fonts")
-for %%f in ("%WORKING_DIRECTORY%\ROM\GameMenus\Fonts\*.prs") do (%WORKING_DIRECTORY%\Tools\PrsDec\PrsDec.exe %%f %%~pnf.bin)
-for %%f in ("%WORKING_DIRECTORY%\ROM\GameMenus\Fonts\*.prs") do (DEL /F %%f)
+rem #02 ADD OTHER ITEMS TO MAINMENU
+echo "[02/30] ADD OTHER ITEMS TO MAINMENU"
+call :OtherMenuItems
 
-rem
-rem Move over Unused Files
-rem
-mkdir "%WORKING_DIRECTORY%\ROM\GameMenus\Unused"
-cd "%WORKING_DIRECTORY%\ROM\GameMenus\Unused"
-mkdir "%WORKING_DIRECTORY%\ROM\GameMenus\Unused\EarlyE3-10.8Title Screen"
-mkdir "%WORKING_DIRECTORY%\ROM\GameMenus\Unused\EarlyPre10.8ProtoAudioMenu"
-mkdir "%WORKING_DIRECTORY%\ROM\GameMenus\Unused\E3BuildMainMenuAssets"
-move /Y "%WORKING_DIRECTORY%\ROM\GameMenus\adv_title.one" "%WORKING_DIRECTORY%\ROM\GameMenus\Unused\EarlyE3-10.8Title Screen"
-move /Y "%WORKING_DIRECTORY%\ROM\GameMenus\adv_audio.one" "%WORKING_DIRECTORY%\ROM\GameMenus\Unused\EarlyPre10.8ProtoAudioMenu"
-move /Y "%WORKING_DIRECTORY%\ROM\GameMenus\adv_e3rom.one" "%WORKING_DIRECTORY%\ROM\GameMenus\Unused\E3BuildMainMenuAssets"
- 
-rem
-rem Group Assets
-rem
-mkdir "%WORKING_DIRECTORY%\ROM\GameMenus\Assets"
-for %%f in ("%WORKING_DIRECTORY%\ROM\GameMenus\adv_*") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\GameMenus\Assets")
-move /Y "%WORKING_DIRECTORY%\ROM\GameMenus\as_emblem.one" "%WORKING_DIRECTORY%\ROM\GameMenus\Assets"
-cd %WORKING_DIRECTORY%\ROM\GameMenus\Assets
-call %WORKING_DIRECTORY%\Scripts\Current\GroupAssets.bat
+rem #03 MOVE MAIN MENU CHARS!
+echo "[03/30] MOVE MAIN MENU CHARS"
+call :OtherMenuChars
+call :GenerateMenuCharacters
 
-rem
-rem Rename Language Specific Assets
-rem
-for /D %%d in ("%WORKING_DIRECTORY%\ROM\GameMenus\LocalizedMenuAssets\*") do (cd %%d & call "%WORKING_DIRECTORY%\Scripts\Current\RenameLocaleFiles.bat")
-cd %WORKING_DIRECTORY%
+rem #04 DECOMPRESS PRS FONTS
+echo "[04/30] DECOMPRESS PRS FONTS"
+call :DecompressPrsFonts
 
-rem
-rem Add Menu Text
-rem
-mkdir "%WORKING_DIRECTORY%\ROM\GameMenus\GameMenuText"
-for %%f in ("%WORKING_DIRECTORY%\ROM\Text\*.utx") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\GameMenus\GameMenuText")
-mkdir "%WORKING_DIRECTORY%\ROM\GameMenus\CreditsScreenText"
-move /Y "%WORKING_DIRECTORY%\ROM\Text\staffroll.csv" "%WORKING_DIRECTORY%\ROM\GameMenus\CreditsScreenText"
+rem #05 MOVE UNUSED MENU FILES
+echo "[05/30] MOVE UNUSED MENU FILES"
+call :MoveUnusedMenuFiles
 
-rem
-rem Bundle Game Code Together
-rem
-mkdir "%WORKING_DIRECTORY%\ROM\GameCode\StageRelocatableModuleFiles"
-cd "%WORKING_DIRECTORY%\ROM\GameCode\StageRelocatableModuleFiles"
-call %WORKING_DIRECTORY%\Scripts\Current\CreateLevelFolders.bat
-cd %WORKING_DIRECTORY%\ROM\
+rem #06 GROUP MAIN MENU ASSETS
+echo "[06/30] GROUP MAIN MENU ASSETS"
+call :GroupMainMenuAssets
+call :HardcodeGroupAssetsBatch
 
-for /D %%d in ("%WORKING_DIRECTORY%\ROM\GameCode\StageRelocatableModuleFiles\*") do (
-	for %%f in (*.rel) do (
-		set FileName=%%~nf
-		set FolderName=%%~nd
-		set First5Letters=!FileName:~0,5!
-		set LevelIDRel=!FileName:~5,2!
-		set LevelIDFolder=!FolderName:~6,2!
-		if /I !First5Letters!==stage ( if /I !LevelIDRel!==!LevelIDFolder! ( move /Y %%f "%%d\" ) ) else ( move /Y %%f "%WORKING_DIRECTORY%\ROM\GameCode\" )
-	)
-)
-move /Y "%WORKING_DIRECTORY%\ROM\&&systemdata\*.dol" "%WORKING_DIRECTORY%\ROM\GameCode\"
-move /Y "%WORKING_DIRECTORY%\ROM\TSonic.str" "%WORKING_DIRECTORY%\ROM\GameCode\"
-@echo Similar stages and zones share one unique .rel file, e.g. stage01D.rel is used for Seaside Hill and Ocean Palace.> "%WORKING_DIRECTORY%\ROM\GameCode\StageRelocatableModuleFiles\Note.txt"
-@echo TSonic.str (and TSonicD.str) is simply a log of the compilation of the current ROM, showing what assets have been rebuilt for this version.\n Start.dol (typically named), is the equivalent of the main executable of the game (.elf on PS2, .exe on PC and .xex on XBOX).> "%WORKING_DIRECTORY%\ROM\GameCode\Note.txt"
-rem
-rem Set up Event Handling
-rem
-mkdir "%WORKING_DIRECTORY%\ROM\Events"
-mkdir "%WORKING_DIRECTORY%\ROM\Events\TeamSonicEvents"
-mkdir "%WORKING_DIRECTORY%\ROM\Events\TeamDarkEvents"
-mkdir "%WORKING_DIRECTORY%\ROM\Events\TeamRoseEvents"
-mkdir "%WORKING_DIRECTORY%\ROM\Events\TeamChaotixEvents"
-mkdir "%WORKING_DIRECTORY%\ROM\Events\LastStoryEvents"
-mkdir "%WORKING_DIRECTORY%\ROM\Events\Other~UnusedEvents"
-for %%f in ("%WORKING_DIRECTORY%\ROM\event*") do (move /Y "%%f" "%WORKING_DIRECTORY%\ROM\Events\")
-for %%f in ("%WORKING_DIRECTORY%\ROM\Events\event00*") do (move /Y "%%f" "%WORKING_DIRECTORY%\ROM\Events\TeamSonicEvents\")
-for %%f in ("%WORKING_DIRECTORY%\ROM\Events\event01*") do (move /Y "%%f" "%WORKING_DIRECTORY%\ROM\Events\TeamDarkEvents\")
-for %%f in ("%WORKING_DIRECTORY%\ROM\Events\event02*") do (move /Y "%%f" "%WORKING_DIRECTORY%\ROM\Events\TeamRoseEvents\")
-for %%f in ("%WORKING_DIRECTORY%\ROM\Events\event03*") do (move /Y "%%f" "%WORKING_DIRECTORY%\ROM\Events\TeamChaotixEvents\")
-for %%f in ("%WORKING_DIRECTORY%\ROM\Events\event04*") do (move /Y "%%f" "%WORKING_DIRECTORY%\ROM\Events\LastStoryEvents\")
-for %%f in ("%WORKING_DIRECTORY%\ROM\Events\event*") do (move /Y "%%f" "%WORKING_DIRECTORY%\ROM\Events\TeamSonicEvents\")
+rem #07 LANGUAGE SPECIFIC ASSETS
+echo "[07/30] LANGUAGE SPECIFIC ASSETS"
+call :RenameLanguageSpecificMenuAssets
 
-rem SONIC
-rem Auto Gen Folders based on Suffix Discriminant
-cd %WORKING_DIRECTORY%\ROM\Events\TeamSonicEvents
-for %%f in ("%WORKING_DIRECTORY%\ROM\Events\TeamSonicEvents\event0*.scr") do (
-	set suffix=%%~nxf
-	if /I not !suffix:~-6!==_e.scr mkdir "%%~pnf"
-)
+rem #08 MOVE MAIN MENU TEXT
+echo "[08/30] MOVE MAIN MENU TEXT"
+call :MoveMainMenuText
 
-for /D %%d in ("%WORKING_DIRECTORY%\ROM\Events\TeamSonicEvents\*") do (
-	for %%f in ("%WORKING_DIRECTORY%\ROM\Events\TeamSonicEvents\*") do (
-		set directoryname=%%~nxd
-		set filename=%%~nf
-		set test=!filename:~0,9!
-		if /I !test!==!directoryname! (move /Y %%f %%d\)
-	)
-)
+rem #09 MOVE GAMECUBE GAME CODE
+echo "[09/30] MOVE GAMECUBE GAME CODE"
+call :GameCubeGameCode
 
-rem DARK
-rem Auto Gen Folders based on Suffix Discriminant
-cd %WORKING_DIRECTORY%\ROM\Events\TeamDarkEvents
-for %%f in ("%WORKING_DIRECTORY%\ROM\Events\TeamDarkEvents\event0*.scr") do (
-	set suffix=%%~nxf
-	if /I not !suffix:~-6!==_e.scr mkdir "%%~pnf"
-)
+rem #10 SET UP INGAME EVENTS 
+echo "[10/30] EXTRACT AND REARRANGE INGAME EVENTS"
+call :SonicHeroesEvents
 
-for /D %%d in ("%WORKING_DIRECTORY%\ROM\Events\TeamDarkEvents\*") do (
-	for %%f in ("%WORKING_DIRECTORY%\ROM\Events\TeamDarkEvents\*") do (
-		set directoryname=%%~nxd
-		set filename=%%~nf
-		set test=!filename:~0,9!
-		if /I !test!==!directoryname! (move /Y %%f %%d\)
-	)
-)
+rem #11 SET UP CHARACTER MODELS
+echo "[11/30] SET UP CHARACTER MODELS"
+call :SetupCharacters
 
-rem ROSE
-rem Auto Gen Folders based on Suffix Discriminant
-cd %WORKING_DIRECTORY%\ROM\Events\TeamRoseEvents
-for %%f in ("%WORKING_DIRECTORY%\ROM\Events\TeamRoseEvents\event0*.scr") do (
-	set suffix=%%~nxf
-	if /I not !suffix:~-6!==_e.scr mkdir "%%~pnf"
-)
+rem #12 SET UP LEVELS
+echo "[12/30] SET UP LEVELS"
+call :SetupLevelsDirectories
+call :MoveLevelsAssets
+call :SortOutCommonObjects
+call :MoveGenericStageTitles
+call :MoveCharacterStageTitles
+call :MoveActionStageFilesToStageDir-DAT
+call :MoveActionStageFilesToStageDir-DMO
+call :MoveActionStageFilesToStageDir-TXC
+call :MoveActionStageFilesToStageDir-SPL
+call :MoveActionStageFilesToStageDir-TXD
+call :MoveActionStageFilesToStageDir-ONE
+call :MoveActionStageFilesToStageDir-CL
+call :MoveActionStageFilesToStageDir-BIN
+call :MoveActionStageFilesToStageDir-BMP
 
-for /D %%d in ("%WORKING_DIRECTORY%\ROM\Events\TeamRoseEvents\*") do (
-	for %%f in ("%WORKING_DIRECTORY%\ROM\Events\TeamRoseEvents\*") do (
-		set directoryname=%%~nxd
-		set filename=%%~nf
-		set test=!filename:~0,9!
-		if /I !test!==!directoryname! (move /Y %%f %%d\)
-	)
-)
-
-rem CHAOTIX
-rem Auto Gen Folders based on Suffix Discriminant
-cd %WORKING_DIRECTORY%\ROM\Events\TeamChaotixEvents
-for %%f in ("%WORKING_DIRECTORY%\ROM\Events\TeamChaotixEvents\event0*.scr") do (
-	set suffix=%%~nxf
-	if /I not !suffix:~-6!==_e.scr mkdir "%%~pnf"
-)
-
-for /D %%d in ("%WORKING_DIRECTORY%\ROM\Events\TeamChaotixEvents\*") do (
-	for %%f in ("%WORKING_DIRECTORY%\ROM\Events\TeamChaotixEvents\*") do (
-		set directoryname=%%~nxd
-		set filename=%%~nf
-		set test=!filename:~0,9!
-		if /I !test!==!directoryname! (move /Y %%f %%d\)
-	)
-)
-
-rem LAST
-rem Auto Gen Folders based on Suffix Discriminant
-cd %WORKING_DIRECTORY%\ROM\Events\LastStoryEvents
-for %%f in ("%WORKING_DIRECTORY%\ROM\Events\LastStoryEvents\event0*.scr") do (
-	set suffix=%%~nxf
-	if /I not !suffix:~-6!==_e.scr mkdir "%%~pnf"
-)
-
-for /D %%d in ("%WORKING_DIRECTORY%\ROM\Events\LastStoryEvents\*") do (
-	for %%f in ("%WORKING_DIRECTORY%\ROM\Events\LastStoryEvents\*") do (
-		set directoryname=%%~nxd
-		set filename=%%~nf
-		set test=!filename:~0,9!
-		if /I !test!==!directoryname! (move /Y %%f %%d\)
-	)
-)
-
-rem UNUSED
-rem Auto Gen Folders based on Suffix Discriminant
-cd %WORKING_DIRECTORY%\ROM\Events\Other~UnusedEvents
-for %%f in ("%WORKING_DIRECTORY%\ROM\Events\Other~UnusedEvents\event0*.scr") do (
-	set suffix=%%~nxf
-	if /I not !suffix:~-6!==_e.scr mkdir "%%~pnf"
-)
-
-for /D %%d in ("%WORKING_DIRECTORY%\ROM\Events\Other~UnusedEvents\*") do (
-	for %%f in ("%WORKING_DIRECTORY%\ROM\Events\Other~UnusedEvents\*") do (
-		set directoryname=%%~nxd
-		set filename=%%~nf
-		set test=!filename:~0,9!
-		if /I !test!==!directoryname! (move /Y %%f %%d\)
-	)
-)
-
-rem
-rem Handle Character Models
-rem
-cd %WORKING_DIRECTORY%\ROM\
-ren playmodel "CharacterModels"
-cd %WORKING_DIRECTORY%\ROM\CharacterModels
-call %WORKING_DIRECTORY%\Scripts\Current\CreateCharacterFolders.bat
-
-rem For Each Directory Do Sort Out Animations Models And Textures
-for /D %%d in ("%WORKING_DIRECTORY%\ROM\CharacterModels\*") do (
-	for %%f in ("%%d\*") do (
-		set filename=%%~nf
-		set directory=%%~nxf
-		set test=!filename:~-4!
-		if /I !test!==_anm (mkdir "%%~pfAnimations" & move "%%f" "%%~pfAnimations\")
-	)
-)
-
-for /D %%d in ("%WORKING_DIRECTORY%\ROM\CharacterModels\*") do (
-	for %%f in ("%%d\*") do (
-		set filename=%%~nf
-		set directory=%%~nxf
-		set test=!filename:~-4!
-		if /I !test!==_dff (mkdir "%%~pfModels" & move "%%f" "%%~pfModels\")
-	)
-)
-
-for /D %%d in ("%WORKING_DIRECTORY%\ROM\CharacterModels\*") do (
-	for %%f in ("%%d\*") do (
-		set filename=%%~nxf
-		set directory=%%~nxf
-		set test=!filename:~-4!
-		if /I !test!==.txd (mkdir "%%~pfTextures" & move "%%f" "%%~pfTextures\")
-	)
-)
-
-rem
-rem Set up Stages Rewrite Full X2
-rem
-
-mkdir "%WORKING_DIRECTORY%\ROM\Levels\ActionStages"
-mkdir "%WORKING_DIRECTORY%\ROM\Levels\Other\SETIDTable"
-mkdir "%WORKING_DIRECTORY%\ROM\Levels\Other\CommonParticleData"
-mkdir "%WORKING_DIRECTORY%\ROM\Levels\Other\"
-mkdir "%WORKING_DIRECTORY%\ROM\Levels\CommonObjects"
-mkdir "%WORKING_DIRECTORY%\ROM\Levels\Unused\CommonObjects"
-cd "%WORKING_DIRECTORY%\ROM\Levels\ActionStages"
-call %WORKING_DIRECTORY%\Scripts\Current\CreateLevelFolders.bat
-for /D %%d in ("%WORKING_DIRECTORY%\ROM\Levels\ActionStages\*") do (
-	mkdir "%%d\Geometry"
-	mkdir "%%d\CustomFalcoEnemy"
-	mkdir "%%d\StageSpecificObjects\GeometryAndEnvironmentModels"
-	mkdir "%%d\TitleCardMissionText"
-	mkdir "%%d\TitleCard"
-	mkdir "%%d\TitleCard\ExtraMission"
-	mkdir "%%d\TitleCard\SuperHard"
-	mkdir "%%d\Collision"
-	mkdir "%%d\Collision\WaterCollision"
-	mkdir "%%d\Collision\DeathPlanes"
-	mkdir "%%d\ObjectLayouts"
-	mkdir "%%d\ObjectLayouts\AllTeams"
-	mkdir "%%d\ObjectLayouts\TeamSonic"
-	mkdir "%%d\ObjectLayouts\TeamDark"
-	mkdir "%%d\ObjectLayouts\TeamRose"
-	mkdir "%%d\ObjectLayouts\TeamChaotix"
-	mkdir "%%d\ObjectLayouts\SuperHard"
-	mkdir "%%d\ObjectLayouts\DecorationLayouts"	
-	mkdir "%%d\IdleAutoplayDemos"
-	mkdir "%%d\LightingData"
-	mkdir "%%d\CameraData"
-	mkdir "%%d\GeometryVisibilityData"
-	mkdir "%%d\Textures"
-	mkdir "%%d\IndirectionalData"
-	mkdir "%%d\ParticleData"
-	mkdir "%%d\ExtraSplineData"
-	mkdir "%%d\Unknown"
-)
-
-REM MOVE ALL THE STUFF
-REM MOVE ALL THE STUFF
-REM MOVE ALL THE STUFF
-for %%f in ("%WORKING_DIRECTORY%\ROM\s**obj.one") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ActionStages")
-for %%f in ("%WORKING_DIRECTORY%\ROM\s**MRG.one") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ActionStages")
-for %%f in ("%WORKING_DIRECTORY%\ROM\s**_flyer.one") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ActionStages")
-for %%f in ("%WORKING_DIRECTORY%\ROM\s**.one") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ActionStages")
-for %%f in ("%WORKING_DIRECTORY%\ROM\stg**.one") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ActionStages")
-for %%f in ("%WORKING_DIRECTORY%\ROM\collisions\*.cl") do (move /Y "%%f" "%WORKING_DIRECTORY%\ROM\Levels\ActionStages")
-for %%f in ("%WORKING_DIRECTORY%\ROM\s**_PB.bin") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ActionStages")
-for %%f in ("%WORKING_DIRECTORY%\ROM\s**_P1.bin") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ActionStages")
-for %%f in ("%WORKING_DIRECTORY%\ROM\s**_P2.bin") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ActionStages")
-for %%f in ("%WORKING_DIRECTORY%\ROM\s**_P3.bin") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ActionStages")
-for %%f in ("%WORKING_DIRECTORY%\ROM\s**_P4.bin") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ActionStages")
-for %%f in ("%WORKING_DIRECTORY%\ROM\s**_P5.bin") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ActionStages")
-for %%f in ("%WORKING_DIRECTORY%\ROM\s**_DB.bin") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ActionStages")
-for %%f in ("%WORKING_DIRECTORY%\ROM\stgtitle\mission\*.bmp") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ActionStages")
-for %%f in ("%WORKING_DIRECTORY%\ROM\stgtitle\*.one") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ActionStages")
-for %%f in ("%WORKING_DIRECTORY%\ROM\s**.dmo") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ActionStages")
-for %%f in ("%WORKING_DIRECTORY%\ROM\s**_light.bin") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ActionStages")
-for %%f in ("%WORKING_DIRECTORY%\ROM\s**_cam.bin") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ActionStages")
-for %%f in ("%WORKING_DIRECTORY%\ROM\s**_blk.bin") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ActionStages")
-for %%f in ("%WORKING_DIRECTORY%\ROM\s**_indinfo.dat") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ActionStages")
-for %%f in ("%WORKING_DIRECTORY%\ROM\s**_ptcl.bin") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ActionStages")
-for %%f in ("%WORKING_DIRECTORY%\ROM\s**_ptclplay.bin") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ActionStages")
-for %%f in ("%WORKING_DIRECTORY%\ROM\s**.txc") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ActionStages")
-for %%f in ("%WORKING_DIRECTORY%\ROM\s**.spl") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ActionStages")
-for %%f in ("%WORKING_DIRECTORY%\ROM\Textures\s**.txd") do (
-	set filename=%%~nf
-	set test1=!filename:~-0,3!
-	if /I not !test1!==stg (set test2=!filename:~0,8!) else (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ActionStages")
-	if /I not !test2!==startbtn (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ActionStages")
-)
-
-REM COMMON OBJS
-REM Fixes for object filter inaccuracies, and move the common objects.
-for %%f in ("%WORKING_DIRECTORY%\ROM\Levels\ActionStages\stg06_kw_hanabi_**.one") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\CommonObjects")
-move /Y "%WORKING_DIRECTORY%\ROM\Levels\ActionStages\stgmem0910.one" "%WORKING_DIRECTORY%\ROM\Levels\CommonObjects"
-
-REM Manually move Common Objects Across to the correct directories.
-for %%f in ("%WORKING_DIRECTORY%\ROM\obj*_Prop*.dff") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\CommonObjects")
-for %%f in ("%WORKING_DIRECTORY%\ROM\bob*.one") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\CommonObjects")
-move /Y "%WORKING_DIRECTORY%\ROM\rain_ita.dff" "%WORKING_DIRECTORY%\ROM\Levels\CommonObjects"
-move /Y "%WORKING_DIRECTORY%\ROM\obj0708_sparks.dff" "%WORKING_DIRECTORY%\ROM\Levels\CommonObjects"
-move /Y "%WORKING_DIRECTORY%\ROM\primModels.one" "%WORKING_DIRECTORY%\ROM\Levels\Unused\CommonObjects"
-move /Y "%WORKING_DIRECTORY%\ROM\indirectEditor.dff" "%WORKING_DIRECTORY%\ROM\Levels\Unused\CommonObjects"
-move /Y "%WORKING_DIRECTORY%\ROM\null.dff" "%WORKING_DIRECTORY%\ROM\Levels\Unused\CommonObjects"
-move /Y "%WORKING_DIRECTORY%\ROM\comobj.one" "%WORKING_DIRECTORY%\ROM\Levels\CommonObjects"
-
-mkdir  "%WORKING_DIRECTORY%\ROM\Levels\CommonObjects\Bomb Effect\Model\"
-mkdir  "%WORKING_DIRECTORY%\ROM\Levels\CommonObjects\Bomb Effect\Animation\"
-move /Y "%WORKING_DIRECTORY%\ROM\ef_bomb.dff" "%WORKING_DIRECTORY%\ROM\Levels\CommonObjects\Bomb Effect\Model\"
-move /Y "%WORKING_DIRECTORY%\ROM\ef_bomb.anm" "%WORKING_DIRECTORY%\ROM\Levels\CommonObjects\Bomb Effect\Animation\"
-
-cd "%WORKING_DIRECTORY%\ROM\Levels\CommonObjects"
-call %WORKING_DIRECTORY%\Scripts\Current\RenameCommonObjects.bat
 
 rem
 rem Move Stuff Level Stuff To Proper Directory
 rem
-
-for %%f in ("%WORKING_DIRECTORY%\ROM\Levels\ActionStages\*") do ( 
-	set FileName=%%~nf
-	
-	set TeamChaotixTest=!FileName:~-0,15!
-	set EnglishTeamTitleTest=!FileName:~-1!
-	set Team4CharTest=!FileName:~-0,12!
-	set Team5CharTest=!FileName:~-0,13!
-	set GenericStageTitleTest=!FileName:~-0,13!
-	set GenericStageTitleID=!FileName:~13,3!
-
-	REM TEST FOR TEAMS
-		
-	if /I !TeamChaotixTest!==stgCHAOTIXtitle (if /I !EnglishTeamTitleTest!==E (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\TeamBattleTitles\Chaotix\English\") else (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\TeamBattleTitles\Chaotix\"))
-		
-	if /I !Team4CharTest!==stgDARKtitle (if /I !EnglishTeamTitleTest!==E (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\TeamBattleTitles\Dark\English") else (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\TeamBattleTitles\Dark\"))
-		
-	if /I !Team4CharTest!==stgROSEtitle (if /I !EnglishTeamTitleTest!==E (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\TeamBattleTitles\Rose\English") else (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\TeamBattleTitles\Rose\"))
-		
-	if /I !Team5CharTest!==stgSONICtitle (if /I !EnglishTeamTitleTest!==E (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\TeamBattleTitles\Sonic\English") else (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\TeamBattleTitles\Sonic\"))
-		
-	if /I !GenericStageTitleTest!==stgtitle_disp (
-		if /I !GenericStageTitleID!==EEX (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\GenericStageTitles\English\ExtraMission\")
-		if /I !GenericStageTitleID!==ESH (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\GenericStageTitles\English\SuperHard\")
-		if /I !GenericStageTitleID!==E (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\GenericStageTitles\English\")
-		
-		if /I !GenericStageTitleID!==FSH (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\GenericStageTitles\French\ExtraMission\")
-		if /I !GenericStageTitleID!==FEX (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\GenericStageTitles\French\SuperHard\")
-		if /I !GenericStageTitleID!==F (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\GenericStageTitles\French\")
-			
-		if /I !GenericStageTitleID!==GSH (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\GenericStageTitles\German\ExtraMission\")
-		if /I !GenericStageTitleID!==GEX (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\GenericStageTitles\German\SuperHard\")
-		if /I !GenericStageTitleID!==G (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\GenericStageTitles\German\")
-		
-		if /I !GenericStageTitleID!==ISH (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\GenericStageTitles\Italian\ExtraMission\")
-		if /I !GenericStageTitleID!==IEX (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\GenericStageTitles\Italian\SuperHard\")
-		if /I !GenericStageTitleID!==I (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\GenericStageTitles\Italian\")
-		
-		if /I !GenericStageTitleID!==SSH (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\GenericStageTitles\Spanish\ExtraMission\")
-		if /I !GenericStageTitleID!==SEX (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\GenericStageTitles\Spanish\SuperHard\")
-		if /I !GenericStageTitleID!==S (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\GenericStageTitles\Spanish\")
-	)
-)
-
-for /D %%d in ("%WORKING_DIRECTORY%\ROM\Levels\ActionStages\*") do (
-	set StageDirectory=%%~nd
-	for %%f in ("%WORKING_DIRECTORY%\ROM\Levels\ActionStages\*") do ( 
-		set FileName=%%~nf
-		set directory=%%~nxd
-		set stagedirshort=!StageDirectory:~6,2!
-		set test1=!FileName:~-0,3!
-		
-		REM TEST FOR DIRECTORY
-		if /I not !test1!==stg (set test2=!FileName:~1,2!) else (set test2=!FileName:~3,2!)
-		if /I !test2!==!stagedirshort! (move /Y "%%~pnxf" "%%~pf!StageDirectory!\")
-		
-		echo "Current Directory #1: !directory!"
-	)
-)
+pause
 
 for /D %%d in ("%WORKING_DIRECTORY%\ROM\Levels\ActionStages\*") do (
 	for %%f in ("%%d\*") do ( 
@@ -505,6 +145,8 @@ for /D %%d in ("%WORKING_DIRECTORY%\ROM\Levels\ActionStages\*") do (
 		if /I !FileName!==stg!GeomFileNameTest2! (move /Y "%%f" "%%d\Geometry\")
 	)
 )
+
+pause
 
 REM
 REM SORT OUT THE UNUSUAL LEVEL STUFF (This is pt2 to last method)
@@ -619,8 +261,8 @@ mkdir "SoundEffects\SoundEffectSoundLibConfiguration"
 move /Y %WORKING_DIRECTORY%\ROM\GCAX.conf "%WORKING_DIRECTORY%\ROM\SoundEffects\SoundEffectSoundLibConfiguration\"
 for %%f in (%WORKING_DIRECTORY%\ROM\se_*.mlt) do (move /Y %%f "%WORKING_DIRECTORY%\ROM\SoundEffects\Sounds\")
 for %%f in (%WORKING_DIRECTORY%\ROM\se_*.bin) do (move /Y %%f "%WORKING_DIRECTORY%\ROM\SoundEffects\SoundEffectTables\")
-cd %WORKING_DIRECTORY%\ROM\SoundEffects\Sounds\ && call %WORKING_DIRECTORY%\Scripts\Current\CreateLevelFolders.bat
-cd %WORKING_DIRECTORY%\ROM\SoundEffects\SoundEffectTables\ && call %WORKING_DIRECTORY%\Scripts\Current\CreateLevelFolders.bat
+cd %WORKING_DIRECTORY%\ROM\SoundEffects\Sounds\ && goto CreateLevelFolders
+cd %WORKING_DIRECTORY%\ROM\SoundEffects\SoundEffectTables\ && goto CreateLevelFolders
 for /D %%d in ("%WORKING_DIRECTORY%\ROM\SoundEffects\*") do (
 	mkdir "%%d\Player\TeamSonic"
 	mkdir "%%d\Player\TeamDark"
@@ -920,7 +562,7 @@ mkdir "%WORKING_DIRECTORY%\ROM\Fonts~Text\MainMenus\TextFontMaps"
 REM HINTTEXT
 mkdir "%WORKING_DIRECTORY%\ROM\Fonts~Text\Hints\"
 cd "%WORKING_DIRECTORY%\ROM\Fonts~Text\Hints\"
-call %WORKING_DIRECTORY%\Scripts\Current\CreateLevelFolders.bat
+goto CreateLevelFolders
 
 for /D %%d in (%WORKING_DIRECTORY%\ROM\Fonts~Text\Hints\*) do (
 	mkdir "%%d\English"
@@ -1270,4 +912,868 @@ rem ALL HAIL MARKEYJESTER
 rem ALL HAIL MARKEYJESTER
 rem ALL HAIL MARKEYJESTER
 echo "DONE"
+
+REM METHODS
+REM ###########################################################################################################
+REM ###########################################################################################################
+REM ###########################################################################################################
+REM ###########################################################################################################
+REM ###########################################################################################################
+REM ###########################################################################################################
+REM ###########################################################################################################
+REM ###########################################################################################################
+REM ###########################################################################################################
+REM ###########################################################################################################
+REM ###########################################################################################################
+REM ###########################################################################################################
+REM METHODS
+
+:ReArrangeAdvertise
+mkdir "%WORKING_DIRECTORY%\ROM\GameMenus"
+mkdir "%WORKING_DIRECTORY%\ROM\GameMenus\LocalizedMenuAssets"
+mkdir "%WORKING_DIRECTORY%\ROM\GameMenus\LocalizedMenuAssets\English"
+mkdir "%WORKING_DIRECTORY%\ROM\GameMenus\LocalizedMenuAssets\French"
+mkdir "%WORKING_DIRECTORY%\ROM\GameMenus\LocalizedMenuAssets\German"
+mkdir "%WORKING_DIRECTORY%\ROM\GameMenus\LocalizedMenuAssets\Italian"
+mkdir "%WORKING_DIRECTORY%\ROM\GameMenus\LocalizedMenuAssets\Japanese"
+mkdir "%WORKING_DIRECTORY%\ROM\GameMenus\LocalizedMenuAssets\Korean"
+mkdir "%WORKING_DIRECTORY%\ROM\GameMenus\LocalizedMenuAssets\Spanish"
+move /Y %WORKING_DIRECTORY%\ROM\advertise\* "%WORKING_DIRECTORY%\ROM\GameMenus"
+move /Y %WORKING_DIRECTORY%\ROM\advertise\E\* "%WORKING_DIRECTORY%\ROM\GameMenus\LocalizedMenuAssets\English"
+move /Y %WORKING_DIRECTORY%\ROM\advertise\F\* "%WORKING_DIRECTORY%\ROM\GameMenus\LocalizedMenuAssets\French"
+move /Y %WORKING_DIRECTORY%\ROM\advertise\G\* "%WORKING_DIRECTORY%\ROM\GameMenus\LocalizedMenuAssets\German"
+move /Y %WORKING_DIRECTORY%\ROM\advertise\I\* "%WORKING_DIRECTORY%\ROM\GameMenus\LocalizedMenuAssets\Italian"
+move /Y %WORKING_DIRECTORY%\ROM\advertise\J\* "%WORKING_DIRECTORY%\ROM\GameMenus\LocalizedMenuAssets\Japanese"
+move /Y %WORKING_DIRECTORY%\ROM\advertise\K\* "%WORKING_DIRECTORY%\ROM\GameMenus\LocalizedMenuAssets\Korean"
+move /Y %WORKING_DIRECTORY%\ROM\advertise\S\* "%WORKING_DIRECTORY%\ROM\GameMenus\LocalizedMenuAssets\Spanish"
+goto :eof
+
+:OtherMenuItems
+mkdir "%WORKING_DIRECTORY%\ROM\GameMenus\TransitionModels"
+move /Y %WORKING_DIRECTORY%\ROM\adv_ef_warpa.dff "%WORKING_DIRECTORY%\ROM\GameMenus\TransitionModels"
+move /Y %WORKING_DIRECTORY%\ROM\adv_ef_warpb.dff "%WORKING_DIRECTORY%\ROM\GameMenus\TransitionModels"
+move /Y %WORKING_DIRECTORY%\ROM\adv_sonicoutline.dff "%WORKING_DIRECTORY%\ROM\GameMenus\TransitionModels"
+mkdir "%WORKING_DIRECTORY%\ROM\GameMenus\SpecialStageTimeUpModels"
+mkdir "%WORKING_DIRECTORY%\ROM\GameMenus\SpecialStageTimeUpModels\French"
+mkdir "%WORKING_DIRECTORY%\ROM\GameMenus\SpecialStageTimeUpModels\German"
+mkdir "%WORKING_DIRECTORY%\ROM\GameMenus\SpecialStageTimeUpModels\Italian"
+mkdir "%WORKING_DIRECTORY%\ROM\GameMenus\SpecialStageTimeUpModels\Spanish"
+mkdir "%WORKING_DIRECTORY%\ROM\GameMenus\SpecialStageTimeUpModels\English & Japanese"
+move /Y %WORKING_DIRECTORY%\ROM\adv_timeup.dff "%WORKING_DIRECTORY%\ROM\GameMenus\SpecialStageTimeUpModels\English&Japanese"
+move /Y %WORKING_DIRECTORY%\ROM\adv_timeup_fr.dff "%WORKING_DIRECTORY%\ROM\GameMenus\SpecialStageTimeUpModels\French"
+move /Y %WORKING_DIRECTORY%\ROM\adv_timeup_ge.dff "%WORKING_DIRECTORY%\ROM\GameMenus\SpecialStageTimeUpModels\German"
+move /Y %WORKING_DIRECTORY%\ROM\adv_timeup_it.dff "%WORKING_DIRECTORY%\ROM\GameMenus\SpecialStageTimeUpModels\Italian"
+move /Y %WORKING_DIRECTORY%\ROM\adv_timeup_sp.dff "%WORKING_DIRECTORY%\ROM\GameMenus\SpecialStageTimeUpModels\Spanish"
+goto :eof
+
+:OtherMenuChars
+mkdir "%WORKING_DIRECTORY%\ROM\GameMenus\MainMenuCharacters"
+for %%f in ("%WORKING_DIRECTORY%\ROM\GameMenus\adv_pl*.one") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\GameMenus\MainMenuCharacters\")
+cd "%WORKING_DIRECTORY%\ROM\GameMenus\MainMenuCharacters\"
+goto :eof
+
+:DecompressPrsFonts
+cd %WORKING_DIRECTORY%
+mkdir "%WORKING_DIRECTORY%\ROM\GameMenus\Fonts"
+for %%f in ("%WORKING_DIRECTORY%\ROM\GameMenus\*.prs") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\GameMenus\Fonts")
+for %%f in ("%WORKING_DIRECTORY%\ROM\GameMenus\Fonts\*.prs") do (%WORKING_DIRECTORY%\Tools\PrsDec\PrsDec.exe %%f %%~pnf.bin)
+for %%f in ("%WORKING_DIRECTORY%\ROM\GameMenus\Fonts\*.prs") do (DEL /F %%f)
+goto :eof
+
+:GenerateMenuCharacters
+mkdir "Amy"
+mkdir "CharmyBee"
+mkdir "BigTheCat"
+mkdir "Cream"
+mkdir "Espio"
+mkdir "Knuckles"
+mkdir "Omega"
+mkdir "Rouge"
+mkdir "Shadow"
+mkdir "Sonic"
+mkdir "Tails"
+mkdir "Vector"
+mkdir "AllPlayers"
+mkdir "Unused~Unidentified"
+move /Y adv_pl_amy.one "Amy\"
+move /Y adv_pl_bee.one "CharmyBee\"
+move /Y adv_pl_big.one "BigTheCat\"
+move /Y adv_pl_cream.one "Cream\"
+move /Y adv_pl_espio.one "Espio\"
+move /Y adv_pl_knuckles.one "Knuckles\"
+move /Y adv_pl_omega.one "Omega\"
+move /Y adv_pl_rouge.one "Rouge\"
+move /Y adv_pl_shadow.one "Shadow\"
+move /Y adv_pl_sonic.one "Sonic\"
+move /Y adv_pl_tails.one "Tails\"
+move /Y adv_pl_vector.one "Vector\"
+move /Y adv_player.one "AllPlayers\"
+for %%f in (adv_pl*.one) do (move /Y %%f "Unused~Unidentified\")
+goto :eof
+
+:MoveUnusedMenuFiles
+mkdir "%WORKING_DIRECTORY%\ROM\GameMenus\Unused"
+cd "%WORKING_DIRECTORY%\ROM\GameMenus\Unused"
+mkdir "%WORKING_DIRECTORY%\ROM\GameMenus\Unused\EarlyE3-10.8Title Screen"
+mkdir "%WORKING_DIRECTORY%\ROM\GameMenus\Unused\EarlyPre10.8ProtoAudioMenu"
+mkdir "%WORKING_DIRECTORY%\ROM\GameMenus\Unused\E3BuildMainMenuAssets"
+move /Y "%WORKING_DIRECTORY%\ROM\GameMenus\adv_title.one" "%WORKING_DIRECTORY%\ROM\GameMenus\Unused\EarlyE3-10.8Title Screen"
+move /Y "%WORKING_DIRECTORY%\ROM\GameMenus\adv_audio.one" "%WORKING_DIRECTORY%\ROM\GameMenus\Unused\EarlyPre10.8ProtoAudioMenu"
+move /Y "%WORKING_DIRECTORY%\ROM\GameMenus\adv_e3rom.one" "%WORKING_DIRECTORY%\ROM\GameMenus\Unused\E3BuildMainMenuAssets"
+goto :eof
+
+:GroupMainMenuAssets
+mkdir "%WORKING_DIRECTORY%\ROM\GameMenus\Assets"
+for %%f in ("%WORKING_DIRECTORY%\ROM\GameMenus\adv_*") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\GameMenus\Assets")
+move /Y "%WORKING_DIRECTORY%\ROM\GameMenus\as_emblem.one" "%WORKING_DIRECTORY%\ROM\GameMenus\Assets"
+cd %WORKING_DIRECTORY%\ROM\GameMenus\Assets
+goto :eof
+
+:HardcodeGroupAssetsBatch
+mkdir "MainMenuBackgroundAssets"
+mkdir "MainMenuOmochao"
+mkdir "MainMenuOmochaoHelpIcon"
+mkdir "AutosaveMenu"
+mkdir "CreditsScreenLogos"
+mkdir "MainMenuWindowTextures"
+mkdir "EmblemCountSpinningEmblem"
+
+move /Y adv_bg.one "MainMenuBackgroundAssets\"
+move /Y adv_chao.one "MainMenuOmochao\"
+move /Y adv_help.one "MainMenuOmochaoHelpIcon\"
+move /Y adv_save.one "AutosaveMenu\"
+move /Y adv_staffroll.one "CreditsScreenLogos\"
+move /Y adv_window.one "MainMenuWindowTextures\"
+move /Y as_emblem.one "EmblemCountSpinningEmblem\"
+goto :eof
+
+:RenameLanguageSpecificMenuAssets
+for /D %%d in ("%WORKING_DIRECTORY%\ROM\GameMenus\LocalizedMenuAssets\*") do (cd %%d & call "%WORKING_DIRECTORY%\Scripts\Current\RenameLocaleFiles.bat")
+goto :eof
+
+:MoveMainMenuText
+mkdir "%WORKING_DIRECTORY%\ROM\GameMenus\GameMenuText"
+for %%f in ("%WORKING_DIRECTORY%\ROM\Text\*.utx") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\GameMenus\GameMenuText")
+mkdir "%WORKING_DIRECTORY%\ROM\GameMenus\CreditsScreenText"
+move /Y "%WORKING_DIRECTORY%\ROM\Text\staffroll.csv" "%WORKING_DIRECTORY%\ROM\GameMenus\CreditsScreenText"
+goto :eof
+
+:CreateLevelFolders
+mkdir "Stage 01 - Seaside Hill"
+mkdir "Stage 02 - Ocean Palace"
+mkdir "Stage 03 - Grand Metropolis"
+mkdir "Stage 04 - Power Plant"
+mkdir "Stage 11 - Hang Castle"
+mkdir "Stage 12 - Mystic Mansion"
+mkdir "Stage 13 - Egg Fleet"
+mkdir "Stage 14 - Final Fortress"
+mkdir "Stage 20 - Egg Hawk"
+mkdir "Stage 21 - Team Battle 1"
+mkdir "Stage 22 - Robot Carnival"
+mkdir "Stage 23 - Egg Albatross"
+mkdir "Stage 25 - Final Fortress"
+mkdir "Stage 27 - Metal Madness"
+mkdir "Stage 28 - Metal Overlord"
+mkdir "Stage 29 - Sea Gate"
+mkdir "Stage 31 - Seaside Course"
+mkdir "Stage 32 - City Course"
+mkdir "Stage 33 - Casino Course"
+mkdir "Stage 60 - Seaside Hill 2P"
+mkdir "Stage 61 - Grand Metropolis 2P"
+mkdir "Stage 63 - City Top 2P"
+mkdir "Stage 65 - Turtle Shell 2P"
+mkdir "Stage 66 - Egg Treat 2P"
+mkdir "Stage 68 - Hot Elevator 2P"
+mkdir "Stage 69 - Road Rock 2P"
+mkdir "Stage 71 - Terror Hall 2P"
+mkdir "Stage 74 - Egg Fleet 2P"
+
+mkdir "Stage 00 - Test Level"
+mkdir "Stage 05 - Casino Park"
+mkdir "Stage 06 - BINGO Highway"
+mkdir "Stage 07 - Rail Canyon"
+mkdir "Stage 08 - Bullet Station"
+mkdir "Stage 09 - Frog Forest"
+mkdir "Stage 10 - Lost Jungle"
+mkdir "Stage 24 - Team Battle 2"
+mkdir "Stage 26 - Egg Emperor"
+mkdir "Stage 40 - Bonus Stage 2"
+mkdir "Stage 41 - Bonus Stage 1"
+mkdir "Stage 42 - Bonus Stage 3"
+mkdir "Stage 43 - Bonus Stage 4"
+mkdir "Stage 44 - Bonus Stage 5"
+mkdir "Stage 45 - Bonus Stage 6"
+mkdir "Stage 46 - Bonus Stage 7"
+mkdir "Stage 50 - Team Chaotix Rail Canyon"
+mkdir "Stage 62 - BINGO Highway 2P"
+mkdir "Stage 64 - Casino Ring 2P"
+mkdir "Stage 67 - Pinball Match 2P"
+mkdir "Stage 70 - Mad Express 2P"
+mkdir "Stage 72 - Rail Canyon 2P"
+mkdir "Stage 73 - Frog Forest 2P"
+mkdir "Stage 80 - Emerald Challenge 2"
+mkdir "Stage 81 - Emerald Challenge 1"
+mkdir "Stage 82 - Emerald Challenge 3"
+mkdir "Stage 83 - Emerald Challenge 4"
+mkdir "Stage 84 - Emerald Challenge 5"
+mkdir "Stage 85 - Emerald Challenge 6"
+mkdir "Stage 86 - Emerald Challenge 7"
+mkdir "Stage 87 - Special Stage 1 2P"
+mkdir "Stage 88 - Special Stage 2 2P"
+mkdir "Stage 89 - Special Stage 3 2P"
+
+mkdir "Stage 15 - Unused"
+mkdir "Stage 16 - Unused"
+mkdir "Stage 17 - Unused"
+mkdir "Stage 18 - Unused"
+mkdir "Stage 19 - Unused"
+mkdir "Stage 30 - Unused"
+mkdir "Stage 34 - Unused"
+mkdir "Stage 35 - Unused"
+mkdir "Stage 36 - Unused"
+mkdir "Stage 37 - Unused"
+mkdir "Stage 38 - Unused"
+mkdir "Stage 39 - Unused"
+mkdir "Stage 47 - Unused"
+mkdir "Stage 48 - Unused"
+mkdir "Stage 49 - Unused"
+mkdir "Stage 51 - Unused"
+mkdir "Stage 52 - Unused"
+mkdir "Stage 53 - Unused"
+mkdir "Stage 54 - Unused"
+mkdir "Stage 55 - Unused"
+mkdir "Stage 56 - Unused"
+mkdir "Stage 57 - Unused"
+mkdir "Stage 58 - Unused"
+mkdir "Stage 59 - Unused"
+mkdir "Stage 75 - Unused"
+mkdir "Stage 76 - Unused"
+mkdir "Stage 77 - Unused"
+mkdir "Stage 78 - Unused"
+mkdir "Stage 79 - Unused"
+mkdir "Stage 90 - Unused"
+mkdir "Stage 91 - Unused"
+mkdir "Stage 92 - Unused"
+mkdir "Stage 93 - Unused"
+mkdir "Stage 94 - Unused"
+mkdir "Stage 95 - Unused"
+mkdir "Stage 96 - Unused"
+mkdir "Stage 97 - Unused"
+mkdir "Stage 98 - Unused"
+mkdir "Stage 99 - Unused"
+
+mkdir "Stage XX - Common Assets\GenericStageTitles\English\ExtraMission"
+mkdir "Stage XX - Common Assets\GenericStageTitles\English\SuperHard"
+
+mkdir "Stage XX - Common Assets\GenericStageTitles\French\SuperHard"
+mkdir "Stage XX - Common Assets\GenericStageTitles\French\ExtraMission"
+
+mkdir "Stage XX - Common Assets\GenericStageTitles\German\ExtraMission"
+mkdir "Stage XX - Common Assets\GenericStageTitles\German\SuperHard"
+
+mkdir "Stage XX - Common Assets\GenericStageTitles\Italian\ExtraMission"
+mkdir "Stage XX - Common Assets\GenericStageTitles\Italian\SuperHard"
+
+mkdir "Stage XX - Common Assets\GenericStageTitles\Spanish\ExtraMission"
+mkdir "Stage XX - Common Assets\GenericStageTitles\Spanish\SuperHard"
+
+mkdir "Stage XX - Common Assets\TeamBattleTitles\Chaotix\English"
+mkdir "Stage XX - Common Assets\TeamBattleTitles\Rose\English"
+mkdir "Stage XX - Common Assets\TeamBattleTitles\Dark\English"
+mkdir "Stage XX - Common Assets\TeamBattleTitles\Sonic\English"
+goto :eof
+
+:GameCubeGameCode
+mkdir "%WORKING_DIRECTORY%\ROM\GameCode\StageRelocatableModuleFiles"
+cd "%WORKING_DIRECTORY%\ROM\GameCode\StageRelocatableModuleFiles"
+goto CreateLevelFolders
+cd %WORKING_DIRECTORY%\ROM\
+
+for /D %%d in ("%WORKING_DIRECTORY%\ROM\GameCode\StageRelocatableModuleFiles\*") do (
+	for %%f in (*.rel) do (
+		set FileName=%%~nf
+		set FolderName=%%~nd
+		set First5Letters=!FileName:~0,5!
+		set LevelIDRel=!FileName:~5,2!
+		set LevelIDFolder=!FolderName:~6,2!
+		if /I !First5Letters!==stage ( if /I !LevelIDRel!==!LevelIDFolder! ( move /Y %%f "%%d\" ) ) else ( move /Y %%f "%WORKING_DIRECTORY%\ROM\GameCode\" )
+	)
+)
+move /Y "%WORKING_DIRECTORY%\ROM\&&systemdata\*.dol" "%WORKING_DIRECTORY%\ROM\GameCode\"
+move /Y "%WORKING_DIRECTORY%\ROM\TSonic.str" "%WORKING_DIRECTORY%\ROM\GameCode\"
+move /Y "%WORKING_DIRECTORY%\ROM\TSonicD.str" "%WORKING_DIRECTORY%\ROM\GameCode\"
+goto :eof
+
+:SonicHeroesEvents
+mkdir "%WORKING_DIRECTORY%\ROM\Events\TeamSonicEvents"
+mkdir "%WORKING_DIRECTORY%\ROM\Events\TeamDarkEvents"
+mkdir "%WORKING_DIRECTORY%\ROM\Events\TeamRoseEvents"
+mkdir "%WORKING_DIRECTORY%\ROM\Events\TeamChaotixEvents"
+mkdir "%WORKING_DIRECTORY%\ROM\Events\LastStoryEvents"
+mkdir "%WORKING_DIRECTORY%\ROM\Events\Other~UnusedEvents"
+for %%f in ("%WORKING_DIRECTORY%\ROM\event*") do (move /Y "%%f" "%WORKING_DIRECTORY%\ROM\Events\")
+for %%f in ("%WORKING_DIRECTORY%\ROM\Events\event00*") do (move /Y "%%f" "%WORKING_DIRECTORY%\ROM\Events\TeamSonicEvents\")
+for %%f in ("%WORKING_DIRECTORY%\ROM\Events\event01*") do (move /Y "%%f" "%WORKING_DIRECTORY%\ROM\Events\TeamDarkEvents\")
+for %%f in ("%WORKING_DIRECTORY%\ROM\Events\event02*") do (move /Y "%%f" "%WORKING_DIRECTORY%\ROM\Events\TeamRoseEvents\")
+for %%f in ("%WORKING_DIRECTORY%\ROM\Events\event03*") do (move /Y "%%f" "%WORKING_DIRECTORY%\ROM\Events\TeamChaotixEvents\")
+for %%f in ("%WORKING_DIRECTORY%\ROM\Events\event04*") do (move /Y "%%f" "%WORKING_DIRECTORY%\ROM\Events\LastStoryEvents\")
+for %%f in ("%WORKING_DIRECTORY%\ROM\Events\event*") do (move /Y "%%f" "%WORKING_DIRECTORY%\ROM\Events\TeamSonicEvents\")
+
+rem SONIC
+rem Auto Gen Folders based on Suffix Discriminant
+cd %WORKING_DIRECTORY%\ROM\Events\TeamSonicEvents
+for %%f in ("%WORKING_DIRECTORY%\ROM\Events\TeamSonicEvents\event0*.scr") do (
+	set suffix=%%~nxf
+	if /I not !suffix:~-6!==_e.scr mkdir "%%~pnf"
+)
+
+for /D %%d in ("%WORKING_DIRECTORY%\ROM\Events\TeamSonicEvents\*") do (
+	for %%f in ("%WORKING_DIRECTORY%\ROM\Events\TeamSonicEvents\*") do (
+		set directoryname=%%~nxd
+		set filename=%%~nf
+		set test=!filename:~0,9!
+		if /I !test!==!directoryname! (move /Y %%f %%d\)
+	)
+)
+
+rem DARK
+rem Auto Gen Folders based on Suffix Discriminant
+cd %WORKING_DIRECTORY%\ROM\Events\TeamDarkEvents
+for %%f in ("%WORKING_DIRECTORY%\ROM\Events\TeamDarkEvents\event0*.scr") do (
+	set suffix=%%~nxf
+	if /I not !suffix:~-6!==_e.scr mkdir "%%~pnf"
+)
+
+for /D %%d in ("%WORKING_DIRECTORY%\ROM\Events\TeamDarkEvents\*") do (
+	for %%f in ("%WORKING_DIRECTORY%\ROM\Events\TeamDarkEvents\*") do (
+		set directoryname=%%~nxd
+		set filename=%%~nf
+		set test=!filename:~0,9!
+		if /I !test!==!directoryname! (move /Y %%f %%d\)
+	)
+)
+
+rem ROSE
+rem Auto Gen Folders based on Suffix Discriminant
+cd %WORKING_DIRECTORY%\ROM\Events\TeamRoseEvents
+for %%f in ("%WORKING_DIRECTORY%\ROM\Events\TeamRoseEvents\event0*.scr") do (
+	set suffix=%%~nxf
+	if /I not !suffix:~-6!==_e.scr mkdir "%%~pnf"
+)
+
+for /D %%d in ("%WORKING_DIRECTORY%\ROM\Events\TeamRoseEvents\*") do (
+	for %%f in ("%WORKING_DIRECTORY%\ROM\Events\TeamRoseEvents\*") do (
+		set directoryname=%%~nxd
+		set filename=%%~nf
+		set test=!filename:~0,9!
+		if /I !test!==!directoryname! (move /Y %%f %%d\)
+	)
+)
+
+rem CHAOTIX
+rem Auto Gen Folders based on Suffix Discriminant
+cd %WORKING_DIRECTORY%\ROM\Events\TeamChaotixEvents
+for %%f in ("%WORKING_DIRECTORY%\ROM\Events\TeamChaotixEvents\event0*.scr") do (
+	set suffix=%%~nxf
+	if /I not !suffix:~-6!==_e.scr mkdir "%%~pnf"
+)
+
+for /D %%d in ("%WORKING_DIRECTORY%\ROM\Events\TeamChaotixEvents\*") do (
+	for %%f in ("%WORKING_DIRECTORY%\ROM\Events\TeamChaotixEvents\*") do (
+		set directoryname=%%~nxd
+		set filename=%%~nf
+		set test=!filename:~0,9!
+		if /I !test!==!directoryname! (move /Y %%f %%d\)
+	)
+)
+
+rem LAST
+rem Auto Gen Folders based on Suffix Discriminant
+cd %WORKING_DIRECTORY%\ROM\Events\LastStoryEvents
+for %%f in ("%WORKING_DIRECTORY%\ROM\Events\LastStoryEvents\event0*.scr") do (
+	set suffix=%%~nxf
+	if /I not !suffix:~-6!==_e.scr mkdir "%%~pnf"
+)
+
+for /D %%d in ("%WORKING_DIRECTORY%\ROM\Events\LastStoryEvents\*") do (
+	for %%f in ("%WORKING_DIRECTORY%\ROM\Events\LastStoryEvents\*") do (
+		set directoryname=%%~nxd
+		set filename=%%~nf
+		set test=!filename:~0,9!
+		if /I !test!==!directoryname! (move /Y %%f %%d\)
+	)
+)
+
+rem UNUSED
+rem Auto Gen Folders based on Suffix Discriminant
+cd %WORKING_DIRECTORY%\ROM\Events\Other~UnusedEvents
+for %%f in ("%WORKING_DIRECTORY%\ROM\Events\Other~UnusedEvents\event0*.scr") do (
+	set suffix=%%~nxf
+	if /I not !suffix:~-6!==_e.scr mkdir "%%~pnf"
+)
+
+for /D %%d in ("%WORKING_DIRECTORY%\ROM\Events\Other~UnusedEvents\*") do (
+	for %%f in ("%WORKING_DIRECTORY%\ROM\Events\Other~UnusedEvents\*") do (
+		set directoryname=%%~nxd
+		set filename=%%~nf
+		set test=!filename:~0,9!
+		if /I !test!==!directoryname! (move /Y %%f %%d\)
+	)
+)
+goto :eof
+
+:SetupCharacters
+cd %WORKING_DIRECTORY%\ROM\
+ren playmodel "CharacterModels"
+cd %WORKING_DIRECTORY%\ROM\CharacterModels
+
+echo "-- Create Character Folders"
+call :CreateCharacterFolders
+echo "-- Move Each Character To Folder"
+call :MoveEachCharacterToFolder
+echo "-- Sort Out Each Character"
+
+rem For Each Directory Do Sort Out Animations Models And Textures
+for /D %%d in ("%WORKING_DIRECTORY%\ROM\CharacterModels\*") do (
+	for %%f in ("%%d\*") do (
+		set filename=%%~nf
+		if /I !filename:~-4!==_anm (mkdir "%%~pfAnimations" & move "%%f" "%%~pfAnimations\")
+	)
+)
+
+for /D %%d in ("%WORKING_DIRECTORY%\ROM\CharacterModels\*") do (
+	for %%f in ("%%d\*") do (
+		set filename=%%~nf
+		if /I !filename:~-4!==_dff (mkdir "%%~pfModels" & move "%%f" "%%~pfModels\")
+	)
+)
+
+for /D %%d in ("%WORKING_DIRECTORY%\ROM\CharacterModels\*") do (
+	for %%f in ("%%d\*") do (
+		set filename=%%~nxf
+		if /I !filename:~-4!==.txd (mkdir "%%~pfTextures" & move "%%f" "%%~pfTextures\")
+	)
+)
+goto :eof
+
+:CreateCharacterFolders
+mkdir "Amy"
+mkdir "Charmy"
+mkdir "Cheese"
+mkdir "Big"
+mkdir "Cream"
+mkdir "Espio"
+mkdir "Knuckles"
+mkdir "Omega"
+mkdir "Rouge"
+mkdir "Shadow"
+mkdir "Sonic"
+mkdir "Tails"
+mkdir "Vector"
+
+mkdir "SuperSonic"
+mkdir "SuperKnuckles"
+mkdir "SuperTails"
+
+mkdir "MetalAmy"
+mkdir "MetalCharmy"
+mkdir "MetalCheese"
+mkdir "MetalBig"
+mkdir "MetalCream"
+mkdir "MetalEspio"
+mkdir "MetalKnuckles"
+mkdir "MetalOmega"
+mkdir "MetalRouge"
+mkdir "MetalShadow"
+mkdir "MetalSonic"
+mkdir "MetalTails"
+mkdir "MetalVector"
+goto :eof
+
+:MoveEachCharacterToFolder
+for %%f in ("am*") do (move /Y %%f "Amy")
+for %%f in ("be*") do (move /Y %%f "Charmy")
+for %%f in ("bi*") do (move /Y %%f "Big")
+for %%f in ("cheese*") do (move /Y %%f "Cheese")
+for %%f in ("cr*") do (move /Y %%f "Cream")
+for %%f in ("es*") do (move /Y %%f "Espio")
+for %%f in ("fam*") do (move /Y %%f "MetalAmy")
+for %%f in ("fbe*") do (move /Y %%f "MetalCharmy")
+for %%f in ("fbi*") do (move /Y %%f "MetalBig")
+for %%f in ("fcheese*") do (move /Y %%f "MetalCheese")
+for %%f in ("fcr*") do (move /Y %%f "MetalCream")
+for %%f in ("fes*") do (move /Y %%f "MetalEspio")
+for %%f in ("fkn*") do (move /Y %%f "MetalKnuckles")
+for %%f in ("fom*") do (move /Y %%f "MetalOmega")
+for %%f in ("fro*") do (move /Y %%f "MetalRouge")
+for %%f in ("fsh*") do (move /Y %%f "MetalShadow")
+for %%f in ("fso*") do (move /Y %%f "MetalSonic")
+for %%f in ("fta*") do (move /Y %%f "MetalTails")
+for %%f in ("fve*") do (move /Y %%f "MetalVector")
+for %%f in ("kn*") do (move /Y %%f "Knuckles")
+for %%f in ("om*") do (move /Y %%f "Omega")
+for %%f in ("ro*") do (move /Y %%f "Rouge")
+for %%f in ("sh*") do (move /Y %%f "Shadow")
+for %%f in ("sk*") do (move /Y %%f "SuperKnuckles")
+for %%f in ("sh*") do (move /Y %%f "Shadow")
+for %%f in ("so*") do (move /Y %%f "Sonic")
+for %%f in ("ss*") do (move /Y %%f "SuperSonic")
+for %%f in ("st*") do (move /Y %%f "SuperTails")
+for %%f in ("ta*") do (move /Y %%f "Tails")
+for %%f in ("ve*") do (move /Y %%f "Vector")
+goto :eof
+
+:SetupLevelsDirectories
+mkdir "%WORKING_DIRECTORY%\ROM\Levels\ActionStages\"
+mkdir "%WORKING_DIRECTORY%\ROM\Levels\Other\SETIDTable"
+mkdir "%WORKING_DIRECTORY%\ROM\Levels\Other\CommonParticleData"
+mkdir "%WORKING_DIRECTORY%\ROM\Levels\Other\"
+mkdir "%WORKING_DIRECTORY%\ROM\Levels\CommonObjects"
+mkdir "%WORKING_DIRECTORY%\ROM\Levels\Unused\CommonObjects"
+cd "%WORKING_DIRECTORY%\ROM\Levels\ActionStages"
+call :CreateLevelFolders
+for /D %%d in ("%WORKING_DIRECTORY%\ROM\Levels\ActionStages\*") do (
+	mkdir "%%d\Geometry"
+	mkdir "%%d\CustomFalcoEnemy"
+	mkdir "%%d\StageSpecificObjects\GeometryAndEnvironmentModels"
+	mkdir "%%d\TitleCardMissionText"
+	mkdir "%%d\TitleCard"
+	mkdir "%%d\TitleCard\ExtraMission"
+	mkdir "%%d\TitleCard\SuperHard"
+	mkdir "%%d\Collision"
+	mkdir "%%d\Collision\WaterCollision"
+	mkdir "%%d\Collision\DeathPlanes"
+	mkdir "%%d\ObjectLayouts"
+	mkdir "%%d\ObjectLayouts\AllTeams"
+	mkdir "%%d\ObjectLayouts\TeamSonic"
+	mkdir "%%d\ObjectLayouts\TeamDark"
+	mkdir "%%d\ObjectLayouts\TeamRose"
+	mkdir "%%d\ObjectLayouts\TeamChaotix"
+	mkdir "%%d\ObjectLayouts\SuperHard"
+	mkdir "%%d\ObjectLayouts\DecorationLayouts"	
+	mkdir "%%d\IdleAutoplayDemos"
+	mkdir "%%d\LightingData"
+	mkdir "%%d\CameraData"
+	mkdir "%%d\GeometryVisibilityData"
+	mkdir "%%d\Textures"
+	mkdir "%%d\IndirectionalData"
+	mkdir "%%d\ParticleData"
+	mkdir "%%d\ExtraSplineData"
+	mkdir "%%d\Unknown"
+)
+goto :eof
+
+:MoveLevelsAssets
+for %%f in ("%WORKING_DIRECTORY%\ROM\s**obj.one") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ActionStages")
+for %%f in ("%WORKING_DIRECTORY%\ROM\s**MRG.one") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ActionStages")
+for %%f in ("%WORKING_DIRECTORY%\ROM\s**_flyer.one") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ActionStages")
+for %%f in ("%WORKING_DIRECTORY%\ROM\s**.one") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ActionStages")
+for %%f in ("%WORKING_DIRECTORY%\ROM\stg**.one") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ActionStages")
+for %%f in ("%WORKING_DIRECTORY%\ROM\collisions\*.cl") do (move /Y "%%f" "%WORKING_DIRECTORY%\ROM\Levels\ActionStages")
+for %%f in ("%WORKING_DIRECTORY%\ROM\s**_PB.bin") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ActionStages")
+for %%f in ("%WORKING_DIRECTORY%\ROM\s**_P1.bin") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ActionStages")
+for %%f in ("%WORKING_DIRECTORY%\ROM\s**_P2.bin") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ActionStages")
+for %%f in ("%WORKING_DIRECTORY%\ROM\s**_P3.bin") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ActionStages")
+for %%f in ("%WORKING_DIRECTORY%\ROM\s**_P4.bin") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ActionStages")
+for %%f in ("%WORKING_DIRECTORY%\ROM\s**_P5.bin") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ActionStages")
+for %%f in ("%WORKING_DIRECTORY%\ROM\s**_DB.bin") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ActionStages")
+for %%f in ("%WORKING_DIRECTORY%\ROM\stgtitle\mission\*.bmp") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ActionStages")
+for %%f in ("%WORKING_DIRECTORY%\ROM\stgtitle\*.one") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ActionStages")
+for %%f in ("%WORKING_DIRECTORY%\ROM\s**.dmo") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ActionStages")
+for %%f in ("%WORKING_DIRECTORY%\ROM\s**_light.bin") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ActionStages")
+for %%f in ("%WORKING_DIRECTORY%\ROM\s**_cam.bin") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ActionStages")
+for %%f in ("%WORKING_DIRECTORY%\ROM\s**_blk.bin") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ActionStages")
+for %%f in ("%WORKING_DIRECTORY%\ROM\s**_indinfo.dat") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ActionStages")
+for %%f in ("%WORKING_DIRECTORY%\ROM\s**_ptcl.bin") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ActionStages")
+for %%f in ("%WORKING_DIRECTORY%\ROM\s**_ptclplay.bin") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ActionStages")
+for %%f in ("%WORKING_DIRECTORY%\ROM\s**.txc") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ActionStages")
+for %%f in ("%WORKING_DIRECTORY%\ROM\s**.spl") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ActionStages")
+for %%f in ("%WORKING_DIRECTORY%\ROM\Textures\s**.txd") do (
+	set filename=%%~nf
+	set test1=!filename:~-0,3!
+	if /I not !test1!==stg (set test2=!filename:~0,8!) else (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ActionStages")
+	if /I not !test2!==startbtn (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\ActionStages")
+)
+goto :eof
+
+:SortOutCommonObjects
+REM COMMON OBJS
+REM Fixes for object filter inaccuracies, and move the common objects.
+for %%f in ("%WORKING_DIRECTORY%\ROM\Levels\ActionStages\stg06_kw_hanabi_**.one") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\CommonObjects")
+move /Y "%WORKING_DIRECTORY%\ROM\Levels\ActionStages\stgmem0910.one" "%WORKING_DIRECTORY%\ROM\Levels\CommonObjects"
+
+REM Manually move Common Objects Across to the correct directories.
+for %%f in ("%WORKING_DIRECTORY%\ROM\obj*_Prop*.dff") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\CommonObjects")
+for %%f in ("%WORKING_DIRECTORY%\ROM\bob*.one") do (move /Y %%f "%WORKING_DIRECTORY%\ROM\Levels\CommonObjects")
+move /Y "%WORKING_DIRECTORY%\ROM\rain_ita.dff" "%WORKING_DIRECTORY%\ROM\Levels\CommonObjects"
+move /Y "%WORKING_DIRECTORY%\ROM\obj0708_sparks.dff" "%WORKING_DIRECTORY%\ROM\Levels\CommonObjects"
+move /Y "%WORKING_DIRECTORY%\ROM\primModels.one" "%WORKING_DIRECTORY%\ROM\Levels\Unused\CommonObjects"
+move /Y "%WORKING_DIRECTORY%\ROM\indirectEditor.dff" "%WORKING_DIRECTORY%\ROM\Levels\Unused\CommonObjects"
+move /Y "%WORKING_DIRECTORY%\ROM\null.dff" "%WORKING_DIRECTORY%\ROM\Levels\Unused\CommonObjects"
+move /Y "%WORKING_DIRECTORY%\ROM\comobj.one" "%WORKING_DIRECTORY%\ROM\Levels\CommonObjects"
+
+mkdir  "%WORKING_DIRECTORY%\ROM\Levels\CommonObjects\Bomb Effect\Model\"
+mkdir  "%WORKING_DIRECTORY%\ROM\Levels\CommonObjects\Bomb Effect\Animation\"
+move /Y "%WORKING_DIRECTORY%\ROM\ef_bomb.dff" "%WORKING_DIRECTORY%\ROM\Levels\CommonObjects\Bomb Effect\Model\"
+move /Y "%WORKING_DIRECTORY%\ROM\ef_bomb.anm" "%WORKING_DIRECTORY%\ROM\Levels\CommonObjects\Bomb Effect\Animation\"
+
+cd "%WORKING_DIRECTORY%\ROM\Levels\CommonObjects"
+call :RenameCommonObjects
+goto :eof
+
+:RenameCommonObjects
+mkdir "Bobsled"
+mkdir "French"
+mkdir "German"
+mkdir "Italian"
+mkdir "Spanish"
+
+move /Y "French" "Bobsled\"
+move /Y "German" "Bobsled\"
+move /Y "Italian" "Bobsled\"
+move /Y "Spanish" "Bobsled\"
+
+move /Y bob.one "Bobsled\"
+move /Y bobF.one "Bobsled\French"
+move /Y bobG.one "Bobsled\German"
+move /Y bobI.one "Bobsled\Italian"
+move /Y bobS.one "Bobsled\Spanish"
+
+mkdir "Common SET Placeable Objects"
+move /Y "comobj.one" "Common SET Placeable Objects\"
+
+mkdir "Stage 09~10 - Frog Forest~Lost Jungle - Level Specific Object Model Copies"
+move /Y "stgmem0910.one" "Stage 09~10 - Frog Forest~Lost Jungle - Level Specific Object Model Copies"
+
+mkdir "Stage 06 - BINGO Highway - Lighting Strip Decoration Models"
+for %%f in (stg06_kw*) do (move "%%f" "Stage 06 - BINGO Highway - Lighting Strip Decoration Models\")
+
+mkdir "Stage 09 - Frog Forest - Custom Propeller Model"
+move /Y obj09* "Stage 09 - Frog Forest - Custom Propeller Model\"
+
+mkdir "Stage 10 - Lost Jungle - Custom Propeller Model"
+move /Y obj10* "Stage 10 - Lost Jungle - Custom Propeller Model\"
+
+mkdir "Stage 73 - Frog Forest 2P - Custom Propeller Model"
+move /Y obj73* "Stage 73 - Frog Forest 2P - Custom Propeller Model\"
+
+mkdir "Stage 07~08 - Rail Canyon~Bullet Station - Sparks Model"
+move /Y obj0708_sparks.dff "Stage 07~08 - Rail Canyon~Bullet Station - Sparks Model\"
+
+mkdir "Generic Propeller Model"
+move /Y obj_prop.dff "Generic Propeller Model\"
+
+mkdir "Generic Rain Model"
+move /Y rain_ita.dff "Generic Rain Model\"
+goto :eof
+
+:MoveGenericStageTitles
+for %%f in ("%WORKING_DIRECTORY%\ROM\Levels\ActionStages\stgtitle_disp*.one") do ( 
+	set FileName=%%~nf
+	set GenericStageTitleID=!FileName:~13,3!
+	if /I !GenericStageTitleID!==EEX (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\GenericStageTitles\English\ExtraMission\")
+	if /I !GenericStageTitleID!==ESH (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\GenericStageTitles\English\SuperHard\")
+	if /I !GenericStageTitleID!==E (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\GenericStageTitles\English\")
+		
+	if /I !GenericStageTitleID!==FSH (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\GenericStageTitles\French\ExtraMission\")
+	if /I !GenericStageTitleID!==FEX (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\GenericStageTitles\French\SuperHard\")
+	if /I !GenericStageTitleID!==F (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\GenericStageTitles\French\")
+			
+	if /I !GenericStageTitleID!==GSH (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\GenericStageTitles\German\ExtraMission\")
+	if /I !GenericStageTitleID!==GEX (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\GenericStageTitles\German\SuperHard\")
+	if /I !GenericStageTitleID!==G (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\GenericStageTitles\German\")
+		
+	if /I !GenericStageTitleID!==ISH (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\GenericStageTitles\Italian\ExtraMission\")
+	if /I !GenericStageTitleID!==IEX (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\GenericStageTitles\Italian\SuperHard\")
+	if /I !GenericStageTitleID!==I (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\GenericStageTitles\Italian\")
+		
+	if /I !GenericStageTitleID!==SSH (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\GenericStageTitles\Spanish\ExtraMission\")
+	if /I !GenericStageTitleID!==SEX (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\GenericStageTitles\Spanish\SuperHard\")
+	if /I !GenericStageTitleID!==S (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\GenericStageTitles\Spanish\")
+)
+goto :eof
+
+:MoveCharacterStageTitles
+for %%f in ("%WORKING_DIRECTORY%\ROM\Levels\ActionStages\stg*title_disp*.one") do ( 
+	set FileName=%%~nf
+	
+	set TeamChaotixTest=!FileName:~-0,15!
+	set EnglishTeamTitleTest=!FileName:~-1!
+	set Team4CharTest=!FileName:~-0,12!
+	set Team5CharTest=!FileName:~-0,13!
+
+	REM TEST FOR TEAMS
+		
+	if /I !TeamChaotixTest!==stgCHAOTIXtitle (if /I !EnglishTeamTitleTest!==E (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\TeamBattleTitles\Chaotix\English\") else (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\TeamBattleTitles\Chaotix\"))
+		
+	if /I !Team4CharTest!==stgDARKtitle (if /I !EnglishTeamTitleTest!==E (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\TeamBattleTitles\Dark\English") else (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\TeamBattleTitles\Dark\"))
+		
+	if /I !Team4CharTest!==stgROSEtitle (if /I !EnglishTeamTitleTest!==E (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\TeamBattleTitles\Rose\English") else (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\TeamBattleTitles\Rose\"))
+		
+	if /I !Team5CharTest!==stgSONICtitle (if /I !EnglishTeamTitleTest!==E (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\TeamBattleTitles\Sonic\English") else (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\TeamBattleTitles\Sonic\"))
+)
+goto :eof
+
+:MoveActionStageFilesToStageDir-DAT
+for /D %%d in ("%WORKING_DIRECTORY%\ROM\Levels\ActionStages\*") do (
+	set StageDirectory=%%~nd
+	for %%f in ("%WORKING_DIRECTORY%\ROM\Levels\ActionStages\*.dat") do ( 
+		set FileName=%%~nf
+		set directory=%%~nxd
+		set stagedirshort=!StageDirectory:~6,2!
+		set test1=!FileName:~-0,3!
+		
+		REM TEST FOR DIRECTORY
+		if /I not !test1!==stg (set test2=!FileName:~1,2!) else (set test2=!FileName:~3,2!)
+		if /I !test2!==!stagedirshort! (move /Y "%%~pnxf" "%%~pf!StageDirectory!\")
+		
+		echo "Current Directory DAT: !directory!"
+	)
+)
+goto :eof
+
+:MoveActionStageFilesToStageDir-DMO
+for /D %%d in ("%WORKING_DIRECTORY%\ROM\Levels\ActionStages\*") do (
+	set StageDirectory=%%~nd
+	for %%f in ("%WORKING_DIRECTORY%\ROM\Levels\ActionStages\*.dmo") do ( 
+		set FileName=%%~nf
+		set directory=%%~nxd
+		set stagedirshort=!StageDirectory:~6,2!
+		set test1=!FileName:~-0,3!
+		
+		REM TEST FOR DIRECTORY
+		if /I not !test1!==stg (set test2=!FileName:~1,2!) else (set test2=!FileName:~3,2!)
+		if /I !test2!==!stagedirshort! (move /Y "%%~pnxf" "%%~pf!StageDirectory!\")
+		
+		echo "Current Directory DMO: !directory!"
+	)
+)
+goto :eof
+
+:MoveActionStageFilesToStageDir-TXC
+for /D %%d in ("%WORKING_DIRECTORY%\ROM\Levels\ActionStages\*") do (
+	set StageDirectory=%%~nd
+	for %%f in ("%WORKING_DIRECTORY%\ROM\Levels\ActionStages\*.txc") do ( 
+		set FileName=%%~nf
+		set directory=%%~nxd
+		set stagedirshort=!StageDirectory:~6,2!
+		set test1=!FileName:~-0,3!
+		
+		REM TEST FOR DIRECTORY
+		if /I not !test1!==stg (set test2=!FileName:~1,2!) else (set test2=!FileName:~3,2!)
+		if /I !test2!==!stagedirshort! (move /Y "%%~pnxf" "%%~pf!StageDirectory!\")
+		
+		echo "Current Directory TXC: !directory!"
+	)
+)
+goto :eof
+
+:MoveActionStageFilesToStageDir-SPL
+for /D %%d in ("%WORKING_DIRECTORY%\ROM\Levels\ActionStages\*") do (
+	set StageDirectory=%%~nd
+	for %%f in ("%WORKING_DIRECTORY%\ROM\Levels\ActionStages\*.spl") do ( 
+		set FileName=%%~nf
+		set directory=%%~nxd
+		set stagedirshort=!StageDirectory:~6,2!
+		set test1=!FileName:~-0,3!
+		
+		REM TEST FOR DIRECTORY
+		if /I not !test1!==stg (set test2=!FileName:~1,2!) else (set test2=!FileName:~3,2!)
+		if /I !test2!==!stagedirshort! (move /Y "%%~pnxf" "%%~pf!StageDirectory!\")
+		
+		echo "Current Directory SPL: !directory!"
+	)
+)
+goto :eof
+
+:MoveActionStageFilesToStageDir-TXD
+for /D %%d in ("%WORKING_DIRECTORY%\ROM\Levels\ActionStages\*") do (
+	set StageDirectory=%%~nd
+	for %%f in ("%WORKING_DIRECTORY%\ROM\Levels\ActionStages\*.txd") do ( 
+		set FileName=%%~nf
+		set directory=%%~nxd
+		set stagedirshort=!StageDirectory:~6,2!
+		set test1=!FileName:~-0,3!
+		
+		REM TEST FOR DIRECTORY
+		if /I not !test1!==stg (set test2=!FileName:~1,2!) else (set test2=!FileName:~3,2!)
+		if /I !test2!==!stagedirshort! (move /Y "%%~pnxf" "%%~pf!StageDirectory!\")
+		
+		echo "Current Directory TXD: !directory!"
+	)
+)
+goto :eof
+
+:MoveActionStageFilesToStageDir-ONE
+for /D %%d in ("%WORKING_DIRECTORY%\ROM\Levels\ActionStages\*") do (
+	set StageDirectory=%%~nd
+	for %%f in ("%WORKING_DIRECTORY%\ROM\Levels\ActionStages\*.one") do ( 
+		set FileName=%%~nf
+		set directory=%%~nxd
+		set stagedirshort=!StageDirectory:~6,2!
+		set test1=!FileName:~-0,3!
+		
+		REM TEST FOR DIRECTORY
+		if /I not !test1!==stg (set test2=!FileName:~1,2!) else (set test2=!FileName:~3,2!)
+		if /I !test2!==!stagedirshort! (move /Y "%%~pnxf" "%%~pf!StageDirectory!\")
+		
+		echo "Current Directory ONE: !directory!"
+	)
+)
+goto :eof
+
+:MoveActionStageFilesToStageDir-CL
+for /D %%d in ("%WORKING_DIRECTORY%\ROM\Levels\ActionStages\*") do (
+	set StageDirectory=%%~nd
+	for %%f in ("%WORKING_DIRECTORY%\ROM\Levels\ActionStages\*.cl") do ( 
+		set FileName=%%~nf
+		set directory=%%~nxd
+		set stagedirshort=!StageDirectory:~6,2!
+		set test1=!FileName:~-0,3!
+		
+		REM TEST FOR DIRECTORY
+		if /I not !test1!==stg (set test2=!FileName:~1,2!) else (set test2=!FileName:~3,2!)
+		if /I !test2!==!stagedirshort! (move /Y "%%~pnxf" "%%~pf!StageDirectory!\")
+		
+		echo "Current Directory Collision: !directory!"
+	)
+)
+goto :eof
+
+:MoveActionStageFilesToStageDir-BIN
+for /D %%d in ("%WORKING_DIRECTORY%\ROM\Levels\ActionStages\*") do (
+	set StageDirectory=%%~nd
+	for %%f in ("%WORKING_DIRECTORY%\ROM\Levels\ActionStages\*.bin") do ( 
+		set FileName=%%~nf
+		set directory=%%~nxd
+		set stagedirshort=!StageDirectory:~6,2!
+		set test1=!FileName:~-0,3!
+		
+		REM TEST FOR DIRECTORY
+		if /I not !test1!==stg (set test2=!FileName:~1,2!) else (set test2=!FileName:~3,2!)
+		if /I !test2!==!stagedirshort! (move /Y "%%~pnxf" "%%~pf!StageDirectory!\")
+		
+		echo "Current Directory BIN: !directory!"
+	)
+)
+goto :eof
+
+:MoveActionStageFilesToStageDir-BMP
+for /D %%d in ("%WORKING_DIRECTORY%\ROM\Levels\ActionStages\*") do (
+	set StageDirectory=%%~nd
+	for %%f in ("%WORKING_DIRECTORY%\ROM\Levels\ActionStages\*.bmp") do ( 
+		set FileName=%%~nf
+		set directory=%%~nxd
+		set stagedirshort=!StageDirectory:~6,2!
+		set test1=!FileName:~-0,3!
+		
+		REM TEST FOR DIRECTORY
+		if /I not !test1!==stg (set test2=!FileName:~1,2!) else (set test2=!FileName:~3,2!)
+		if /I !test2!==!stagedirshort! (move /Y "%%~pnxf" "%%~pf!StageDirectory!\")
+		
+		echo "Current Directory BMP: !directory!"
+	)
+)
+goto :eof
+
 pause
