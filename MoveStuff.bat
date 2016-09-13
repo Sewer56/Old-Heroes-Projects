@@ -1,4 +1,4 @@
-echo off
+@echo off
 set WORKING_DIRECTORY=%cd%
 rem FIX FOR VARS INSIDE LOOPS
 setlocal enabledelayedexpansion
@@ -132,7 +132,7 @@ for %%f in ("%WORKING_DIRECTORY%\ROM\Events\event01*") do (move /Y "%%f" "%WORKI
 for %%f in ("%WORKING_DIRECTORY%\ROM\Events\event02*") do (move /Y "%%f" "%WORKING_DIRECTORY%\ROM\Events\TeamRoseEvents\")
 for %%f in ("%WORKING_DIRECTORY%\ROM\Events\event03*") do (move /Y "%%f" "%WORKING_DIRECTORY%\ROM\Events\TeamChaotixEvents\")
 for %%f in ("%WORKING_DIRECTORY%\ROM\Events\event04*") do (move /Y "%%f" "%WORKING_DIRECTORY%\ROM\Events\LastStoryEvents\")
-for %%f in ("%WORKING_DIRECTORY%\ROM\Events\event*") do (move /Y "%%f" "%WORKING_DIRECTORY%\ROM\Events\Team SonicEvents\")
+for %%f in ("%WORKING_DIRECTORY%\ROM\Events\event*") do (move /Y "%%f" "%WORKING_DIRECTORY%\ROM\Events\TeamSonicEvents\")
 
 rem SONIC
 rem Auto Gen Folders based on Suffix Discriminant
@@ -375,6 +375,49 @@ rem
 rem Move Stuff Level Stuff To Proper Directory
 rem
 
+for %%f in ("%WORKING_DIRECTORY%\ROM\Levels\ActionStages\*") do ( 
+	set FileName=%%~nf
+	
+	set TeamChaotixTest=!FileName:~-0,15!
+	set EnglishTeamTitleTest=!FileName:~-1!
+	set Team4CharTest=!FileName:~-0,12!
+	set Team5CharTest=!FileName:~-0,13!
+	set GenericStageTitleTest=!FileName:~-0,13!
+	set GenericStageTitleID=!FileName:~13,3!
+
+	REM TEST FOR TEAMS
+		
+	if /I !TeamChaotixTest!==stgCHAOTIXtitle (if /I !EnglishTeamTitleTest!==E (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\TeamBattleTitles\Chaotix\English\") else (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\TeamBattleTitles\Chaotix\"))
+		
+	if /I !Team4CharTest!==stgDARKtitle (if /I !EnglishTeamTitleTest!==E (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\TeamBattleTitles\Dark\English") else (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\TeamBattleTitles\Dark\"))
+		
+	if /I !Team4CharTest!==stgROSEtitle (if /I !EnglishTeamTitleTest!==E (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\TeamBattleTitles\Rose\English") else (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\TeamBattleTitles\Rose\"))
+		
+	if /I !Team5CharTest!==stgSONICtitle (if /I !EnglishTeamTitleTest!==E (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\TeamBattleTitles\Sonic\English") else (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\TeamBattleTitles\Sonic\"))
+		
+	if /I !GenericStageTitleTest!==stgtitle_disp (
+		if /I !GenericStageTitleID!==EEX (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\GenericStageTitles\English\ExtraMission\")
+		if /I !GenericStageTitleID!==ESH (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\GenericStageTitles\English\SuperHard\")
+		if /I !GenericStageTitleID!==E (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\GenericStageTitles\English\")
+		
+		if /I !GenericStageTitleID!==FSH (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\GenericStageTitles\French\ExtraMission\")
+		if /I !GenericStageTitleID!==FEX (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\GenericStageTitles\French\SuperHard\")
+		if /I !GenericStageTitleID!==F (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\GenericStageTitles\French\")
+			
+		if /I !GenericStageTitleID!==GSH (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\GenericStageTitles\German\ExtraMission\")
+		if /I !GenericStageTitleID!==GEX (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\GenericStageTitles\German\SuperHard\")
+		if /I !GenericStageTitleID!==G (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\GenericStageTitles\German\")
+		
+		if /I !GenericStageTitleID!==ISH (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\GenericStageTitles\Italian\ExtraMission\")
+		if /I !GenericStageTitleID!==IEX (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\GenericStageTitles\Italian\SuperHard\")
+		if /I !GenericStageTitleID!==I (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\GenericStageTitles\Italian\")
+		
+		if /I !GenericStageTitleID!==SSH (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\GenericStageTitles\Spanish\ExtraMission\")
+		if /I !GenericStageTitleID!==SEX (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\GenericStageTitles\Spanish\SuperHard\")
+		if /I !GenericStageTitleID!==S (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\GenericStageTitles\Spanish\")
+	)
+)
+
 for /D %%d in ("%WORKING_DIRECTORY%\ROM\Levels\ActionStages\*") do (
 	set StageDirectory=%%~nd
 	for %%f in ("%WORKING_DIRECTORY%\ROM\Levels\ActionStages\*") do ( 
@@ -382,49 +425,12 @@ for /D %%d in ("%WORKING_DIRECTORY%\ROM\Levels\ActionStages\*") do (
 		set directory=%%~nxd
 		set stagedirshort=!StageDirectory:~6,2!
 		set test1=!FileName:~-0,3!
-		set TeamChaotixTest=!FileName:~-0,15!
-		set EnglishTeamTitleTest=!FileName:~-1!
-		set Team4CharTest=!FileName:~-0,12!
-		set Team5CharTest=!FileName:~-0,13!
-		set GenericStageTitleTest=!FileName:~-0,13!
-		set GenericStageTitleID=!FileName:~13,3!
 		
 		REM TEST FOR DIRECTORY
 		if /I not !test1!==stg (set test2=!FileName:~1,2!) else (set test2=!FileName:~3,2!)
 		if /I !test2!==!stagedirshort! (move /Y "%%~pnxf" "%%~pf!StageDirectory!\")
 		
-		REM TEST FOR TEAMS
-		
-		if /I !TeamChaotixTest!==stgCHAOTIXtitle (if /I !EnglishTeamTitleTest!==E (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\TeamBattleTitles\Chaotix\English\") else (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\TeamBattleTitles\Chaotix\"))
-		
-		if /I !Team4CharTest!==stgDARKtitle (if /I !EnglishTeamTitleTest!==E (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\TeamBattleTitles\Dark\English") else (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\TeamBattleTitles\Dark\"))
-		
-		if /I !Team4CharTest!==stgROSEtitle (if /I !EnglishTeamTitleTest!==E (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\TeamBattleTitles\Rose\English") else (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\TeamBattleTitles\Rose\"))
-		
-		if /I !Team5CharTest!==stgSONICtitle (if /I !EnglishTeamTitleTest!==E (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\TeamBattleTitles\Sonic\English") else (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\TeamBattleTitles\Sonic\"))
-		
-		if /I !GenericStageTitleTest!==stgtitle_disp (
-			if /I !GenericStageTitleID!==EEX (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\GenericStageTitles\English\ExtraMission\")
-			if /I !GenericStageTitleID!==ESH (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\GenericStageTitles\English\SuperHard\")
-			if /I !GenericStageTitleID!==E (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\GenericStageTitles\English\")
-			
-			if /I !GenericStageTitleID!==FSH (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\GenericStageTitles\French\ExtraMission\")
-			if /I !GenericStageTitleID!==FEX (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\GenericStageTitles\French\SuperHard\")
-			if /I !GenericStageTitleID!==F (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\GenericStageTitles\French\")
-			
-			if /I !GenericStageTitleID!==GSH (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\GenericStageTitles\German\ExtraMission\")
-			if /I !GenericStageTitleID!==GEX (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\GenericStageTitles\German\SuperHard\")
-			if /I !GenericStageTitleID!==G (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\GenericStageTitles\German\")
-			
-			if /I !GenericStageTitleID!==ISH (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\GenericStageTitles\Italian\ExtraMission\")
-			if /I !GenericStageTitleID!==IEX (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\GenericStageTitles\Italian\SuperHard\")
-			if /I !GenericStageTitleID!==I (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\GenericStageTitles\Italian\")
-			
-			if /I !GenericStageTitleID!==SSH (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\GenericStageTitles\Spanish\ExtraMission\")
-			if /I !GenericStageTitleID!==SEX (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\GenericStageTitles\Spanish\SuperHard\")
-			if /I !GenericStageTitleID!==S (move /Y "%%~pnxf" "%%~pf\Stage XX - Common Assets\GenericStageTitles\Spanish\")
-		)
-		echo "Current Directory: !directory!"
+		echo "Current Directory #1: !directory!"
 	)
 )
 
@@ -825,13 +831,420 @@ for %%f in (%WORKING_DIRECTORY%\ROM\*) do (
 )
 
 rem
+rem Sort out fonts and ingame text.
+rem
+cd %WORKING_DIRECTORY%\ROM\
+ren "font" "Fonts~Text"
+REM No scripting, time waster, not enough dirs to be worth 0.001s performance loss XDDDDD.
+mkdir %WORKING_DIRECTORY%\ROM\Fonts~Text\Ascii\FontMaps
+mkdir %WORKING_DIRECTORY%\ROM\Fonts~Text\Ascii\Metrics
+mkdir %WORKING_DIRECTORY%\ROM\Fonts~Text\Ascii\TextFontMaps
+
+mkdir %WORKING_DIRECTORY%\ROM\Fonts~Text\JapanFont\Metrics
+mkdir %WORKING_DIRECTORY%\ROM\Fonts~Text\JapanFont\FontMaps
+mkdir %WORKING_DIRECTORY%\ROM\Fonts~Text\JapanFont\TextFontMaps
+
+mkdir %WORKING_DIRECTORY%\ROM\Fonts~Text\ScoreNumbers\FontMaps
+mkdir %WORKING_DIRECTORY%\ROM\Fonts~Text\ScoreNumbers\Metrics
+mkdir %WORKING_DIRECTORY%\ROM\Fonts~Text\ScoreNumbers\TextFontMaps
+
+mkdir %WORKING_DIRECTORY%\ROM\Fonts~Text\MainMenuAscii\Metrics
+mkdir %WORKING_DIRECTORY%\ROM\Fonts~Text\MainMenuAscii\FontMaps
+mkdir %WORKING_DIRECTORY%\ROM\Fonts~Text\MainMenuAscii\TextFontMaps
+
+mkdir %WORKING_DIRECTORY%\ROM\Fonts~Text\Unused\EnglishAscii\TextFontMaps
+mkdir %WORKING_DIRECTORY%\ROM\Fonts~Text\Unused\EnglishAscii\Metrics
+mkdir %WORKING_DIRECTORY%\ROM\Fonts~Text\Unused\EnglishAscii\FontMaps
+
+mkdir %WORKING_DIRECTORY%\ROM\Fonts~Text\Unused\DUMMY\FontMaps
+mkdir %WORKING_DIRECTORY%\ROM\Fonts~Text\Unused\DUMMY\Metrics
+mkdir %WORKING_DIRECTORY%\ROM\Fonts~Text\Unused\DUMMY\TextFontMaps
+
+mkdir %WORKING_DIRECTORY%\ROM\Fonts~Text\ErrorMessage\
+
+REM TSONIC
+mkdir "%WORKING_DIRECTORY%\ROM\Fonts~Text\Events\TeamSonicEvents\Japanese\Metrics"
+mkdir "%WORKING_DIRECTORY%\ROM\Fonts~Text\Events\TeamSonicEvents\Japanese\FontMaps"
+mkdir "%WORKING_DIRECTORY%\ROM\Fonts~Text\Events\TeamSonicEvents\Japanese\TextFontMaps"
+
+mkdir "%WORKING_DIRECTORY%\ROM\Fonts~Text\Events\TeamSonicEvents\Korean\Metrics"
+mkdir "%WORKING_DIRECTORY%\ROM\Fonts~Text\Events\TeamSonicEvents\Korean\FontMaps"
+mkdir "%WORKING_DIRECTORY%\ROM\Fonts~Text\Events\TeamSonicEvents\Korean\TextFontMaps"
+
+REM TDARK
+mkdir "%WORKING_DIRECTORY%\ROM\Fonts~Text\Events\TeamDarkEvents\Japanese\Metrics"
+mkdir "%WORKING_DIRECTORY%\ROM\Fonts~Text\Events\TeamDarkEvents\Japanese\FontMaps"
+mkdir "%WORKING_DIRECTORY%\ROM\Fonts~Text\Events\TeamDarkEvents\Japanese\TextFontMaps"
+
+mkdir "%WORKING_DIRECTORY%\ROM\Fonts~Text\Events\TeamDarkEvents\Korean\Metrics"
+mkdir "%WORKING_DIRECTORY%\ROM\Fonts~Text\Events\TeamDarkEvents\Korean\FontMaps"
+mkdir "%WORKING_DIRECTORY%\ROM\Fonts~Text\Events\TeamDarkEvents\Korean\TextFontMaps"
+
+REM TROSE
+mkdir "%WORKING_DIRECTORY%\ROM\Fonts~Text\Events\TeamRoseEvents\Japanese\Metrics"
+mkdir "%WORKING_DIRECTORY%\ROM\Fonts~Text\Events\TeamRoseEvents\Japanese\FontMaps"
+mkdir "%WORKING_DIRECTORY%\ROM\Fonts~Text\Events\TeamRoseEvents\Japanese\TextFontMaps"
+
+mkdir "%WORKING_DIRECTORY%\ROM\Fonts~Text\Events\TeamRoseEvents\Korean\Metrics"
+mkdir "%WORKING_DIRECTORY%\ROM\Fonts~Text\Events\TeamRoseEvents\Korean\FontMaps"
+mkdir "%WORKING_DIRECTORY%\ROM\Fonts~Text\Events\TeamRoseEvents\Korean\TextFontMaps"
+
+REM TCHAOTIX
+mkdir "%WORKING_DIRECTORY%\ROM\Fonts~Text\Events\TeamChaotixEvents\Japanese\Metrics"
+mkdir "%WORKING_DIRECTORY%\ROM\Fonts~Text\Events\TeamChaotixEvents\Japanese\FontMaps"
+mkdir "%WORKING_DIRECTORY%\ROM\Fonts~Text\Events\TeamChaotixEvents\Japanese\TextFontMaps"
+
+mkdir "%WORKING_DIRECTORY%\ROM\Fonts~Text\Events\TeamChaotixEvents\Korean\Metrics"
+mkdir "%WORKING_DIRECTORY%\ROM\Fonts~Text\Events\TeamChaotixEvents\Korean\FontMaps"
+mkdir "%WORKING_DIRECTORY%\ROM\Fonts~Text\Events\TeamChaotixEvents\Korean\TextFontMaps"
+
+REM TLASTSTORY
+mkdir "%WORKING_DIRECTORY%\ROM\Fonts~Text\Events\LastStoryEvents\Japanese\Metrics"
+mkdir "%WORKING_DIRECTORY%\ROM\Fonts~Text\Events\LastStoryEvents\Japanese\FontMaps"
+mkdir "%WORKING_DIRECTORY%\ROM\Fonts~Text\Events\LastStoryEvents\Japanese\TextFontMaps"
+
+mkdir "%WORKING_DIRECTORY%\ROM\Fonts~Text\Events\LastStoryEvents\Korean\Metrics"
+mkdir "%WORKING_DIRECTORY%\ROM\Fonts~Text\Events\LastStoryEvents\Korean\FontMaps"
+mkdir "%WORKING_DIRECTORY%\ROM\Fonts~Text\Events\LastStoryEvents\Korean\TextFontMaps"
+
+REM Unused
+mkdir "%WORKING_DIRECTORY%\ROM\Fonts~Text\Events\Other~UnusedEvents\Metrics"
+mkdir "%WORKING_DIRECTORY%\ROM\Fonts~Text\Events\Other~UnusedEvents\FontMaps"
+mkdir "%WORKING_DIRECTORY%\ROM\Fonts~Text\Events\Other~UnusedEvents\TextFontMaps"
+
+REM Unused
+mkdir "%WORKING_DIRECTORY%\ROM\Fonts~Text\MainMenus\Metrics"
+mkdir "%WORKING_DIRECTORY%\ROM\Fonts~Text\MainMenus\FontMaps"
+mkdir "%WORKING_DIRECTORY%\ROM\Fonts~Text\MainMenus\TextFontMaps"
+
+REM HINTTEXT
+mkdir "%WORKING_DIRECTORY%\ROM\Fonts~Text\Hints\"
+cd "%WORKING_DIRECTORY%\ROM\Fonts~Text\Hints\"
+call %WORKING_DIRECTORY%\Scripts\Current\CreateLevelFolders.bat
+
+for /D %%d in (%WORKING_DIRECTORY%\ROM\Fonts~Text\Hints\*) do (
+	mkdir "%%d\English"
+	mkdir "%%d\French"
+	mkdir "%%d\German"
+	mkdir "%%d\Italian"
+	mkdir "%%d\Korean"
+	mkdir "%%d\Spanish"
+	mkdir "%%d\Metrics"
+	mkdir "%%d\FontMaps"
+	mkdir "%%d\TextFontMaps"
+)
+
+for /D %%d in (%WORKING_DIRECTORY%\ROM\Fonts~Text\MainMenus\*) do (
+	mkdir "%%d\English"
+	mkdir "%%d\French"
+	mkdir "%%d\German"
+	mkdir "%%d\Italian"
+	mkdir "%%d\Korean"
+	mkdir "%%d\Spanish"
+	mkdir "%%d\Metrics"
+	mkdir "%%d\FontMaps"
+	mkdir "%%d\TextFontMaps"
+)
+
+for %%f in (%WORKING_DIRECTORY%\ROM\Fonts~Text\*) do (
+	set FileName=%%~nf
+	set Extension=%%~xf
+	
+	set Ascii=!FileName:~0,9!
+	set ScoreNums=!FileName:~0,7!
+	set JPAscii=!FileName:~0,3!
+	set MainMenu=!FileName:~0,4!
+	
+	set EventLanguage=!FileName:~10,1!
+	set EventTest=!FileName:~0,5!
+	set EventTeam=!FileName:~6,1!
+	
+	set HintIdentifier=!FileName:~0,4!
+	set HintLanguage=!FileName:~7,1!
+
+	set MainMenuIdentifier=!FileName:~0,8!
+	set MainMenuLanguage=!FileName:~8,1!
+	
+	REM ASCII EUROPE
+	if /I !Ascii!==a_euascii (
+		if /I !Extension!==.png (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\Ascii\FontMaps\")
+		if /I !Extension!==.bmp (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\Ascii\FontMaps\")
+		if /I !Extension!==.txt (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\JapanFont\TextFontMaps\")
+		if /I !Extension!==.met (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\Ascii\Metrics\")
+	)
+	
+	REM SCORE NUMBERS ALL
+	if /I !ScoreNums!==a_num_s (
+		if /I !Extension!==.png (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\ScoreNumbers\FontMaps\")
+		if /I !Extension!==.bmp (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\ScoreNumbers\FontMaps\")
+		if /I !Extension!==.txt (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\JapanFont\TextFontMaps\")
+		if /I !Extension!==.met (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\ScoreNumbers\Metrics\")
+	)
+	
+	REM JAPAN ASCII1
+	if /I !JPAscii!==abc (
+		if /I !Extension!==.png (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\JapanFont\FontMaps\")
+		if /I !Extension!==.bmp (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\JapanFont\FontMaps\")
+		if /I !Extension!==.txt (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\JapanFont\TextFontMaps\")
+		if /I !Extension!==.met (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\JapanFont\Metrics\")
+	)
+	
+	REM JAPAN ASCII2
+	if /I !JPAscii!==def (
+		if /I !Extension!==.png (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\JapanFont\FontMaps\")
+		if /I !Extension!==.bmp (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\JapanFont\FontMaps\")
+		if /I !Extension!==.txt (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\JapanFont\TextFontMaps\")
+		if /I !Extension!==.met (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\JapanFont\Metrics\")
+	)
+	
+	REM UNUSED ASCII METRICS ENGLISH1
+	if /I !Ascii!==a_enascii (
+		if /I !Extension!==.png (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\Unused\EnglishAscii\FontMaps\")
+		if /I !Extension!==.bmp (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\Unused\EnglishAscii\FontMaps\")
+		if /I !Extension!==.txt (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\Unused\EnglishAscii\TextFontMaps\")
+		if /I !Extension!==.met (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\Unused\EnglishAscii\Metrics\")
+	)
+	
+	REM UNUSED ASCII METRICS ENGLISH2
+	if /I !FileName!==ascii00 (
+		if /I !Extension!==.png (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\Unused\EnglishAscii\FontMaps\")
+		if /I !Extension!==.bmp (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\Unused\EnglishAscii\FontMaps\")
+		if /I !Extension!==.txt (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\Unused\EnglishAscii\TextFontMaps\")
+		if /I !Extension!==.met (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\Unused\EnglishAscii\Metrics\")
+	)	
+	
+	REM MAIN MENU ASCII ALL
+	if /I !MainMenu!==adv_ (
+		if /I !Extension!==.png (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\MainMenuAscii\FontMaps\")
+		if /I !Extension!==.bmp (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\MainMenuAscii\FontMaps\")
+		if /I !Extension!==.txt (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\MainMenuAscii\TextFontMaps\")
+		if /I !Extension!==.met (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\MainMenuAscii\Metrics\")
+	) else (
+		if /I !MainMenu!==madv (
+			if /I !Extension!==.png (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\MainMenuAscii\FontMaps\")
+			if /I !Extension!==.bmp (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\MainMenuAscii\FontMaps\")
+			if /I !Extension!==.txt (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\MainMenuAscii\TextFontMaps\")
+			if /I !Extension!==.met (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\MainMenuAscii\Metrics\")
+		)
+	)
+	
+	REM DUMMY ASCII AYY LMAO
+	if /I !FileName!==dummy (
+		if /I !Extension!==.png (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\Unused\Dummy\FontMaps\")
+		if /I !Extension!==.bmp (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\Unused\Dummy\FontMaps\")
+		if /I !Extension!==.txt (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\Unused\Dummy\TextFontMaps\")
+		if /I !Extension!==.met (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\Unused\Dummy\Metrics\")
+	)
+
+	if /I !FileName!==errMessage (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\ErrorMessage\")
+	
+	REM EVENTS
+	if /I !EventTest!==event (
+		REM SONIC
+		if /I !EventTeam!==0 (
+			if /I !EventLanguage!==k (
+				if /I !Extension!==.png (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\Events\TeamSonicEvents\Korean\FontMaps\")
+				if /I !Extension!==.bmp (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\Events\TeamSonicEvents\Korean\FontMaps\")
+				if /I !Extension!==.txt (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\Events\TeamSonicEvents\Korean\TextFontMaps\")
+				if /I !Extension!==.met (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\Events\TeamSonicEvents\Korean\Metrics\")
+			)
+			if /I !EventLanguage!==j (
+				if /I !Extension!==.png (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\Events\TeamSonicEvents\Japanese\FontMaps\")
+				if /I !Extension!==.bmp (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\Events\TeamSonicEvents\Japanese\FontMaps\")
+				if /I !Extension!==.txt (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\Events\TeamSonicEvents\Japanese\TextFontMaps\")
+				if /I !Extension!==.met (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\Events\TeamSonicEvents\Japanese\Metrics\")
+			)
+		)
+		
+		REM DARK
+		if /I !EventTeam!==1 (
+			if /I !EventLanguage!==k (
+				if /I !Extension!==.png (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\Events\TeamDarkEvents\Korean\FontMaps\")
+				if /I !Extension!==.bmp (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\Events\TeamDarkEvents\Korean\FontMaps\")
+				if /I !Extension!==.txt (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\Events\TeamDarkEvents\Korean\TextFontMaps\")
+				if /I !Extension!==.met (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\Events\TeamDarkEvents\Korean\Metrics\")
+			)
+			if /I !EventLanguage!==j (
+				if /I !Extension!==.png (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\Events\TeamDarkEvents\Japanese\FontMaps\")
+				if /I !Extension!==.bmp (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\Events\TeamDarkEvents\Japanese\FontMaps\")
+				if /I !Extension!==.txt (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\Events\TeamDarkEvents\Japanese\TextFontMaps\")
+				if /I !Extension!==.met (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\Events\TeamDarkEvents\Japanese\Metrics\")
+			)
+		)
+		
+		REM ROSE
+		if /I !EventTeam!==2 (
+			if /I !EventLanguage!==k (
+				if /I !Extension!==.png (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\Events\TeamRoseEvents\Korean\FontMaps\")
+				if /I !Extension!==.bmp (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\Events\TeamRoseEvents\Korean\FontMaps\")
+				if /I !Extension!==.txt (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\Events\TeamRoseEvents\Korean\TextFontMaps\")
+				if /I !Extension!==.met (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\Events\TeamRoseEvents\Korean\Metrics\")
+			)
+			if /I !EventLanguage!==j (
+				if /I !Extension!==.png (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\Events\TeamRoseEvents\Japanese\FontMaps\")
+				if /I !Extension!==.bmp (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\Events\TeamRoseEvents\Japanese\FontMaps\")
+				if /I !Extension!==.txt (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\Events\TeamRoseEvents\Japanese\TextFontMaps\")
+				if /I !Extension!==.met (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\Events\TeamRoseEvents\Japanese\Metrics\")
+			)
+		)
+		
+		REM CHAOTIX
+		if /I !EventTeam!==3 (
+			if /I !EventLanguage!==k (
+				if /I !Extension!==.png (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\Events\TeamChaotixEvents\Korean\FontMaps\")
+				if /I !Extension!==.bmp (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\Events\TeamChaotixEvents\Korean\FontMaps\")
+				if /I !Extension!==.txt (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\Events\TeamChaotixEvents\Korean\TextFontMaps\")
+				if /I !Extension!==.met (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\Events\TeamChaotixEvents\Korean\Metrics\")
+			)
+			if /I !EventLanguage!==j (
+				if /I !Extension!==.png (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\Events\TeamChaotixEvents\Japanese\FontMaps\")
+				if /I !Extension!==.bmp (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\Events\TeamChaotixEvents\Japanese\FontMaps\")
+				if /I !Extension!==.txt (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\Events\TeamChaotixEvents\Japanese\TextFontMaps\")
+				if /I !Extension!==.met (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\Events\TeamChaotixEvents\Japanese\Metrics\")
+			)
+		)
+		
+		REM LAST
+		if /I !EventTeam!==4 (
+			if /I !EventLanguage!==k (
+				if /I !Extension!==.png (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\Events\LastStoryEvents\Korean\FontMaps\")
+				if /I !Extension!==.bmp (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\Events\LastStoryEvents\Korean\FontMaps\")
+				if /I !Extension!==.txt (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\Events\LastStoryEvents\Korean\TextFontMaps\")
+				if /I !Extension!==.met (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\Events\LastStoryEvents\Korean\Metrics\")
+			)
+			if /I !EventLanguage!==j (
+				if /I !Extension!==.png (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\Events\LastStoryEvents\Japanese\FontMaps\")
+				if /I !Extension!==.bmp (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\Events\LastStoryEvents\Japanese\FontMaps\")
+				if /I !Extension!==.txt (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\Events\LastStoryEvents\Japanese\TextFontMaps\")
+				if /I !Extension!==.met (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\Events\LastStoryEvents\Japanese\Metrics\")
+			)
+		)
+		
+		REM HINTMENU
+		echo "MMI: !MainMenuIdentifier!"
+		if /I !MainMenuIdentifier!==hintmenu (
+			if /I !HintLanguage!==e (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\MainMenus\English\")
+			if /I !HintLanguage!==f (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\MainMenus\French\")
+			if /I !HintLanguage!==g (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\MainMenus\German\")
+			if /I !HintLanguage!==i (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\MainMenus\Italian\")
+			if /I !HintLanguage!==k (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\MainMenus\Korean\")
+			if /I !HintLanguage!==s (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\MainMenus\Spanish\") 
+			if /I !Extension!==.png (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\MainMenus\FontMaps\")
+			if /I !Extension!==.bmp (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\MainMenus\FontMaps\")
+			if /I !Extension!==.txt (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\MainMenus\TextFontMaps\")
+			if /I !Extension!==.met (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\MainMenus\Metrics\")
+		)
+		
+		if /I !Extension!==.png (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\Events\Other~UnusedEvents\FontMaps\")
+		if /I !Extension!==.bmp (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\Events\Other~UnusedEvents\FontMaps\")
+		if /I !Extension!==.txt (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\Events\Other~UnusedEvents\TextFontMaps\")
+		if /I !Extension!==.met (move /Y %%f "%WORKING_DIRECTORY%\ROM\Fonts~Text\Events\Other~UnusedEvents\Metrics\")
+		
+	)
+)
+
+for /D %%d in ("%WORKING_DIRECTORY%\ROM\Fonts~Text\Hints\*") do (
+	mkdir "%%d\Metrics\Japanese"
+	mkdir "%%d\Metrics\Korean"
+	mkdir "%%d\FontMaps\Japanese"
+	mkdir "%%d\FontMaps\Korean"
+	mkdir "%%d\TextFontMaps\Korean"
+	mkdir "%%d\TextFontMaps\Japanese"
+	for %%f in ("%WORKING_DIRECTORY%\ROM\Fonts~Text\*") do (
+		set FileName=%%~nf
+		set Extension=%%~xf
+	
+		set Directory=%%~nd
+		set DirStageID=!Directory:~6,2!
+		set StageID=!FileName:~5,2!
+		set StageID2=!FileName:~6,2!
+	
+		set HintIdentifier=!FileName:~0,4!
+		set HintMenuIdentifier=!FileName:~0,4!
+		set HintLanguage=!FileName:~7,1!
+		
+		REM HINTS
+		if /I !HintIdentifier!==Hint (
+			if /I !DirStageID!==!StageID! (
+			
+				if /I !Extension!==.png (
+				if /I !HintLanguage!==k (move /Y %%f "%%d\FontMaps\Korean")
+				if /I !HintLanguage!==j (move /Y %%f "%%d\FontMaps\Japanese") )
+
+				if /I !Extension!==.bmp (
+				if /I !HintLanguage!==k (move /Y %%f "%%d\FontMaps\Korean")
+				if /I !HintLanguage!==j (move /Y %%f "%%d\FontMaps\Japanese") )
+
+				if /I !Extension!==.txt (
+				if /I !HintLanguage!==k (move /Y %%f "%%d\TextFontMaps\Korean")
+				if /I !HintLanguage!==j (move /Y %%f "%%d\TextFontMaps\Japanese") )
+		
+				if /I !Extension!==.met (
+				if /I !HintLanguage!==k (move /Y %%f "%%d\Metrics\Korean")
+				if /I !HintLanguage!==j (move /Y %%f "%%d\Metrics\Japanese") )
+			
+				if /I !HintLanguage!==e (move /Y %%f "%%d\English")
+				if /I !HintLanguage!==f (move /Y %%f "%%d\French")
+				if /I !HintLanguage!==g (move /Y %%f "%%d\German")
+				if /I !HintLanguage!==i (move /Y %%f "%%d\Italian")
+				if /I !HintLanguage!==k (move /Y %%f "%%d\Korean")
+				if /I !HintLanguage!==s (move /Y %%f "%%d\Spanish") else (move /Y %%f "%%d\")
+			) else (
+				if /I !DirStageID!==!StageID2! (
+				
+					if /I !Extension!==.png (
+					if /I !HintLanguage!==k (move /Y %%f "%%d\FontMaps\Korean")
+					if /I !HintLanguage!==j (move /Y %%f "%%d\FontMaps\Japanese") )
+
+					if /I !Extension!==.bmp (
+					if /I !HintLanguage!==k (move /Y %%f "%%d\FontMaps\Korean")
+					if /I !HintLanguage!==j (move /Y %%f "%%d\FontMaps\Japanese") )
+
+					if /I !Extension!==.txt (
+					if /I !HintLanguage!==k (move /Y %%f "%%d\TextFontMaps\Korean")
+					if /I !HintLanguage!==j (move /Y %%f "%%d\TextFontMaps\Japanese") )
+		
+					if /I !Extension!==.met (
+					if /I !HintLanguage!==k (move /Y %%f "%%d\Metrics\Korean")
+					if /I !HintLanguage!==j (move /Y %%f "%%d\Metrics\Japanese") )				
+
+					if /I !HintLanguage!==e (move /Y %%f "%%d\English")
+					if /I !HintLanguage!==f (move /Y %%f "%%d\French")
+					if /I !HintLanguage!==g (move /Y %%f "%%d\German")
+					if /I !HintLanguage!==i (move /Y %%f "%%d\Italian")
+					if /I !HintLanguage!==k (move /Y %%f "%%d\Korean")
+					if /I !HintLanguage!==s (move /Y %%f "%%d\Spanish") else (move /Y %%f "%%d\")
+				)
+			)
+		)
+	)
+)
+
+
+echo "AYY LMAO"
+echo "AYY LMAO"
+echo "AYY LMAO"
+pause
+rem
 rem HeroesONE goes Harambe! AYAYAYAYAYAYAY!!!
 rem
 cd %WORKING_DIRECTORY%\ROM\
+rem Protect Weird .one files from HeroesONE and Removal
+for /D %%d in (%WORKING_DIRECTORY%\ROM\Other\OpenDiscTrayMessage\*) do (
+	for %%f in (%%d\*.one) do (
+		cd %%d
+		ren "%%~nxf" "%%~xnf.tmp"
+	)
+)
+
+cd "%WORKING_DIRECTORY%\ROM\"
 for /R %%f in ("*.one") do (
 	echo "HeroesONE: Extracting %%~nxf"
+	%WORKING_DIRECTORY%\Tools\HeroesONE\HeroesONE.exe -u "%%f" "%%~pnf.HeroesONE"
+)
 for /R %%f in ("*.one") do (DEL /F "%%f")
 
+cd %WORKING_DIRECTORY%\ROM\
 rem Protect Weird .one files from HeroesONE and Removal 2
 for /D %%d in (%WORKING_DIRECTORY%\ROM\Other\OpenDiscTrayMessage\*) do (
 	for %%f in (%%d\*.tmp) do (
