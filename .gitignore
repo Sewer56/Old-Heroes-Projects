@@ -20,6 +20,17 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+# VIM TEMP FILES
+*.swo
+*.swp
+*.swn
+*.swm
+
+# VIM TEMP FILES
+Linux/ffmpeg-git/*
+Linux/libfdk_aac/*
+Linux/x265/*
+
 # =========================
 # Operating System Files
 # =========================
