@@ -1,0 +1,4 @@
+Delta Patcher and Patch Creator
+Undoer
+Improve Efficiency by going to End of Current Loop when X/Y/Z found.
+Rest saved on GIT.
