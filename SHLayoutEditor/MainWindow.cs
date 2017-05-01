@@ -48,28 +48,36 @@ public partial class MainWindow : Window
         switch (OSPlatform)
         {
             case PlatformID.Unix:
-                ProcessX = Process.Start
-                (
-                    new ProcessStartInfo
+                try
+                {
+                    ProcessX = Process.Start
                     (
-                        AppDomain.CurrentDomain.BaseDirectory + @"/Tools/Linux/HeroesOBJ",
-                        @"--extract -i " + CurrentFile + " -o " + CurrentFile + ".txt"
-                    )
-                    { UseShellExecute = false }
-                );
-                ProcessX.WaitForExit();
+                        new ProcessStartInfo
+                        (
+                            AppDomain.CurrentDomain.BaseDirectory + @"/Tools/Linux/HeroesOBJ",
+                            @"--extract -i " + CurrentFile + " -o " + CurrentFile + ".txt"
+                        )
+                        { UseShellExecute = false }
+                    );
+                    ProcessX.WaitForExit();
+                }
+                catch { }
                 break;
             default:
-                ProcessX = Process.Start
-                (
-                    new ProcessStartInfo
+                try
+                {
+                    ProcessX = Process.Start
                     (
-                        AppDomain.CurrentDomain.BaseDirectory + @"\Tools\Windows\HeroesOBJ.exe",
-                        @"--extract -i " + CurrentFile + " -o " + CurrentFile + ".txt"
-                    )
-                    { UseShellExecute = false }
-                );
-                ProcessX.WaitForExit();
+                        new ProcessStartInfo
+                        (
+                            AppDomain.CurrentDomain.BaseDirectory + @"\Tools\Windows\HeroesOBJ.exe",
+                            @"--extract -i " + CurrentFile + " -o " + CurrentFile + ".txt"
+                        )
+                        { UseShellExecute = false }
+                    );
+                    ProcessX.WaitForExit();
+                }
+                catch { }
                 break;
         }
     }
