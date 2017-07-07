@@ -155,10 +155,10 @@ namespace HeroesCollisionGeneratorII
                               "at an greatly improved speed, accuracy is just barely sacrificed for performance <3.");
 
             Console.WriteLine("-----------------------");
-            Console.WriteLine("Usage ( => .CL): OBJColGen.exe --file <OBJFile>");
+            Console.WriteLine("Usage ( => .CL): HeroesCollisionGeneratorII.exe --file <OBJFile>");
             Console.WriteLine("Usage ( => .CL, w/ Node Level): OBJColGen.exe --file <OBJFile> --nodelevel <NodeLevelByte>");
             Console.WriteLine("Usage ( => .CL, w/ Node Level & Offset Base Power): OBJColGen.exe --file <OBJFile> --nodelevel <NodeLevelByte> --offsetlevel <offsetpowerlevel>");
-            Console.WriteLine("Recommended Use: OBJColGen.exe --file <OBJFile> --nodelevel 5 --optimizeintersections 5 --intersectscalarlevel 100");
+            Console.WriteLine("Recommended Use: HeroesCollisionGeneratorII.exe --file <OBJFile> --nodelevel 5 --optimizeintersections 5 --intersectscalarlevel 100");
             Console.WriteLine("-----------------------\n");
             Console.WriteLine("Additional Arguments:");
             Console.WriteLine("--findneighbours : Will find and bake neighbours into the collision file, (may introduce/resolve crashes)");
@@ -166,12 +166,12 @@ namespace HeroesCollisionGeneratorII
             Console.WriteLine("--optimizeintersections <Value>: Default: 2048 | Makes size of quadtree divisble by supplied value, improved collision file generation performance (may introduce or resolve crashes)");
             Console.WriteLine("--optimizeintersectionsalternate <Value>: Same as --optimizeintersections, but will round the value DOWN instead.");
             Console.WriteLine("--optimizeintersections <0>: Special case, will make value divisible by the power level.");
-            Console.WriteLine("--findadjacents : Will find adjacent triangles (potentially but not necessarily buggy).\n");
+            Console.WriteLine("--findadjacents : Will find adjacent triangles (potentially but not necessarily buggy, can cause Tails' Teammates to clip floor while flying).\n");
             Console.WriteLine("The default offset power level is 0x0C, you can try changing it, wonder what effects it'll bring.");
             Console.WriteLine("The recommended node level is level 8 (default), there is a node limit, 65535.");
             Console.WriteLine("You must also watch out for the whole overall triangle limit at 65535.\n");
             Console.WriteLine("Warning: Depths above level 8 may trigger a possibility of overflow of the 65535 limit, especially if your level is very square....");
-            Console.WriteLine("Note: If you experience craashes then try running with --optimizeintersections 0 (and with a depth divisible by 2?)");
+            Console.WriteLine("Note: If you experience crashes ingame then try node level 5.");
             Console.WriteLine("Enjoy!");
             Console.ReadLine();
         }
