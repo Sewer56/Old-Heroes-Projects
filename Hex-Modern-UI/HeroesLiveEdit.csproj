@@ -65,6 +65,8 @@
   <ItemGroup>
     <Compile Include="Classes\Technical\DirectInputDevices.cs" />
     <Compile Include="Classes\Technical\GameHook.cs" />
+    <Compile Include="Classes\Technical\GameUtilityFunctions.cs" />
+    <Compile Include="Classes\Technical\SonicHeroesFunctions.cs" />
     <Compile Include="Classes\Technical\SonicHeroesVariables.cs" />
     <Compile Include="Classes\Visual\Common Theming\ThemeMethods.cs" />
     <Compile Include="Classes\Technical\WinAPIComponents.cs" />
@@ -123,11 +125,29 @@
     <Compile Include="Forms\Fake Overlay Parent Form\OverlayForm.Designer.cs">
       <DependentUpon>OverlayForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Small UI -  Overlay\WarpOverlay.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Small UI -  Overlay\WarpOverlay.Designer.cs">
+      <DependentUpon>WarpOverlay.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Small UI -  Overlay\WarpUtilities.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Small UI -  Overlay\WarpUtilities.Designer.cs">
+      <DependentUpon>WarpUtilities.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Small UI -  Overlay\MainFormSmall.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\Small UI -  Overlay\MainFormSmall.Designer.cs">
       <DependentUpon>MainFormSmall.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Small UI -  Overlay\GameVisualOptions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Small UI -  Overlay\GameVisualOptions.Designer.cs">
+      <DependentUpon>GameVisualOptions.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Small UI -  Overlay\ThemeMenuTinyUI.cs">
       <SubType>Form</SubType>
@@ -168,6 +188,15 @@
     </None>
     <EmbeddedResource Include="Forms\Fake Overlay Parent Form\OverlayForm.resx">
       <DependentUpon>OverlayForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Small UI -  Overlay\WarpOverlay.resx">
+      <DependentUpon>WarpOverlay.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Small UI -  Overlay\WarpUtilities.resx">
+      <DependentUpon>WarpUtilities.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Small UI -  Overlay\GameVisualOptions.resx">
+      <DependentUpon>GameVisualOptions.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Small UI -  Overlay\MainFormSmall.resx">
       <DependentUpon>MainFormSmall.cs</DependentUpon>
@@ -257,6 +286,9 @@
     <Content Include="Fonts\LICENSE.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Images\square-targeting-interface-symbol2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Images\SettingsIcon_HalogenOS_Sewer56lol.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

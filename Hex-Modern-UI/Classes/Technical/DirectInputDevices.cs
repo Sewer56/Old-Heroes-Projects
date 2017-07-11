@@ -302,6 +302,11 @@ namespace Hex_Modern_UI
         {
             ToggleFormVisibility,
             DisplayTestMessage,
+            SelectLastTeleport,
+            SelectNextTeleport,
+            WarpToDestination,
+            SaveWarpDestination,
+            ToggleWarpOverlay,
             ToggleMode
         };
                    
@@ -312,8 +317,23 @@ namespace Hex_Modern_UI
                 case (int)ControllerInputBindingsName.ToggleFormVisibility:
                     Program.xSmallMainWindow.OptionsMenu.ToggleVisibilityHotkey();
                     break;
+                case (int)ControllerInputBindingsName.SelectLastTeleport:
+                    Program.xSmallMainWindow.WarpUtilitiesMenu.SelectLastTeleport();
+                    break;
+                case (int)ControllerInputBindingsName.SelectNextTeleport:
+                    Program.xSmallMainWindow.WarpUtilitiesMenu.SelectNextTeleport();
+                    break;
+                case (int)ControllerInputBindingsName.WarpToDestination:
+                    Program.xSmallMainWindow.WarpUtilitiesMenu.TeleportToDestination();
+                    break;
+                case (int)ControllerInputBindingsName.SaveWarpDestination:
+                    Program.xSmallMainWindow.WarpUtilitiesMenu.SaveStatus();
+                    break;
                 case (int)ControllerInputBindingsName.DisplayTestMessage:
                     Program.xSmallMainWindow.OptionsMenu.TestMessage();
+                    break;
+                case (int)ControllerInputBindingsName.ToggleWarpOverlay:
+                    Program.xSmallMainWindow.WarpUtilitiesMenu.ToggleWarpOverlay();
                     break;
                 case (int)ControllerInputBindingsName.ToggleMode:
                     //CheckUIBox(); // We may be running on a different thread, modifying a control, hold up doc!

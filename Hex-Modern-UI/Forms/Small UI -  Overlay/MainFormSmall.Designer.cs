@@ -31,10 +31,11 @@
             this.Toolstrip_Bottom = new System.Windows.Forms.ToolStrip();
             this.lbl_ActionBar_BottomRight = new System.Windows.Forms.ToolStripLabel();
             this.Panel_SideBar = new System.Windows.Forms.Panel();
-            this.SideBtn_Themes = new System.Windows.Forms.Button();
-            this.SideBtn_Options = new System.Windows.Forms.Button();
             this.Panel_TitleBar = new System.Windows.Forms.Panel();
             this.TinyUI_TopLabel_PageTitle = new System.Windows.Forms.Label();
+            this.SideBtn_Warping = new System.Windows.Forms.Button();
+            this.SideBtn_Themes = new System.Windows.Forms.Button();
+            this.SideBtn_Options = new System.Windows.Forms.Button();
             this.TopBtn_Minimize = new Hex_Modern_UI.CustomButton();
             this.TopBtn_Close = new Hex_Modern_UI.CustomButton();
             this.Toolstrip_Bottom.SuspendLayout();
@@ -75,6 +76,7 @@
             // Panel_SideBar
             // 
             this.Panel_SideBar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(41)))), ((int)(((byte)(46)))));
+            this.Panel_SideBar.Controls.Add(this.SideBtn_Warping);
             this.Panel_SideBar.Controls.Add(this.SideBtn_Themes);
             this.Panel_SideBar.Controls.Add(this.SideBtn_Options);
             this.Panel_SideBar.Dock = System.Windows.Forms.DockStyle.Top;
@@ -85,6 +87,54 @@
             this.Panel_SideBar.Size = new System.Drawing.Size(291, 42);
             this.Panel_SideBar.TabIndex = 138;
             this.Panel_SideBar.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Panel_SideBar_MouseMove);
+            // 
+            // Panel_TitleBar
+            // 
+            this.Panel_TitleBar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(53)))), ((int)(((byte)(64)))));
+            this.Panel_TitleBar.Controls.Add(this.TinyUI_TopLabel_PageTitle);
+            this.Panel_TitleBar.Controls.Add(this.TopBtn_Minimize);
+            this.Panel_TitleBar.Controls.Add(this.TopBtn_Close);
+            this.Panel_TitleBar.Dock = System.Windows.Forms.DockStyle.Top;
+            this.Panel_TitleBar.Location = new System.Drawing.Point(0, 0);
+            this.Panel_TitleBar.Margin = new System.Windows.Forms.Padding(0);
+            this.Panel_TitleBar.Name = "Panel_TitleBar";
+            this.Panel_TitleBar.Size = new System.Drawing.Size(291, 44);
+            this.Panel_TitleBar.TabIndex = 139;
+            this.Panel_TitleBar.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Panel_TitleBar_MouseMove);
+            // 
+            // TinyUI_TopLabel_PageTitle
+            // 
+            this.TinyUI_TopLabel_PageTitle.BackColor = System.Drawing.Color.Transparent;
+            this.TinyUI_TopLabel_PageTitle.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.TinyUI_TopLabel_PageTitle.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.TinyUI_TopLabel_PageTitle.Font = new System.Drawing.Font("Roboto Light", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TinyUI_TopLabel_PageTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+            this.TinyUI_TopLabel_PageTitle.Location = new System.Drawing.Point(0, 0);
+            this.TinyUI_TopLabel_PageTitle.Margin = new System.Windows.Forms.Padding(0);
+            this.TinyUI_TopLabel_PageTitle.Name = "TinyUI_TopLabel_PageTitle";
+            this.TinyUI_TopLabel_PageTitle.Size = new System.Drawing.Size(291, 44);
+            this.TinyUI_TopLabel_PageTitle.TabIndex = 149;
+            this.TinyUI_TopLabel_PageTitle.Text = "Welcome Screen";
+            this.TinyUI_TopLabel_PageTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.TinyUI_TopLabel_PageTitle.MouseMove += new System.Windows.Forms.MouseEventHandler(this.TinyUI_TopLabel_PageTitle_MouseMove);
+            // 
+            // SideBtn_Warping
+            // 
+            this.SideBtn_Warping.BackColor = this.Panel_SideBar.BackColor;
+            this.SideBtn_Warping.BackgroundImage = global::Hex_Modern_UI.Properties.Resources.square_targeting_interface_symbol2;
+            this.SideBtn_Warping.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.SideBtn_Warping.Dock = System.Windows.Forms.DockStyle.Right;
+            this.SideBtn_Warping.FlatAppearance.BorderSize = 0;
+            this.SideBtn_Warping.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.SideBtn_Warping.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SideBtn_Warping.ForeColor = System.Drawing.Color.White;
+            this.SideBtn_Warping.Location = new System.Drawing.Point(165, 0);
+            this.SideBtn_Warping.Margin = new System.Windows.Forms.Padding(6, 3, 6, 3);
+            this.SideBtn_Warping.Name = "SideBtn_Warping";
+            this.SideBtn_Warping.Size = new System.Drawing.Size(42, 42);
+            this.SideBtn_Warping.TabIndex = 148;
+            this.SideBtn_Warping.UseVisualStyleBackColor = false;
+            this.SideBtn_Warping.Click += new System.EventHandler(this.SideBtn_Warping_Click);
             // 
             // SideBtn_Themes
             // 
@@ -121,36 +171,6 @@
             this.SideBtn_Options.TabIndex = 147;
             this.SideBtn_Options.UseVisualStyleBackColor = false;
             this.SideBtn_Options.Click += new System.EventHandler(this.SideBtn_Options_Click);
-            // 
-            // Panel_TitleBar
-            // 
-            this.Panel_TitleBar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(53)))), ((int)(((byte)(64)))));
-            this.Panel_TitleBar.Controls.Add(this.TinyUI_TopLabel_PageTitle);
-            this.Panel_TitleBar.Controls.Add(this.TopBtn_Minimize);
-            this.Panel_TitleBar.Controls.Add(this.TopBtn_Close);
-            this.Panel_TitleBar.Dock = System.Windows.Forms.DockStyle.Top;
-            this.Panel_TitleBar.Location = new System.Drawing.Point(0, 0);
-            this.Panel_TitleBar.Margin = new System.Windows.Forms.Padding(0);
-            this.Panel_TitleBar.Name = "Panel_TitleBar";
-            this.Panel_TitleBar.Size = new System.Drawing.Size(291, 44);
-            this.Panel_TitleBar.TabIndex = 139;
-            this.Panel_TitleBar.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Panel_TitleBar_MouseMove);
-            // 
-            // TinyUI_TopLabel_PageTitle
-            // 
-            this.TinyUI_TopLabel_PageTitle.BackColor = System.Drawing.Color.Transparent;
-            this.TinyUI_TopLabel_PageTitle.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.TinyUI_TopLabel_PageTitle.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.TinyUI_TopLabel_PageTitle.Font = new System.Drawing.Font("Roboto Light", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TinyUI_TopLabel_PageTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
-            this.TinyUI_TopLabel_PageTitle.Location = new System.Drawing.Point(0, 0);
-            this.TinyUI_TopLabel_PageTitle.Margin = new System.Windows.Forms.Padding(0);
-            this.TinyUI_TopLabel_PageTitle.Name = "TinyUI_TopLabel_PageTitle";
-            this.TinyUI_TopLabel_PageTitle.Size = new System.Drawing.Size(291, 44);
-            this.TinyUI_TopLabel_PageTitle.TabIndex = 149;
-            this.TinyUI_TopLabel_PageTitle.Text = "Welcome Screen";
-            this.TinyUI_TopLabel_PageTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.TinyUI_TopLabel_PageTitle.MouseMove += new System.Windows.Forms.MouseEventHandler(this.TinyUI_TopLabel_PageTitle_MouseMove);
             // 
             // TopBtn_Minimize
             // 
@@ -215,5 +235,6 @@
         private System.Windows.Forms.Label TinyUI_TopLabel_PageTitle;
         private System.Windows.Forms.Button SideBtn_Themes;
         private System.Windows.Forms.Button SideBtn_Options;
+        private System.Windows.Forms.Button SideBtn_Warping;
     }
 }

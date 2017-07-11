@@ -85,6 +85,18 @@ namespace Hex_Modern_UI
             remove { InternalTextBox.MouseDown -= value; }
         }
 
+        public event EventHandler TextChanged
+        {
+            add { InternalTextBox.TextChanged += value; }
+            remove { InternalTextBox.TextChanged -= value; }
+        }
+
+        public event EventHandler Leave
+        {
+            add { InternalTextBox.Leave += value; }
+            remove { InternalTextBox.Leave -= value; }
+        }
+
         public HorizontalAlignment TextAlign
         {
             get { return InternalTextBox.TextAlign; }

@@ -1,12 +1,9 @@
 ﻿using Binarysharp.MemoryManagement;
 using Binarysharp.MemoryManagement.Helpers;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Timers;
 using System.Windows.Forms;
 
@@ -39,6 +36,10 @@ namespace Hex_Modern_UI
             IntPtr FormHandleID = Program.xSmallMainWindow.Handle;
             IntPtr OverlayWindowHandleID = Program.GDIOverlay.Handle;
             WinAPIComponents.SetParentX(FormHandleID, OverlayWindowHandleID);
+
+            IntPtr WarpMenuInformationHandleID = Program.xSmallMainWindow.WarpUtilitiesMenu.WarpInformationOverlay.Handle;
+            WinAPIComponents.SetParentX(WarpMenuInformationHandleID, OverlayWindowHandleID);
+
             Program.xSmallMainWindow.TopMost = true;
         }
 
@@ -66,6 +67,7 @@ namespace Hex_Modern_UI
             SetWindowParent();
             Program.OpenedForms.Add(Program.GDIOverlay);
             Program.xSmallMainWindow.Location = new Point(0, 0);
+            Program.xSmallMainWindow.WarpUtilitiesMenu.WarpInformationOverlay.Location = new Point(0, 0);
             Program.xSmallMainWindow.OptionsMenu.TinyUI_Nud_OverlayOpacity.Enabled = true;
             Program.xSmallMainWindow.OptionsMenu.TinyUI_Nud_OverlayOpacity.Value = Program.xSmallMainWindow.OptionsMenu.TinyUI_Nud_Opacity.Value;
             Program.xSmallMainWindow.OptionsMenu.TinyUI_Nud_Opacity.Value = 1;

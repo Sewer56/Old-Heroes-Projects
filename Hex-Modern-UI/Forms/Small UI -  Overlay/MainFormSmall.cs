@@ -65,6 +65,7 @@ namespace Hex_Modern_UI
         public ThemeMenuTinyUI ThemeMenu;
         public WelcomeScreenTinyUI WelcomeMenu;
         public OptionsScreenTinyUI OptionsMenu;
+        public WarpUtilities WarpUtilitiesMenu;
 
         /// 
         /// Sets up swappable screens!
@@ -82,6 +83,15 @@ namespace Hex_Modern_UI
             ThemeMethods.DoThemeAssets(WelcomeMenu);
             Program.OpenedForms.Add(WelcomeMenu);
             WelcomeMenu.MdiParent = this;
+
+            WarpUtilitiesMenu = new WarpUtilities();
+            ThemeMethods.DoThemeAssets(WarpUtilitiesMenu);
+            Program.OpenedForms.Add(WarpUtilitiesMenu);
+            WarpUtilitiesMenu.MdiParent = this;
+
+            // Warp Menu Sub Menu
+            ThemeMethods.DoThemeAssets(WarpUtilitiesMenu.WarpInformationOverlay);
+            Program.OpenedForms.Add(WarpUtilitiesMenu.WarpInformationOverlay);
 
             OptionsMenu = new OptionsScreenTinyUI();
             ThemeMethods.DoThemeAssets(OptionsMenu);
@@ -172,6 +182,14 @@ namespace Hex_Modern_UI
             FinishSwappableFormSetup();
         }
 
+        private void SideBtn_Warping_Click(object sender, EventArgs e)
+        {
+            TinyUI_TopLabel_PageTitle.Text = "Warp Settings Menu";
+            SetupNewSwappableForm();
+            Program.CurrentlyOpenedForm = WarpUtilitiesMenu;
+            FinishSwappableFormSetup();
+        }
+
         public void ChangeActionBarLabelText(string Message)
         {
             lbl_ActionBar_BottomRight.Text = Message;
@@ -192,5 +210,7 @@ namespace Hex_Modern_UI
         {
 
         }
+
+
     }
 }
