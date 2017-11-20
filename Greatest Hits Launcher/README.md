@@ -1,5 +1,5 @@
 # Sonic-Heroes-GH-Launcher
-A launcher written by myself for scratch by request of Muzzarino for Sonic Heroes: Greatest Hits. 
+A launcher written by myself from scratch by request of Muzzarino for Sonic Heroes: Greatest Hits. 
 This is a complete replacement, extension and an application granting additional modification options for the Greatest Hits mod, 
 a fork of another application that I am working on in terms of design. 
 
