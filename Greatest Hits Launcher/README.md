@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-Old Projects
-=======
 # Sonic-Heroes-GH-Launcher
 A launcher written by myself for scratch by request of Muzzarino for Sonic Heroes: Greatest Hits. 
 This is a complete replacement, extension and an application granting additional modification options for the Greatest Hits mod, 
@@ -11,4 +8,3 @@ This application may be used with any Sonic Heroes Executable.
 Enjoy the extra options such as Borderless Windowed! 
 
 Application theme and visual style, all original by Sewer56lol, 2017.
->>>>>>> GreatestHitsLauncher/master
