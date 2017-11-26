@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "HeroesCollisionGeneratorII": {
+      "commandName": "Project",
+      "commandLineArgs": "--file \"D:\\Projects\\SonicHackingStuff\\HeroesHAX\\CL2OBJ\\CL2OBJ\\bin\\Release\\s01.obj\" --nodelevel 7  --optimizeintersections 0"
+    }
+  }
+}
